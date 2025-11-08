@@ -8,9 +8,17 @@ public class Level : MonoBehaviour
 	public Map Map;
 	public List<Wave> Waves = new List<Wave>();
 	public Dictionary<Vector2Int, Ghost> Ghosts = new Dictionary<Vector2Int, Ghost>();
+	public Dictionary<Vector2Int, Box> Boxes = new Dictionary<Vector2Int, Box>();
 	public Tilemap WaveMap;
+	public Tilemap ScoreMap;
+	public Tilemap ElementsMap;
 	public Tile WaveTile;
 	public Tile GhostTile;
+	public Tile ReceiverTile;
+	public Tile EmitterTile;
+	public Tile DoorTile;
+	public Tile BoxTile;
+	public List<Tile> NumberTiles = new List<Tile>();
 
 	public void TimeStamp()
 	{
@@ -24,9 +32,11 @@ public class Level : MonoBehaviour
 		}
 		RefreshGrid();
 	}
-
-	void RefreshGrid()
+	Dictionary<Vector2Int, int> Scores;
+	public void RefreshGrid()
 	{
+		Scores = new Dictionary<Vector2Int, int>();
+		ScoreMap.ClearAllTiles();
 		WaveMap.ClearAllTiles();
 
 		List<Wave> CurrentWaves = new List<Wave>();
@@ -40,9 +50,24 @@ public class Level : MonoBehaviour
 			ApplyWave(wave);
 		}
 
-		foreach(Ghost ghost in Ghosts.Values)
+		foreach (Ghost ghost in Ghosts.Values)
 		{
 			ApplyGhost(ghost);
+		}
+
+		foreach(Receiver reciever in Map.Receivers)
+		{
+			reciever.TimeStep();
+		}
+		
+		foreach(KeyValuePair<Vector2Int,int> score in Scores)
+		{
+			int toScore = score.Value;
+			if (toScore > 9) toScore = 9;
+			ScoreMap.SetTile((Vector3Int)score.Key, NumberTiles[toScore]);
+			ScoreMap.SetColor(
+				(Vector3Int)score.Key,
+				new Color(0f, 0f, 0.6f));
 		}
 	}
 
@@ -62,6 +87,14 @@ public class Level : MonoBehaviour
 			WaveMap.SetColor(
 				(Vector3Int)waveElement.Key,
 				new Color(1f, 1f, 1f, waveElement.Value.GetTransparency()));
+			if (Scores.ContainsKey(waveElement.Key))
+			{
+				Scores[waveElement.Key] += waveElement.Value.Strength;
+			}
+			else
+			{
+				Scores.Add(waveElement.Key, waveElement.Value.Strength);
+			}
 		}
 	}
 
@@ -82,10 +115,10 @@ public class Level : MonoBehaviour
 		return score;
 	}
 
-	public void GenerateWave(Vector2Int _origin)
+	public void GenerateWave(Vector2Int _origin, int? _strength = null)
 	{
 		Wave newWave = new Wave(_origin);
-		newWave.Init();
+		newWave.Init(_strength);
 		Waves.Add(newWave);
 		RefreshGrid();
 	}
@@ -97,5 +130,25 @@ public class Level : MonoBehaviour
 		else
 			Ghosts.Add(_position, new Ghost(_position));
 		RefreshGrid();
+	}
+
+	public bool PushBox(Vector2Int _boxPosition, MapDirection _direction)
+	{
+		Box boxToPush = GetBox(_boxPosition);
+		if (boxToPush == null)
+		{
+			Debug.LogError("Tried to push box that doesn't exist");
+			return false;
+		}
+		if (!boxToPush.Push(_direction)) return false;
+		Boxes.Remove(_boxPosition);
+		Boxes.Add(boxToPush.Position, boxToPush);
+		return true;
+	}
+
+	public Box GetBox(Vector2Int _position)
+	{
+		if (Boxes.ContainsKey(_position)) return Boxes[_position];
+		return null;
 	}
 }

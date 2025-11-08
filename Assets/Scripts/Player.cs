@@ -13,9 +13,21 @@ public class Player : MonoBehaviour
 
 	void TryMove(MapDirection _direction)
 	{
-		Vector2Int NewPosition = Map.CoordAfterMovement(Position, _direction);
-		if (GameManager.master.CurrentLevel.Map.CoordIsBlocked(NewPosition)) return;
-		Position = NewPosition;
+		GameManager.master.CurrentLevel.TimeStamp();
+		Vector2Int newPosition = Map.CoordAfterMovement(Position, _direction);
+
+		if (GameManager.master.CurrentLevel.GetBox(newPosition))
+		{
+			if (GameManager.master.CurrentLevel.PushBox(newPosition, _direction))
+			{
+				Position = newPosition;
+				SetPosition(true);
+			}
+			return;
+		}
+
+		if (GameManager.master.CurrentLevel.Map.CoordIsBlocked(newPosition)) return;
+		Position = newPosition;
 		SetPosition();
 	}
 
@@ -46,10 +58,10 @@ public class Player : MonoBehaviour
 			GameManager.master.CurrentLevel.ToggleGhost(Position);
 		}
 	}
-	
-	void SetPosition()
+
+	void SetPosition(bool _forceRefresh = false)
 	{
 		transform.position = Map.CoordToWorldPoint(Position);
-		GameManager.master.CurrentLevel.TimeStamp();
+		if(_forceRefresh) GameManager.master.CurrentLevel.RefreshGrid();
 	}
 }

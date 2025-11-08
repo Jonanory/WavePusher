@@ -16,6 +16,8 @@ public class Map : MonoBehaviour
 	public static float Scale = 0.5f;
 	public Tilemap WallMap;
 
+	public List<Receiver> Receivers = new List<Receiver>();
+
 	public Dictionary<Vector2Int,IBlockable> Blockables = new Dictionary<Vector2Int,IBlockable>();
 
 	public static MapDirection RotateClockwise(MapDirection _direction, int _numberOfSteps = 1)
@@ -63,6 +65,7 @@ public class Map : MonoBehaviour
 	public bool CoordIsBlocked(Vector2Int _coord)
 	{
 		if (WallMap.HasTile((Vector3Int)_coord)) return true;
+		if (GameManager.master.CurrentLevel.Boxes.ContainsKey(_coord)) return true;
 		if(Blockables.ContainsKey(_coord)) return Blockables[_coord].IsBlocking;
 		return false;
 	}

@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -15,15 +16,15 @@ public class Wave
 		Radius = 1;
 	}
 
-	public void Init()
+	public void Init(int? _strength = null)
 	{
+		int strength = _strength.HasValue ? _strength.Value : BASE_WAVE_STRENGTH;
 		NewElements = new Dictionary<Vector2Int, WaveElement>();
-		TryCreateWaveElement(BASE_WAVE_STRENGTH, Map.CoordAfterMovement(Center, MapDirection.UP_LEFT), MapDirection.UP_LEFT);
-		TryCreateWaveElement(BASE_WAVE_STRENGTH, Map.CoordAfterMovement(Center, MapDirection.UP), MapDirection.UP);
-		TryCreateWaveElement(BASE_WAVE_STRENGTH, Map.CoordAfterMovement(Center, MapDirection.UP_RIGHT), MapDirection.UP_RIGHT);
-		TryCreateWaveElement(BASE_WAVE_STRENGTH, Map.CoordAfterMovement(Center, MapDirection.DOWN_LEFT), MapDirection.DOWN_LEFT);
-		TryCreateWaveElement(BASE_WAVE_STRENGTH, Map.CoordAfterMovement(Center, MapDirection.DOWN), MapDirection.DOWN);
-		TryCreateWaveElement(BASE_WAVE_STRENGTH, Map.CoordAfterMovement(Center, MapDirection.DOWN_RIGHT), MapDirection.DOWN_RIGHT);
+		foreach(MapDirection direction in Enum.GetValues(typeof(MapDirection)))
+			TryCreateWaveElement(
+				strength,
+				Map.CoordAfterMovement(Center, direction),
+				direction);
 		Elements = NewElements;
 	}
 
