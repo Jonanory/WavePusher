@@ -6,6 +6,7 @@ public class Door: MonoBehaviour, IActivatable, IBlockable
 	public Vector2Int Position;
 
 	public Receiver Opener;
+	public Button Pusher;
 
 	bool _Blocking;
 	public bool IsBlocking{
@@ -14,25 +15,21 @@ public class Door: MonoBehaviour, IActivatable, IBlockable
 
 	public void Start()
 	{
+		GameManager.master.CurrentLevel.Doors.Add(this);
 		Deactivate();
-		Opener.Activatables.Add(this);
+		if(Opener != null) Opener.Activatables.Add(this);
+		if(Pusher != null) Pusher.Activatables.Add(this);
 	}
 
 	public void Activate()
 	{
 		Open = true;
 		_Blocking = false;
-		GameManager.master.CurrentLevel.Map.WallMap.SetTile(
-			(Vector3Int)Position,
-			null);
 	}
 
 	public void Deactivate()
 	{
 		Open = false;
 		_Blocking = true;
-		GameManager.master.CurrentLevel.Map.WallMap.SetTile(
-			(Vector3Int)Position,
-			GameManager.master.CurrentLevel.DoorTile);
 	}
 }

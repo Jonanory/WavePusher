@@ -38,7 +38,7 @@ public class Wave
 	HashSet<Vector2Int> ExistingElementLocations= new HashSet<Vector2Int>();
 	HashSet<Vector2Int> BlockedElementLocations = new HashSet<Vector2Int>();
 	HashSet<Vector2Int> NewElementLocations = new HashSet<Vector2Int>();
-	public void TimeStamp()
+	public void Flow()
 	{
 		Radius++;
 		NewElements = new Dictionary<Vector2Int,WaveElement>();
@@ -78,14 +78,14 @@ public class Wave
 			!BlockedElementLocations.Contains(_newPosition))
 		{
 			WaveElement newElement;
-			if(!NewElementLocations.Contains(_newPosition))
+			if (!NewElementLocations.Contains(_newPosition))
 			{
-				if(GameManager.master.CurrentLevel.Map.CoordIsBlocked(_newPosition))
+				if (!GameManager.master.Map.CoordIsFlowable(_newPosition))
 				{
 					BlockedElementLocations.Add(_newPosition);
 					return;
 				}
-				newElement = new WaveElement(_strength);
+				newElement = new WaveElement(_newPosition,_strength);
 				NewElements.Add(_newPosition, newElement);
 				NewElementLocations.Add(_newPosition);
 			}
@@ -93,7 +93,6 @@ public class Wave
 			{
 				newElement = NewElements[_newPosition];
 			}
-
 			newElement.AddFlowDirection(_flowFrom);
 			newElement.AddFlowDirection(Map.RotateClockwise(_flowFrom));
 			newElement.AddFlowDirection(Map.RotateCounterClockwise(_flowFrom));
@@ -104,10 +103,12 @@ public class Wave
 public class WaveElement
 {
 	public int Strength;
+	public Vector2Int Position;
 	public HashSet<MapDirection> DirectionsToFlow;
 
-	public WaveElement(int _strength)
+	public WaveElement(Vector2Int _position, int _strength)
 	{
+		Position = _position;
 		Strength = _strength;
 		DirectionsToFlow = new HashSet<MapDirection>();
 	}

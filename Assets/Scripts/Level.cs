@@ -3,42 +3,30 @@ using UnityEngine.Tilemaps;
 using System.Collections;
 using System.Collections.Generic;
 
+public enum ElementLayer
+{
+	WAVE = 0,
+	IMMOVABLE = 1,
+	MOVABLE = 2,
+	SCORE = 3
+}
+
 public class Level : MonoBehaviour
 {
-	public Map Map;
 	public List<Wave> Waves = new List<Wave>();
 	public Dictionary<Vector2Int, Ghost> Ghosts = new Dictionary<Vector2Int, Ghost>();
 	public Dictionary<Vector2Int, Box> Boxes = new Dictionary<Vector2Int, Box>();
-	public Tilemap WaveMap;
-	public Tilemap ScoreMap;
+	public List<Door> Doors = new List<Door>();
+	public Dictionary<Vector2Int, int> Scores = new Dictionary<Vector2Int, int>();
 	public Tilemap ElementsMap;
-	public Tile WaveTile;
-	public Tile GhostTile;
-	public Tile ReceiverTile;
-	public Tile EmitterTile;
-	public Tile DoorTile;
-	public Tile BoxTile;
-	public List<Tile> NumberTiles = new List<Tile>();
+	public Dictionary<Vector2Int, IBlockable> Blockables =
+		new Dictionary<Vector2Int, IBlockable>();
 
-	public void TimeStamp()
-	{
-		foreach (Wave wave in Waves)
-		{
-			wave.TimeStamp();
-		}
-		foreach (Ghost ghost in Ghosts.Values)
-		{
-			ghost.TimeStamp();
-		}
-		RefreshGrid();
-	}
-	Dictionary<Vector2Int, int> Scores;
-	public void RefreshGrid()
+	public void TimeStep()
 	{
 		Scores = new Dictionary<Vector2Int, int>();
-		ScoreMap.ClearAllTiles();
-		WaveMap.ClearAllTiles();
 
+		/* Wave Management */
 		List<Wave> CurrentWaves = new List<Wave>();
 		foreach (Wave wave in Waves)
 		{
@@ -47,60 +35,149 @@ public class Level : MonoBehaviour
 
 		foreach (Wave wave in CurrentWaves)
 		{
-			ApplyWave(wave);
+			if (wave.Radius > 10)
+			{
+				Waves.Remove(wave);
+				continue;
+			}
+			wave.Flow();
 		}
 
 		foreach (Ghost ghost in Ghosts.Values)
 		{
-			ApplyGhost(ghost);
+			ghost.TimeStep();
 		}
 
-		foreach(Receiver reciever in Map.Receivers)
+		foreach (Button button in GameManager.master.Map.Buttons)
+		{
+			button.CheckCondition();
+		}
+
+		/* Do this before the recievers, as the current waves might 
+		 * trigger the receivers */
+		RecalculateScores();
+
+		foreach (Receiver reciever in GameManager.master.Map.Receivers)
 		{
 			reciever.TimeStep();
 		}
-		
+
+		/* Make closed doors block waves */
+		foreach (Door door in Doors)
+		{
+			if (door.Open) continue;
+			foreach (Wave wave in Waves)
+			{
+				if (wave.Elements.ContainsKey(door.Position))
+					wave.Elements.Remove(door.Position);
+			}
+		}
+
+		/* Do this to make changes based on recievers and closed doors */
+		RecalculateScores();
+	}
+
+	void RecalculateScores()
+	{
+		Scores = new Dictionary<Vector2Int, int>();
+		foreach (Wave wave in Waves)
+		{
+			foreach (WaveElement element in wave.Elements.Values)
+			{
+				if (Scores.ContainsKey(element.Position))
+				{
+					Scores[element.Position] += element.Strength;
+				}
+				else
+				{
+					Scores.Add(element.Position, element.Strength);
+				}
+			}
+		}
+	}
+
+	public void Refresh()
+	{
+		ElementsMap.ClearAllTiles();
+
+		ElementsMap.SetTile(
+			new Vector3Int(
+				GameManager.master.Player.Position.x,
+				GameManager.master.Player.Position.y,
+				(int)ElementLayer.MOVABLE),
+			TileManager.GetTile(CellType.PLAYER));
+
+		foreach(Vector2Int boxPos in Boxes.Keys)
+		{
+			ElementsMap.SetTile(
+				new Vector3Int(
+					boxPos.x,
+					boxPos.y,
+					(int)ElementLayer.MOVABLE),
+				TileManager.GetTile(CellType.BOX));
+		}
+
+		foreach (Wave wave in Waves)
+		{
+			DrawWave(wave);
+		}
+
+		foreach(Vector2Int ghostPos in Ghosts.Keys)
+		{
+			ElementsMap.SetTile(
+				new Vector3Int(
+					ghostPos.x,
+					ghostPos.y,
+					(int)ElementLayer.IMMOVABLE),
+				TileManager.GetTile(CellType.GHOST));
+		}
+
 		foreach(KeyValuePair<Vector2Int,int> score in Scores)
 		{
 			int toScore = score.Value;
 			if (toScore > 9) toScore = 9;
-			ScoreMap.SetTile((Vector3Int)score.Key, NumberTiles[toScore]);
-			ScoreMap.SetColor(
-				(Vector3Int)score.Key,
+			Vector3Int position = 
+				new Vector3Int(
+					score.Key.x,
+					score.Key.y,
+					(int)ElementLayer.SCORE);
+			ElementsMap.SetTile(
+				position, 
+				TileManager.GetNumberTile(toScore));
+			ElementsMap.SetColor(
+				position,
 				new Color(0f, 0f, 0.6f));
+		}
+
+		foreach(Door door in Doors)
+		{
+			if(door.Open) continue;
+
+			ElementsMap.SetTile(
+				new Vector3Int(
+					door.Position.x,
+					door.Position.y,
+					(int)ElementLayer.IMMOVABLE), 
+				TileManager.GetTile(CellType.DOOR));
 		}
 	}
 
-	void ApplyWave(Wave _wave)
+	void DrawWave(Wave _wave)
 	{
-		if (_wave.Radius > 10)
-		{
-			Waves.Remove(_wave);
-			return;
-		}
-
 		foreach (KeyValuePair<Vector2Int, WaveElement> waveElement in _wave.Elements)
 		{
 			int xPlace = waveElement.Key.x + _wave.Center.x;
 			int yPlace = waveElement.Key.y + _wave.Center.y;
-			WaveMap.SetTile((Vector3Int)waveElement.Key, WaveTile);
-			WaveMap.SetColor(
-				(Vector3Int)waveElement.Key,
+			Vector3Int position = new Vector3Int(
+				waveElement.Key.x,
+				waveElement.Key.y,
+				(int)ElementLayer.WAVE
+			);
+			ElementsMap.SetTile(position, TileManager.GetTile(CellType.WAVE));
+			ElementsMap.SetColor(
+				position,
 				new Color(1f, 1f, 1f, waveElement.Value.GetTransparency()));
-			if (Scores.ContainsKey(waveElement.Key))
-			{
-				Scores[waveElement.Key] += waveElement.Value.Strength;
-			}
-			else
-			{
-				Scores.Add(waveElement.Key, waveElement.Value.Strength);
-			}
 		}
-	}
-
-	void ApplyGhost(Ghost _ghost)
-	{
-		WaveMap.SetTile((Vector3Int)_ghost.Position, GhostTile);
 	}
 
 	public int ScoreAtCoord(Vector2Int _coord)
@@ -115,12 +192,12 @@ public class Level : MonoBehaviour
 		return score;
 	}
 
-	public void GenerateWave(Vector2Int _origin, int? _strength = null)
+	public void GenerateNewWave(Vector2Int _origin, int? _strength = null)
 	{
 		Wave newWave = new Wave(_origin);
 		newWave.Init(_strength);
 		Waves.Add(newWave);
-		RefreshGrid();
+		Refresh();
 	}
 
 	public void ToggleGhost(Vector2Int _position)
@@ -129,7 +206,7 @@ public class Level : MonoBehaviour
 			Ghosts.Remove(_position);
 		else
 			Ghosts.Add(_position, new Ghost(_position));
-		RefreshGrid();
+		Refresh();
 	}
 
 	public bool PushBox(Vector2Int _boxPosition, MapDirection _direction)

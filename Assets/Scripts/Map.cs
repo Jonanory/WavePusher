@@ -3,7 +3,8 @@ using UnityEngine.Tilemaps;
 using System.Collections;
 using System.Collections.Generic;
 
-public enum MapDirection {
+public enum MapDirection
+{
 	UP = 0,
 	UP_RIGHT = 1,
 	DOWN_RIGHT = 2,
@@ -11,14 +12,57 @@ public enum MapDirection {
 	DOWN_LEFT = 4,
 	UP_LEFT = 5
 }
+
+public enum MapLayer
+{
+	FLOOR = 0,
+	EXTRA = 1,
+	WALL = 2
+}
+
 public class Map : MonoBehaviour
 {
 	public static float Scale = 0.5f;
-	public Tilemap WallMap;
-
+	public Tilemap AreaMap;
+	public Tilemap ElementMap;
+	public List<Wave> Waves = new List<Wave>();
+	public List<Emitter> Emitters = new List<Emitter>();
 	public List<Receiver> Receivers = new List<Receiver>();
+	public List<Button> Buttons = new List<Button>();
 
-	public Dictionary<Vector2Int,IBlockable> Blockables = new Dictionary<Vector2Int,IBlockable>();
+	public Dictionary<Vector2Int, IBlockable> Blockables = new Dictionary<Vector2Int, IBlockable>();
+
+	void Start()
+	{
+		Display();
+	}
+
+	public void Display()
+	{
+		foreach (Button button in Buttons)
+			AreaMap.SetTile(
+				new Vector3Int(
+					button.Position.x,
+					button.Position.y,
+					(int)MapLayer.EXTRA),
+					TileManager.GetTile(CellType.BUTTON));
+
+		foreach (Emitter emitter in Emitters)
+			AreaMap.SetTile(
+				new Vector3Int(
+					emitter.Position.x,
+					emitter.Position.y,
+					(int)MapLayer.EXTRA),
+					TileManager.GetTile(CellType.EMITTER));
+
+		foreach (Receiver receiver in Receivers)
+			AreaMap.SetTile(
+				new Vector3Int(
+					receiver.Position.x,
+					receiver.Position.y,
+					(int)MapLayer.EXTRA),
+					TileManager.GetTile(CellType.RECEIVER));
+	}
 
 	public static MapDirection RotateClockwise(MapDirection _direction, int _numberOfSteps = 1)
 	{
@@ -29,26 +73,26 @@ public class Map : MonoBehaviour
 	public static MapDirection RotateCounterClockwise(MapDirection _direction, int _numberOfSteps = 1)
 	{
 		int newDirection = (int)_direction - _numberOfSteps;
-		while(newDirection < 0) newDirection += 6;
+		while (newDirection < 0) newDirection += 6;
 		return (MapDirection)newDirection;
 	}
 
 	public static Vector2Int CoordAfterMovement(Vector2Int _startPoint, MapDirection _direction)
 	{
-		switch(_direction)
+		switch (_direction)
 		{
 			case MapDirection.UP:
 				return new Vector2Int(_startPoint.x + 1, _startPoint.y);
 			case MapDirection.UP_LEFT:
-				return new Vector2Int(_startPoint.x + Mod(_startPoint.y, 2), _startPoint.y-1);
+				return new Vector2Int(_startPoint.x + Mod(_startPoint.y, 2), _startPoint.y - 1);
 			case MapDirection.UP_RIGHT:
-				return new Vector2Int(_startPoint.x + Mod(_startPoint.y, 2), _startPoint.y+1);
+				return new Vector2Int(_startPoint.x + Mod(_startPoint.y, 2), _startPoint.y + 1);
 			case MapDirection.DOWN:
 				return new Vector2Int(_startPoint.x - 1, _startPoint.y);
 			case MapDirection.DOWN_LEFT:
-				return new Vector2Int(_startPoint.x - 1 + Mod(_startPoint.y, 2), _startPoint.y-1);
+				return new Vector2Int(_startPoint.x - 1 + Mod(_startPoint.y, 2), _startPoint.y - 1);
 			case MapDirection.DOWN_RIGHT:
-				return new Vector2Int(_startPoint.x - 1 + Mod(_startPoint.y, 2), _startPoint.y+1);
+				return new Vector2Int(_startPoint.x - 1 + Mod(_startPoint.y, 2), _startPoint.y + 1);
 			default:
 				return _startPoint;
 		}
@@ -56,18 +100,31 @@ public class Map : MonoBehaviour
 
 	static int Mod(int _value, int _base)
 	{
-		if(_value >= 0) return _value % _base;
+		if (_value >= 0) return _value % _base;
 		int valueHold = _value;
-		while(valueHold < 0) valueHold += _base;
+		while (valueHold < 0) valueHold += _base;
 		return valueHold;
 	}
 
 	public bool CoordIsBlocked(Vector2Int _coord)
 	{
-		if (WallMap.HasTile((Vector3Int)_coord)) return true;
+		if (AreaMap.HasTile((Vector3Int)_coord)) return true;
 		if (GameManager.master.CurrentLevel.Boxes.ContainsKey(_coord)) return true;
-		if(Blockables.ContainsKey(_coord)) return Blockables[_coord].IsBlocking;
+		foreach (Door door in GameManager.master.CurrentLevel.Doors)
+			if (!door.Open && door.Position == _coord) return true;
+		if (Blockables.ContainsKey(_coord)) return Blockables[_coord].IsBlocking;
 		return false;
+	}
+
+	public bool CoordIsFlowable(Vector2Int _coord)
+	{
+		if (AreaMap.HasTile(
+			new Vector3Int(
+				_coord.x,
+				_coord.y,
+				(int)MapLayer.WALL))) return false;
+		if (AreaMap.HasTile((Vector3Int)_coord)) return false;
+		return true;
 	}
 
 	public static Vector2 CoordToWorldPoint(Vector2Int _coord)

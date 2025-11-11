@@ -9,13 +9,6 @@ public class Receiver : MonoBehaviour
 	public bool IsActivated = false;
 	public List<IActivatable> Activatables = new List<IActivatable>();
 
-	public void Start()
-	{
-		GameManager.master.CurrentLevel.ElementsMap.SetTile(
-			(Vector3Int)Position,
-			GameManager.master.CurrentLevel.ReceiverTile);
-	}
-
 	public void TimeStep()
 	{
 		if (!IsActivated && GameManager.master.CurrentLevel.ScoreAtCoord(Position) >= ScoreNeeded)

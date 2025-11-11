@@ -13,22 +13,23 @@ public class Player : MonoBehaviour
 
 	void TryMove(MapDirection _direction)
 	{
-		GameManager.master.CurrentLevel.TimeStamp();
 		Vector2Int newPosition = Map.CoordAfterMovement(Position, _direction);
 
 		if (GameManager.master.CurrentLevel.GetBox(newPosition))
 		{
 			if (GameManager.master.CurrentLevel.PushBox(newPosition, _direction))
 			{
+				GameManager.master.CurrentLevel.TimeStep();
 				Position = newPosition;
 				SetPosition(true);
 			}
 			return;
 		}
 
-		if (GameManager.master.CurrentLevel.Map.CoordIsBlocked(newPosition)) return;
+		if (GameManager.master.Map.CoordIsBlocked(newPosition)) return;
+		GameManager.master.CurrentLevel.TimeStep();
 		Position = newPosition;
-		SetPosition();
+		SetPosition(true);
 	}
 
 	// Update is called once per frame
@@ -49,8 +50,8 @@ public class Player : MonoBehaviour
 
 		if (Keyboard.current.spaceKey.wasPressedThisFrame)
 		{
-			GameManager.master.CurrentLevel.TimeStamp();
-			GameManager.master.CurrentLevel.GenerateWave(Position);
+			GameManager.master.CurrentLevel.TimeStep();
+			GameManager.master.CurrentLevel.GenerateNewWave(Position);
 		}
 
 		if (Keyboard.current.fKey.wasPressedThisFrame)
@@ -62,6 +63,6 @@ public class Player : MonoBehaviour
 	void SetPosition(bool _forceRefresh = false)
 	{
 		transform.position = Map.CoordToWorldPoint(Position);
-		if(_forceRefresh) GameManager.master.CurrentLevel.RefreshGrid();
+		if(_forceRefresh) GameManager.master.CurrentLevel.Refresh();
 	}
 }

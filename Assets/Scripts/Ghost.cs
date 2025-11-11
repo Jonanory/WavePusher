@@ -12,13 +12,13 @@ public class Ghost
 		Position = _position;
 	}
 
-	public void TimeStamp()
+	public void TimeStep()
 	{
 		currentSteps--;
 		if(currentSteps == 0)
 		{
 			currentSteps = STEPS_BETWEEN_WAVES;
-			GameManager.master.CurrentLevel.GenerateWave(Position);
+			GameManager.master.CurrentLevel.GenerateNewWave(Position);
 		}
 	}
 }
