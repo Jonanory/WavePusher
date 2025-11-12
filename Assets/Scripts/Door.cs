@@ -1,24 +1,16 @@
 using UnityEngine;
 
-public class Door: MonoBehaviour, IActivatable, IBlockable
+public class Door: IActivatable, IBlockable
 {
 	public bool Open = false;
 	public Vector2Int Position;
+	public Vector2Int TriggerPosition;
 
-	public Receiver Opener;
-	public Button Pusher;
 
-	bool _Blocking;
-	public bool IsBlocking{
-		get { return _Blocking; }
-	}
-
-	public void Start()
+	bool _Blocking = true;
+	public bool IsBlocking
 	{
-		GameManager.master.CurrentLevel.Doors.Add(this);
-		Deactivate();
-		if(Opener != null) Opener.Activatables.Add(this);
-		if(Pusher != null) Pusher.Activatables.Add(this);
+		get { return _Blocking; }
 	}
 
 	public void Activate()

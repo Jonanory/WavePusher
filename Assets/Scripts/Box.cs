@@ -1,13 +1,8 @@
 using UnityEngine;
 
-public class Box : MonoBehaviour
+public class Box
 {
 	public Vector2Int Position;
-
-	public void Start()
-	{
-		GameManager.master.CurrentLevel.Boxes.Add(Position, this);
-	}
 
 	public bool CanPush(MapDirection _direction)
 	{

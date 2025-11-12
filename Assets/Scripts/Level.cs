@@ -22,6 +22,17 @@ public class Level : MonoBehaviour
 	public Dictionary<Vector2Int, IBlockable> Blockables =
 		new Dictionary<Vector2Int, IBlockable>();
 
+	public void ClearAll()
+	{
+		ElementsMap.ClearAllTiles();
+		Waves = new List<Wave>();
+		Ghosts = new Dictionary<Vector2Int, Ghost>();
+		Boxes = new Dictionary<Vector2Int, Box>();
+		Doors = new List<Door>();
+		Scores = new Dictionary<Vector2Int, int>();
+		Blockables = new Dictionary<Vector2Int, IBlockable>();
+	}
+
 	public void TimeStep()
 	{
 		Scores = new Dictionary<Vector2Int, int>();
@@ -48,7 +59,7 @@ public class Level : MonoBehaviour
 			ghost.TimeStep();
 		}
 
-		foreach (Button button in GameManager.master.Map.Buttons)
+		foreach (Button button in GameManager.master.Map.Buttons.Values)
 		{
 			button.CheckCondition();
 		}
@@ -57,7 +68,7 @@ public class Level : MonoBehaviour
 		 * trigger the receivers */
 		RecalculateScores();
 
-		foreach (Receiver reciever in GameManager.master.Map.Receivers)
+		foreach (Receiver reciever in GameManager.master.Map.Receivers.Values)
 		{
 			reciever.TimeStep();
 		}

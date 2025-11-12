@@ -2,16 +2,11 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class Button : MonoBehaviour
+public class Button
 {
 	public Vector2Int Position;
 	public bool IsActivated = false;
 	public List<IActivatable> Activatables = new List<IActivatable>();
-
-	void Start()
-	{
-		GameManager.master.Map.Buttons.Add(this);
-	}
 
 	public void CheckCondition()
 	{

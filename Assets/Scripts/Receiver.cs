@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class Receiver : MonoBehaviour
+public class Receiver
 {
 	public int ScoreNeeded = 4;
 	public Vector2Int Position;

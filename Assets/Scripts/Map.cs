@@ -15,6 +15,7 @@ public enum MapDirection
 
 public enum MapLayer
 {
+	HOLE = -1,
 	FLOOR = 0,
 	EXTRA = 1,
 	WALL = 2
@@ -24,11 +25,9 @@ public class Map : MonoBehaviour
 {
 	public static float Scale = 0.5f;
 	public Tilemap AreaMap;
-	public Tilemap ElementMap;
-	public List<Wave> Waves = new List<Wave>();
 	public List<Emitter> Emitters = new List<Emitter>();
-	public List<Receiver> Receivers = new List<Receiver>();
-	public List<Button> Buttons = new List<Button>();
+	public Dictionary<Vector2Int, Receiver> Receivers = new Dictionary<Vector2Int, Receiver>();
+	public Dictionary<Vector2Int, Button> Buttons = new Dictionary<Vector2Int, Button>();
 
 	public Dictionary<Vector2Int, IBlockable> Blockables = new Dictionary<Vector2Int, IBlockable>();
 
@@ -37,15 +36,26 @@ public class Map : MonoBehaviour
 		Display();
 	}
 
+	public void ClearAll()
+	{
+		AreaMap.ClearAllTiles();
+		Emitters = new List<Emitter>();
+		Receivers = new Dictionary<Vector2Int, Receiver>();
+		Buttons = new Dictionary<Vector2Int, Button>();
+		Blockables = new Dictionary<Vector2Int, IBlockable>();
+	}
+
 	public void Display()
 	{
-		foreach (Button button in Buttons)
+		foreach (Button button in Buttons.Values)
+		{
 			AreaMap.SetTile(
 				new Vector3Int(
 					button.Position.x,
 					button.Position.y,
 					(int)MapLayer.EXTRA),
-					TileManager.GetTile(CellType.BUTTON));
+				TileManager.GetTile(CellType.BUTTON));
+		}
 
 		foreach (Emitter emitter in Emitters)
 			AreaMap.SetTile(
@@ -53,15 +63,15 @@ public class Map : MonoBehaviour
 					emitter.Position.x,
 					emitter.Position.y,
 					(int)MapLayer.EXTRA),
-					TileManager.GetTile(CellType.EMITTER));
+				TileManager.GetTile(CellType.EMITTER));
 
-		foreach (Receiver receiver in Receivers)
+		foreach (Receiver receiver in Receivers.Values)
 			AreaMap.SetTile(
 				new Vector3Int(
 					receiver.Position.x,
 					receiver.Position.y,
 					(int)MapLayer.EXTRA),
-					TileManager.GetTile(CellType.RECEIVER));
+				TileManager.GetTile(CellType.RECEIVER));
 	}
 
 	public static MapDirection RotateClockwise(MapDirection _direction, int _numberOfSteps = 1)
@@ -98,7 +108,7 @@ public class Map : MonoBehaviour
 		}
 	}
 
-	static int Mod(int _value, int _base)
+	public static int Mod(int _value, int _base)
 	{
 		if (_value >= 0) return _value % _base;
 		int valueHold = _value;
@@ -108,7 +118,16 @@ public class Map : MonoBehaviour
 
 	public bool CoordIsBlocked(Vector2Int _coord)
 	{
-		if (AreaMap.HasTile((Vector3Int)_coord)) return true;
+		if (AreaMap.HasTile(
+			new Vector3Int(
+				_coord.x,
+				_coord.y,
+				(int)MapLayer.WALL))) return true;
+		if (AreaMap.HasTile(
+			new Vector3Int(
+				_coord.x,
+				_coord.y,
+				(int)MapLayer.HOLE))) return true;
 		if (GameManager.master.CurrentLevel.Boxes.ContainsKey(_coord)) return true;
 		foreach (Door door in GameManager.master.CurrentLevel.Doors)
 			if (!door.Open && door.Position == _coord) return true;
@@ -123,7 +142,6 @@ public class Map : MonoBehaviour
 				_coord.x,
 				_coord.y,
 				(int)MapLayer.WALL))) return false;
-		if (AreaMap.HasTile((Vector3Int)_coord)) return false;
 		return true;
 	}
 

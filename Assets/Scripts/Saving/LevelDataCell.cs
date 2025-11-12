@@ -1,6 +1,21 @@
 using UnityEngine;
 
-public enum CellType {PLAYER, WALL, FLOOR, RECEIVER, BUTTON, BOX, EMITTER, DOOR, WAVE, HOLE, GHOST}
+public enum CellType
+{
+	PLAYER = 0,
+	WALL,
+	FLOOR,
+	FLOOR_B,
+	RECEIVER,
+	BUTTON,
+	BOX,
+	EMITTER,
+	DOOR,
+	WAVE,
+	HOLE,
+	GHOST
+}
+[System.Serializable]
 public struct LevelDataCell
 {
 	public CellType Type;

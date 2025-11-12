@@ -1,19 +1,10 @@
 using UnityEngine;
 
-public class Emitter : MonoBehaviour, IActivatable
+public class Emitter : IActivatable
 {
 	public Vector2Int Position;
+	public Vector2Int TriggerPosition;
 	public int Strength;
-	public Receiver Trigger;
-	public Button Pusher;
-
-	public void Start()
-	{
-		GameManager.master.Map.Emitters.Add(this);
-		Deactivate();
-		Trigger.Activatables.Add(this);
-		if(Pusher != null) Pusher.Activatables.Add(this);
-	}
 
 	public void Activate()
 	{

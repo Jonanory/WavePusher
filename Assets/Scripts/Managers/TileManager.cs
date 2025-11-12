@@ -18,11 +18,14 @@ public class TileManager : MonoBehaviour
 	[SerializeField]
 	Tile FloorTile;
 	[SerializeField]
-	Tile WallTile;
+	Tile FloorTileB;
+	[SerializeField]
+	public HexagonalRuleTile  WallTile;
 	[SerializeField]
 	Tile HoleTile;
-	
+
 	[Header("Activators")]
+	[SerializeField]
 	Tile ButtonTile;
 	[SerializeField]
 	Tile ReceiverTile;
@@ -52,10 +55,10 @@ public class TileManager : MonoBehaviour
 
 			case CellType.HOLE:
 				return master.HoleTile;
-			case CellType.WALL:
-				return master.WallTile;
 			case CellType.FLOOR:
 				return master.FloorTile;
+			case CellType.FLOOR_B:
+				return master.FloorTileB;
 
 			case CellType.RECEIVER:
 				return master.ReceiverTile;
