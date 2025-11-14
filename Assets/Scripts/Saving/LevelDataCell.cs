@@ -37,3 +37,9 @@ public struct LevelDataCell
 		else Data = 0;
 	}
 }
+
+[System.Serializable]
+public struct LevelDataLink {
+	public LevelDataCell input;
+	public LevelDataCell output;
+}

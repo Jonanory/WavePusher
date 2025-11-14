@@ -25,7 +25,7 @@ public class Map : MonoBehaviour
 {
 	public static float Scale = 0.5f;
 	public Tilemap AreaMap;
-	public List<Emitter> Emitters = new List<Emitter>();
+	public Dictionary<Vector2Int, Emitter> Emitters = new Dictionary<Vector2Int, Emitter>();
 	public Dictionary<Vector2Int, Receiver> Receivers = new Dictionary<Vector2Int, Receiver>();
 	public Dictionary<Vector2Int, Button> Buttons = new Dictionary<Vector2Int, Button>();
 
@@ -39,7 +39,7 @@ public class Map : MonoBehaviour
 	public void ClearAll()
 	{
 		AreaMap.ClearAllTiles();
-		Emitters = new List<Emitter>();
+		Emitters = new Dictionary<Vector2Int, Emitter>();
 		Receivers = new Dictionary<Vector2Int, Receiver>();
 		Buttons = new Dictionary<Vector2Int, Button>();
 		Blockables = new Dictionary<Vector2Int, IBlockable>();
@@ -57,7 +57,7 @@ public class Map : MonoBehaviour
 				TileManager.GetTile(CellType.BUTTON));
 		}
 
-		foreach (Emitter emitter in Emitters)
+		foreach (Emitter emitter in Emitters.Values)
 			AreaMap.SetTile(
 				new Vector3Int(
 					emitter.Position.x,
@@ -129,7 +129,7 @@ public class Map : MonoBehaviour
 				_coord.y,
 				(int)MapLayer.HOLE))) return true;
 		if (GameManager.master.CurrentLevel.Boxes.ContainsKey(_coord)) return true;
-		foreach (Door door in GameManager.master.CurrentLevel.Doors)
+		foreach (Door door in GameManager.master.CurrentLevel.Doors.Values)
 			if (!door.Open && door.Position == _coord) return true;
 		if (Blockables.ContainsKey(_coord)) return Blockables[_coord].IsBlocking;
 		return false;

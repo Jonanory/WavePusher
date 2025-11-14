@@ -150,10 +150,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LevelAuthoring
   levelAsset: {fileID: 11400000, guid: 3dc3635cd44a9934e8e91e34b88f30a6, type: 2}
   draft:
-  - Type: 4
-    Position: {x: 1, y: 4}
-    SecondaryPosition: {x: 0, y: 0}
-    Data: 0
   - Type: 0
     Position: {x: 0, y: 0}
     SecondaryPosition: {x: 0, y: 0}
@@ -162,12 +158,42 @@ MonoBehaviour:
     Position: {x: -1, y: -2}
     SecondaryPosition: {x: 0, y: 0}
     Data: 0
+  - Type: 7
+    Position: {x: 3, y: 0}
+    SecondaryPosition: {x: 0, y: 0}
+    Data: 0
+  - Type: 8
+    Position: {x: 3, y: 1}
+    SecondaryPosition: {x: 0, y: 0}
+    Data: 0
+  - Type: 8
+    Position: {x: 4, y: 0}
+    SecondaryPosition: {x: 0, y: 0}
+    Data: 0
+  - Type: 8
+    Position: {x: 3, y: -1}
+    SecondaryPosition: {x: 0, y: 0}
+    Data: 0
+  - Type: 8
+    Position: {x: 2, y: -1}
+    SecondaryPosition: {x: 0, y: 0}
+    Data: 0
+  - Type: 8
+    Position: {x: 2, y: 0}
+    SecondaryPosition: {x: 0, y: 0}
+    Data: 0
+  - Type: 5
+    Position: {x: 1, y: 4}
+    SecondaryPosition: {x: 0, y: 0}
+    Data: 0
+  - Type: 5
+    Position: {x: 0, y: -4}
+    SecondaryPosition: {x: 0, y: 0}
+    Data: 0
   floors:
   - {x: -2, y: -1}
   - {x: -1, y: -2}
   - {x: 0, y: -2}
-  - {x: 2, y: -2}
-  - {x: 1, y: -1}
   - {x: 2, y: 0}
   - {x: -1, y: 0}
   - {x: -2, y: 0}
@@ -186,8 +212,6 @@ MonoBehaviour:
   - {x: -3, y: -1}
   - {x: -2, y: -3}
   - {x: -1, y: -3}
-  - {x: 0, y: -3}
-  - {x: 1, y: -3}
   - {x: 2, y: -1}
   - {x: 3, y: 0}
   - {x: 2, y: 4}
@@ -202,21 +226,16 @@ MonoBehaviour:
   - {x: -4, y: 2}
   - {x: -4, y: 0}
   - {x: -3, y: -2}
-  - {x: -3, y: -3}
   - {x: -2, y: -4}
   - {x: -1, y: -4}
-  - {x: 1, y: -4}
   - {x: 0, y: -4}
   - {x: 1, y: 0}
   - {x: -1, y: -1}
   - {x: 0, y: 0}
   - {x: 0, y: 1}
   - {x: 0, y: -1}
-  - {x: 1, y: -2}
   - {x: 3, y: -1}
   - {x: 3, y: -2}
-  - {x: 2, y: -3}
-  - {x: 2, y: -4}
   - {x: 1, y: -6}
   - {x: 1, y: -5}
   - {x: 0, y: -5}
@@ -255,6 +274,7 @@ MonoBehaviour:
   - {x: 4, y: 3}
   - {x: 4, y: 1}
   - {x: 4, y: 4}
+  - {x: -3, y: -3}
   walls:
   - {x: 2, y: 6}
   - {x: 1, y: 6}
@@ -276,28 +296,16 @@ MonoBehaviour:
   - {x: -7, y: -1}
   - {x: -7, y: 1}
   - {x: -6, y: 2}
-  - {x: -7, y: 3}
-  - {x: -6, y: 4}
   - {x: -5, y: 4}
   - {x: -6, y: 3}
-  - {x: -6, y: 5}
   - {x: -5, y: 5}
-  - {x: -5, y: 6}
   - {x: -4, y: 6}
-  - {x: -5, y: 7}
   - {x: -4, y: 7}
   - {x: -2, y: 7}
   - {x: 0, y: 7}
   - {x: -1, y: 7}
   - {x: -3, y: 7}
-  - {x: -3, y: 8}
-  - {x: -4, y: 8}
-  - {x: -2, y: 8}
-  - {x: -1, y: 8}
-  - {x: 0, y: 8}
-  - {x: 2, y: 8}
   - {x: 1, y: 7}
-  - {x: 1, y: 8}
   - {x: 2, y: 7}
   - {x: 3, y: 6}
   - {x: 6, y: 2}
@@ -327,87 +335,41 @@ MonoBehaviour:
   - {x: -1, y: -8}
   - {x: -3, y: -8}
   - {x: -2, y: -8}
-  - {x: -4, y: -8}
-  - {x: -5, y: -6}
-  - {x: -6, y: -5}
-  - {x: -5, y: -7}
-  - {x: -5, y: -8}
-  - {x: -6, y: -7}
-  - {x: -6, y: -6}
-  - {x: -6, y: -8}
-  - {x: -7, y: -7}
-  - {x: -7, y: -5}
   - {x: -6, y: -4}
   - {x: -7, y: -3}
-  - {x: -6, y: 8}
-  - {x: -5, y: 8}
-  - {x: -6, y: 7}
-  - {x: -7, y: 7}
-  - {x: -6, y: 6}
-  - {x: -7, y: 5}
   - {x: 6, y: 4}
   - {x: 5, y: 5}
   - {x: 5, y: 6}
   - {x: 4, y: 7}
-  - {x: 4, y: 8}
-  - {x: 3, y: 8}
-  - {x: 3, y: 9}
-  - {x: 2, y: 9}
-  - {x: 1, y: 9}
-  - {x: -1, y: 9}
-  - {x: 0, y: 9}
-  - {x: -2, y: 9}
-  - {x: -3, y: 9}
-  - {x: -4, y: 9}
-  - {x: -6, y: 9}
-  - {x: -5, y: 9}
-  - {x: 4, y: 9}
-  - {x: 5, y: 8}
-  - {x: 5, y: 7}
-  - {x: 6, y: 6}
-  - {x: 6, y: 5}
-  - {x: 6, y: 7}
-  - {x: 6, y: 8}
-  - {x: 5, y: 9}
   - {x: 6, y: 3}
   - {x: 6, y: 1}
   - {x: 6, y: -1}
   - {x: 6, y: -2}
-  - {x: 6, y: -4}
-  - {x: 6, y: -5}
-  - {x: 6, y: -6}
-  - {x: 6, y: -3}
-  - {x: 6, y: -7}
-  - {x: 6, y: -9}
-  - {x: 6, y: -8}
-  - {x: 4, y: -8}
   - {x: 3, y: -8}
-  - {x: 5, y: -7}
-  - {x: 4, y: -7}
-  - {x: 5, y: -8}
-  - {x: 3, y: -7}
-  - {x: 5, y: -6}
-  - {x: 4, y: -6}
-  - {x: 5, y: -5}
   - {x: 4, y: -5}
   - {x: 5, y: -4}
   - {x: 5, y: -3}
-  - {x: 5, y: -9}
-  - {x: 4, y: -9}
-  - {x: 3, y: -9}
+  - {x: 5, y: 2}
+  - {x: 3, y: -7}
+  - {x: 4, y: -6}
+  - {x: -3, y: -9}
+  - {x: -2, y: -9}
+  - {x: 0, y: -9}
   - {x: 2, y: -9}
   - {x: 1, y: -9}
-  - {x: 0, y: -9}
   - {x: -1, y: -9}
-  - {x: -2, y: -9}
-  - {x: -3, y: -9}
-  - {x: -4, y: -9}
-  - {x: -5, y: -9}
-  - {x: -6, y: -9}
-  - {x: -7, y: -9}
-  - {x: -7, y: 9}
-  - {x: 6, y: 9}
-  - {x: 5, y: 2}
+  - {x: -5, y: -7}
+  - {x: -5, y: -6}
+  - {x: -6, y: -5}
+  - {x: -7, y: -2}
+  - {x: 1, y: -1}
+  - {x: 1, y: -2}
+  - {x: 2, y: -2}
+  - {x: 1, y: -3}
+  - {x: 2, y: -4}
+  - {x: 2, y: -3}
+  - {x: 1, y: -4}
+  - {x: 0, y: -3}
   holes:
   - {x: 2, y: 1}
   - {x: 3, y: 2}
@@ -422,8 +384,27 @@ MonoBehaviour:
   - {x: -1, y: 2}
   - {x: -2, y: 3}
   - {x: -2, y: 2}
+  links:
+  - input:
+      Type: 5
+      Position: {x: 1, y: 4}
+      SecondaryPosition: {x: 0, y: 0}
+      Data: 0
+    output:
+      Type: 7
+      Position: {x: 3, y: 0}
+      SecondaryPosition: {x: 0, y: 0}
+      Data: 0
+  colorOptions:
+  - {r: 1, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0.84313726, b: 1, a: 0}
+  - {r: 0.0739179, g: 0.6981132, b: 0, a: 0}
+  - {r: 0.98263013, g: 1, b: 0.3254717, a: 0}
+  - {r: 1, g: 0, b: 0.86201715, a: 0}
+  - {r: 0.053014755, g: 0, b: 1, a: 0}
+  - {r: 0.24528301, g: 0.24528301, b: 0.24528301, a: 0}
   hexSize: 0.5
-  drawingState: 1
+  drawingState: 5
 --- !u!4 &27472662
 Transform:
   m_ObjectHideFlags: 0
@@ -1001,7 +982,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.4745098, g: 0.19215688, b: 0.19721921, a: 0}
+  m_BackGroundColor: {r: 0.084905684, g: 0.084905684, b: 0.084905684, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0

@@ -52,49 +52,57 @@ public class LevelLoader : MonoBehaviour
 					newEmitter.Position = cell.Position;
 					newEmitter.TriggerPosition = cell.SecondaryPosition;
 					newEmitter.Strength = cell.Data;
-					GameManager.master.Map.Emitters.Add(newEmitter);
+					GameManager.master.Map.Emitters.Add(cell.Position, newEmitter);
 					break;
 
 				case CellType.DOOR:
 					Door newDoor = new Door();
 					newDoor.Position = cell.Position;
-					GameManager.master.CurrentLevel.Doors.Add(newDoor);
+					GameManager.master.CurrentLevel.Doors.Add(cell.Position, newDoor);
 					break;
 			}
 		}
 
+		Door door;
+		Emitter emitter;
+		Receiver receiver;
+		Button button;
 		/* Set the activatables of buttons and receivers */
-		foreach (Door door in GameManager.master.CurrentLevel.Doors)
+		foreach(LevelDataLink link in _levelData.Links)
 		{
-			if (GameManager.master.Map.Buttons.ContainsKey(door.TriggerPosition))
+			switch(link.input.Type)
 			{
-				GameManager.master.Map.Buttons[door.TriggerPosition].Activatables.Add(door);
-			}
-			else if (GameManager.master.Map.Receivers.ContainsKey(door.TriggerPosition))
-			{
-				GameManager.master.Map.Receivers[door.TriggerPosition].Activatables.Add(door);
-			}
-			else
-			{
-				Debug.LogError("Door failed to find trigger object");
+				case CellType.DOOR:
+					door = GameManager.master.CurrentLevel.Doors[link.input.Position];
+					switch(link.output.Type)
+					{
+						case CellType.RECEIVER:
+							receiver = GameManager.master.Map.Receivers[link.input.Position];
+							receiver.Activatables.Add(door);
+							break;
+						case CellType.BUTTON:
+							button = GameManager.master.Map.Buttons[link.input.Position];
+							button.Activatables.Add(door);
+							break;
+					}
+					break;
+				case CellType.EMITTER:
+					emitter = GameManager.master.Map.Emitters[link.input.Position];
+					switch(link.output.Type)
+					{
+						case CellType.RECEIVER:
+							receiver = GameManager.master.Map.Receivers[link.input.Position];
+							receiver.Activatables.Add(emitter);
+							break;
+						case CellType.BUTTON:
+							button = GameManager.master.Map.Buttons[link.input.Position];
+							button.Activatables.Add(emitter);
+							break;
+					}
+					break;
 			}
 		}
 
-		foreach (Emitter emitter in GameManager.master.Map.Emitters)
-		{
-			if (GameManager.master.Map.Buttons.ContainsKey(emitter.TriggerPosition))
-			{
-				GameManager.master.Map.Buttons[emitter.TriggerPosition].Activatables.Add(emitter);
-			}
-			else if (GameManager.master.Map.Receivers.ContainsKey(emitter.TriggerPosition))
-			{
-				GameManager.master.Map.Receivers[emitter.TriggerPosition].Activatables.Add(emitter);
-			}
-			else
-			{
-				Debug.LogError("Door failed to find trigger object");
-			}
-		}
 		GameManager.master.CurrentLevel.Refresh();
 		GameManager.master.Map.Display();
 	}

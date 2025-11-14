@@ -10,11 +10,15 @@ public class Button
 
 	public void CheckCondition()
 	{
+		Debug.Log("---------------------------");
+		Debug.Log(GameManager.master.Player.Position);
+		Debug.Log(Position);
 		if (!IsActivated && (GameManager.master.Player.Position == Position || GameManager.master.CurrentLevel.Boxes.ContainsKey(Position)))
 		{
 			IsActivated = true;
 			foreach (IActivatable activatable in Activatables)
 			{
+				Debug.Log("a");
 				activatable.Activate();
 			}
 		}

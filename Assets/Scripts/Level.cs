@@ -16,7 +16,7 @@ public class Level : MonoBehaviour
 	public List<Wave> Waves = new List<Wave>();
 	public Dictionary<Vector2Int, Ghost> Ghosts = new Dictionary<Vector2Int, Ghost>();
 	public Dictionary<Vector2Int, Box> Boxes = new Dictionary<Vector2Int, Box>();
-	public List<Door> Doors = new List<Door>();
+	public Dictionary<Vector2Int, Door> Doors = new Dictionary<Vector2Int, Door>();
 	public Dictionary<Vector2Int, int> Scores = new Dictionary<Vector2Int, int>();
 	public Tilemap ElementsMap;
 	public Dictionary<Vector2Int, IBlockable> Blockables =
@@ -28,7 +28,7 @@ public class Level : MonoBehaviour
 		Waves = new List<Wave>();
 		Ghosts = new Dictionary<Vector2Int, Ghost>();
 		Boxes = new Dictionary<Vector2Int, Box>();
-		Doors = new List<Door>();
+		Doors = new Dictionary<Vector2Int, Door>();
 		Scores = new Dictionary<Vector2Int, int>();
 		Blockables = new Dictionary<Vector2Int, IBlockable>();
 	}
@@ -74,7 +74,7 @@ public class Level : MonoBehaviour
 		}
 
 		/* Make closed doors block waves */
-		foreach (Door door in Doors)
+		foreach (Door door in Doors.Values)
 		{
 			if (door.Open) continue;
 			foreach (Wave wave in Waves)
@@ -160,7 +160,7 @@ public class Level : MonoBehaviour
 				new Color(0f, 0f, 0.6f));
 		}
 
-		foreach(Door door in Doors)
+		foreach(Door door in Doors.Values)
 		{
 			if(door.Open) continue;
 

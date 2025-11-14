@@ -25,6 +25,10 @@ public class LevelEditor : MonoBehaviour {
 	[HideInInspector] public List<Vector2Int> floors = new();
 	[HideInInspector] public List<Vector2Int> walls = new();
 	[HideInInspector] public List<Vector2Int> holes = new();
+	[HideInInspector] public List<LevelDataLink> links = new();
+
+	public List<Color> colorOptions;
+	Dictionary<Vector2Int, int> ActivatorColors = new Dictionary<Vector2Int, int>();
 
 	public float hexSize = .5f;
 	public DrawingState drawingState;
@@ -51,6 +55,7 @@ public class LevelEditor : MonoBehaviour {
 		floors = levelAsset ? new List<Vector2Int>(levelAsset.Floors) : new List<Vector2Int>();
 		walls = levelAsset ? new List<Vector2Int>(levelAsset.Walls) : new List<Vector2Int>();
 		holes = levelAsset ? new List<Vector2Int>(levelAsset.Holes) : new List<Vector2Int>();
+		links = levelAsset ? new List<LevelDataLink>(levelAsset.Links) : new List<LevelDataLink>();
 		SceneView.RepaintAll();
 	}
 
@@ -61,11 +66,47 @@ public class LevelEditor : MonoBehaviour {
 		levelAsset.Floors = new List<Vector2Int>(floors);
 		levelAsset.Walls = new List<Vector2Int>(walls);
 		levelAsset.Holes = new List<Vector2Int>(holes);
+		levelAsset.Links = new List<LevelDataLink>(links);
 		EditorUtility.SetDirty(levelAsset);
 		AssetDatabase.SaveAssets();
 	}
 
+	public void RemoveCellAtId(int idx)
+	{
+		LevelDataCell cell = draft[idx];
+		List<LevelDataLink> newLinks = new List<LevelDataLink>();
+		if(cell.Type != CellType.BUTTON && 
+				cell.Type != CellType.RECEIVER && 
+				cell.Type != CellType.EMITTER && 
+				cell.Type != CellType.DOOR)
+		{
+			draft.RemoveAt(idx);
+			return;
+		}
+		foreach(LevelDataLink link in links)
+		{
+			if(!link.input.Equals(cell) && !link.output.Equals(cell))
+				newLinks.Add(link);
+		}
+		links = newLinks;
+	}
+
+	public void AddLink(LevelDataLink _newLink)
+	{
+		for(int i=0; i<links.Count;i++)
+		{
+			if(links[i].output.Equals(_newLink.output))
+			{
+				links[i]=_newLink;
+				return;
+			}
+		}
+		links.Add(_newLink);
+	}
+
 	void OnDrawGizmos() {
+		ActivatorColors = new Dictionary<Vector2Int, int>();
+		int activatorColorIndex = 0;
 		if (draft == null) return;
 		foreach (var c in draft) {
 			var pos = AxialToWorld(c.Position.x, c.Position.y);
@@ -76,6 +117,9 @@ public class LevelEditor : MonoBehaviour {
 					icon = "Player.tiff";
 					break;
 				case CellType.RECEIVER:
+					ActivatorColors.Add(
+						c.Position,
+						activatorColorIndex++);
 					icon = "Receiver.tif";
 					break;
 				case CellType.DOOR:
@@ -85,6 +129,9 @@ public class LevelEditor : MonoBehaviour {
 					icon = "Emitter.tif";
 					break;
 				case CellType.BUTTON:
+					ActivatorColors.Add(
+						c.Position,
+						activatorColorIndex++);
 					icon = "Button.tif";
 					break;
 				case CellType.BOX:
@@ -110,6 +157,23 @@ public class LevelEditor : MonoBehaviour {
 			var pos = AxialToWorld(c.x, c.y);
 			pos.z = 2;
 			Gizmos.DrawIcon(pos, "Hole.tif");
+		}
+
+		foreach (var c in links) {
+			var posInput = AxialToWorld(
+				c.input.Position.x,
+				c.input.Position.y);
+			var posOutput = AxialToWorld(
+				c.output.Position.x,
+				c.output.Position.y);
+			Gizmos.DrawIcon(
+				new Vector3(posInput.x, posInput.y, posInput.z),
+				"Connector.tiff",true,
+				colorOptions[ActivatorColors[c.input.Position]]);
+			Gizmos.DrawIcon(
+				new Vector3(posOutput.x, posOutput.y, posOutput.z),
+				"Connector.tiff",true,
+				colorOptions[ActivatorColors[c.input.Position]]);
 		}
 	}
 #endif

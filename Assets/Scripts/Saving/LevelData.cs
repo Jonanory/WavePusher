@@ -7,6 +7,7 @@ using System.Collections.Generic;
 public class LevelData : ScriptableObject
 {
 	public List<LevelDataCell> Cells;
+	public List<LevelDataLink> Links;
 	public List<Vector2Int> Floors;
 	public List<Vector2Int> Holes;
 	public List<Vector2Int> Walls;
