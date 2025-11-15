@@ -4,7 +4,6 @@ public class Door: IActivatable, IBlockable
 {
 	public bool Open = false;
 	public Vector2Int Position;
-	public Vector2Int TriggerPosition;
 
 
 	bool _Blocking = true;

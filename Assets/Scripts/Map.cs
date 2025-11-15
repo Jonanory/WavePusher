@@ -18,17 +18,18 @@ public enum MapLayer
 	HOLE = -1,
 	FLOOR = 0,
 	EXTRA = 1,
-	WALL = 2
+	WALL = 2,
+	EXIT = 3
 }
 
 public class Map : MonoBehaviour
 {
 	public static float Scale = 0.5f;
 	public Tilemap AreaMap;
+	public Vector2Int Exit;
 	public Dictionary<Vector2Int, Emitter> Emitters = new Dictionary<Vector2Int, Emitter>();
 	public Dictionary<Vector2Int, Receiver> Receivers = new Dictionary<Vector2Int, Receiver>();
 	public Dictionary<Vector2Int, Button> Buttons = new Dictionary<Vector2Int, Button>();
-
 	public Dictionary<Vector2Int, IBlockable> Blockables = new Dictionary<Vector2Int, IBlockable>();
 
 	void Start()
@@ -72,6 +73,13 @@ public class Map : MonoBehaviour
 					receiver.Position.y,
 					(int)MapLayer.EXTRA),
 				TileManager.GetTile(CellType.RECEIVER));
+		
+		AreaMap.SetTile(
+			new Vector3Int(
+				Exit.x,
+				Exit.y,
+				(int)MapLayer.EXIT),
+			TileManager.GetTile(CellType.EXIT));
 	}
 
 	public static MapDirection RotateClockwise(MapDirection _direction, int _numberOfSteps = 1)
@@ -128,6 +136,10 @@ public class Map : MonoBehaviour
 				_coord.x,
 				_coord.y,
 				(int)MapLayer.HOLE))) return true;
+		foreach (Emitter emitter in Emitters.Values)
+			if (emitter.Position == _coord) return true;
+		foreach (Receiver receiver in Receivers.Values)
+			if (receiver.Position == _coord) return true;
 		if (GameManager.master.CurrentLevel.Boxes.ContainsKey(_coord)) return true;
 		foreach (Door door in GameManager.master.CurrentLevel.Doors.Values)
 			if (!door.Open && door.Position == _coord) return true;

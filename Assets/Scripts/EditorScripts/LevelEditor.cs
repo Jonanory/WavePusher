@@ -15,7 +15,8 @@ public enum DrawingState
 	BOX = 6,
 	EMITTER = 7,
 	DOOR = 8,
-	HOLE = 10
+	HOLE = 10,
+	EXIT = 12
 }
 [ExecuteInEditMode]
 public class LevelEditor : MonoBehaviour {
@@ -25,12 +26,14 @@ public class LevelEditor : MonoBehaviour {
 	[HideInInspector] public List<Vector2Int> floors = new();
 	[HideInInspector] public List<Vector2Int> walls = new();
 	[HideInInspector] public List<Vector2Int> holes = new();
+	[HideInInspector] public Vector2Int exit = new Vector2Int(0,0);
 	[HideInInspector] public List<LevelDataLink> links = new();
 
 	public List<Color> colorOptions;
 	Dictionary<Vector2Int, int> ActivatorColors = new Dictionary<Vector2Int, int>();
 
 	public float hexSize = .5f;
+	public int Data = 0;
 	public DrawingState drawingState;
 	Vector3 AxialToWorld(int q, int r)
 	{
@@ -56,6 +59,7 @@ public class LevelEditor : MonoBehaviour {
 		walls = levelAsset ? new List<Vector2Int>(levelAsset.Walls) : new List<Vector2Int>();
 		holes = levelAsset ? new List<Vector2Int>(levelAsset.Holes) : new List<Vector2Int>();
 		links = levelAsset ? new List<LevelDataLink>(levelAsset.Links) : new List<LevelDataLink>();
+		exit = levelAsset ? levelAsset.Exit : new Vector2Int(0,0);
 		SceneView.RepaintAll();
 	}
 
@@ -64,9 +68,13 @@ public class LevelEditor : MonoBehaviour {
 		Undo.RecordObject(levelAsset, "Bake Level");
 		levelAsset.Cells = new List<LevelDataCell>(draft);
 		levelAsset.Floors = new List<Vector2Int>(floors);
+		if(levelAsset.Floors.Contains(exit)) levelAsset.Floors.Remove(exit);
 		levelAsset.Walls = new List<Vector2Int>(walls);
+		if(levelAsset.Walls.Contains(exit)) levelAsset.Walls.Remove(exit);
 		levelAsset.Holes = new List<Vector2Int>(holes);
+		if(levelAsset.Holes.Contains(exit)) levelAsset.Holes.Remove(exit);
 		levelAsset.Links = new List<LevelDataLink>(links);
+		levelAsset.Exit = exit;
 		EditorUtility.SetDirty(levelAsset);
 		AssetDatabase.SaveAssets();
 	}
@@ -89,6 +97,7 @@ public class LevelEditor : MonoBehaviour {
 				newLinks.Add(link);
 		}
 		links = newLinks;
+		draft.RemoveAt(idx);
 	}
 
 	public void AddLink(LevelDataLink _newLink)
@@ -142,22 +151,29 @@ public class LevelEditor : MonoBehaviour {
 		}
 
 		foreach (var c in floors) {
+			if(c.x == exit.x && c.y == exit.y) continue;
 			var pos = AxialToWorld(c.x, c.y);
 			pos.z = 2;
 			Gizmos.DrawIcon(pos, "Floor.tiff");
 		}
 
 		foreach (var c in walls) {
+			// if(c.x == exit.x && c.y == exit.y) continue;
 			var pos = AxialToWorld(c.x, c.y);
 			pos.z = 2;
 			Gizmos.DrawIcon(pos, "Wall.tif");
 		}
 
 		foreach (var c in holes) {
+			if(c.x == exit.x && c.y == exit.y) continue;
 			var pos = AxialToWorld(c.x, c.y);
 			pos.z = 2;
 			Gizmos.DrawIcon(pos, "Hole.tif");
 		}
+
+		var exitPos = AxialToWorld(exit.x, exit.y);
+		exitPos.z = 2;
+		Gizmos.DrawIcon(exitPos, "Exit.tiff");
 
 		foreach (var c in links) {
 			var posInput = AxialToWorld(

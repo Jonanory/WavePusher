@@ -13,7 +13,8 @@ public enum CellType
 	DOOR,
 	WAVE,
 	HOLE,
-	GHOST
+	GHOST,
+	EXIT
 }
 [System.Serializable]
 public struct LevelDataCell

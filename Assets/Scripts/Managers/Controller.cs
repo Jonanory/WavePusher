@@ -28,5 +28,15 @@ public class Controller : MonoBehaviour
 		{
 			GameManager.master.CurrentLevel.ToggleGhost(GameManager.master.Player.Position);
 		}
+
+		if (Keyboard.current.rKey.wasPressedThisFrame)
+		{
+			GameManager.master.LoadLevel();
+		}
+
+		if(Keyboard.current.escapeKey.wasPressedThisFrame)
+		{
+			GameManager.master.ShowLevelMenu();
+		}
 	}
 }

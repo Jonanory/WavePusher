@@ -8,26 +8,34 @@ public class Button
 	public bool IsActivated = false;
 	public List<IActivatable> Activatables = new List<IActivatable>();
 
-	public void CheckCondition()
+	public void CheckCondition(bool _ignorePlayer)
 	{
-		Debug.Log("---------------------------");
-		Debug.Log(GameManager.master.Player.Position);
-		Debug.Log(Position);
-		if (!IsActivated && (GameManager.master.Player.Position == Position || GameManager.master.CurrentLevel.Boxes.ContainsKey(Position)))
+		if (!IsActivated)
 		{
-			IsActivated = true;
-			foreach (IActivatable activatable in Activatables)
+			if(GameManager.master.CurrentLevel.Boxes.ContainsKey(Position))
+				IsActivated = true;
+			else if(!_ignorePlayer && GameManager.master.Player.Position == Position)
+				IsActivated = true;
+
+			if(IsActivated)
 			{
-				Debug.Log("a");
-				activatable.Activate();
+				foreach (IActivatable activatable in Activatables)
+				{
+					activatable.Activate();
+				}
 			}
 		}
 		else if (IsActivated && (GameManager.master.Player.Position != Position && !GameManager.master.CurrentLevel.Boxes.ContainsKey(Position)))
 		{
-			IsActivated = false;
-			foreach (IActivatable activatable in Activatables)
+			if(!GameManager.master.CurrentLevel.Boxes.ContainsKey(Position) && (_ignorePlayer || GameManager.master.Player.Position != Position))
+				IsActivated = false;
+
+			if(!IsActivated)
 			{
-				activatable.Deactivate();
+				foreach (IActivatable activatable in Activatables)
+				{
+					activatable.Deactivate();
+				}
 			}
 		}
 	}

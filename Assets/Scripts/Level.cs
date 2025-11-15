@@ -35,9 +35,11 @@ public class Level : MonoBehaviour
 
 	public void TimeStep()
 	{
-		Scores = new Dictionary<Vector2Int, int>();
+		foreach(Emitter emitter in GameManager.master.Map.Emitters.Values)
+		{
+			emitter.InitiateTimestep();
+		}
 
-		/* Wave Management */
 		List<Wave> CurrentWaves = new List<Wave>();
 		foreach (Wave wave in Waves)
 		{
@@ -61,11 +63,24 @@ public class Level : MonoBehaviour
 
 		foreach (Button button in GameManager.master.Map.Buttons.Values)
 		{
-			button.CheckCondition();
+			button.CheckCondition(true);
 		}
 
-		/* Do this before the recievers, as the current waves might 
-		 * trigger the receivers */
+		RecalculateScores();
+	}
+
+	public void CheckButtons()
+	{
+		foreach (Button button in GameManager.master.Map.Buttons.Values)
+		{
+			button.CheckCondition(false);
+		}
+
+		foreach(Emitter emitter in GameManager.master.Map.Emitters.Values)
+		{
+			emitter.TryGenerate();
+		}
+
 		RecalculateScores();
 
 		foreach (Receiver reciever in GameManager.master.Map.Receivers.Values)
@@ -80,11 +95,22 @@ public class Level : MonoBehaviour
 			foreach (Wave wave in Waves)
 			{
 				if (wave.Elements.ContainsKey(door.Position))
+				{
 					wave.Elements.Remove(door.Position);
+				}
 			}
 		}
 
-		/* Do this to make changes based on recievers and closed doors */
+		/* Make boxes block waves */
+		foreach (Box box in Boxes.Values)
+		{
+			foreach (Wave wave in Waves)
+			{
+				if (wave.Elements.ContainsKey(box.Position))
+					wave.Elements.Remove(box.Position);
+			}
+		}
+
 		RecalculateScores();
 	}
 
@@ -170,6 +196,15 @@ public class Level : MonoBehaviour
 					door.Position.y,
 					(int)ElementLayer.IMMOVABLE), 
 				TileManager.GetTile(CellType.DOOR));
+		}
+		CheckWin();
+	}
+
+	void CheckWin()
+	{
+		if(GameManager.master.Player.Position == GameManager.master.Map.Exit)
+		{
+			GameManager.master.NextLevel();
 		}
 	}
 

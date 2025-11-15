@@ -18,6 +18,7 @@ public class LevelLoader : MonoBehaviour
 		DrawFloor(_levelData);
 		DrawWalls(_levelData);
 		DrawHoles(_levelData);
+		GameManager.master.Map.Exit = _levelData.Exit;
 
 		foreach (LevelDataCell cell in _levelData.Cells)
 		{
@@ -50,7 +51,6 @@ public class LevelLoader : MonoBehaviour
 				case CellType.EMITTER:
 					Emitter newEmitter = new Emitter();
 					newEmitter.Position = cell.Position;
-					newEmitter.TriggerPosition = cell.SecondaryPosition;
 					newEmitter.Strength = cell.Data;
 					GameManager.master.Map.Emitters.Add(cell.Position, newEmitter);
 					break;
@@ -70,11 +70,11 @@ public class LevelLoader : MonoBehaviour
 		/* Set the activatables of buttons and receivers */
 		foreach(LevelDataLink link in _levelData.Links)
 		{
-			switch(link.input.Type)
+			switch(link.output.Type)
 			{
 				case CellType.DOOR:
-					door = GameManager.master.CurrentLevel.Doors[link.input.Position];
-					switch(link.output.Type)
+					door = GameManager.master.CurrentLevel.Doors[link.output.Position];
+					switch(link.input.Type)
 					{
 						case CellType.RECEIVER:
 							receiver = GameManager.master.Map.Receivers[link.input.Position];
@@ -87,8 +87,8 @@ public class LevelLoader : MonoBehaviour
 					}
 					break;
 				case CellType.EMITTER:
-					emitter = GameManager.master.Map.Emitters[link.input.Position];
-					switch(link.output.Type)
+					emitter = GameManager.master.Map.Emitters[link.output.Position];
+					switch(link.input.Type)
 					{
 						case CellType.RECEIVER:
 							receiver = GameManager.master.Map.Receivers[link.input.Position];

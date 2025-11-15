@@ -99,29 +99,44 @@ public class LevelEditorEditor : Editor {
 							t.holes.Add(pos);
 						}
 						break;
+					case DrawingState.EXIT:
+						t.exit = pos;
+						break;
 					default:
 						var idx = t.draft.FindIndex(c => c.Position.x==pos.x && c.Position.y==pos.y);
 						if (idx >= 0) {
 							if(t.draft[idx].Type == (CellType)t.drawingState)
 							{
-								t.RemoveCellAtId(idx);
+								if(t.draft[idx].Data != t.Data)
+								{
+									t.draft[idx] = 
+										new LevelDataCell{
+											Position = pos,
+											Type=(CellType)t.drawingState,
+											Data=t.Data
+										};
+								}
+								else
+								{
+									t.RemoveCellAtId(idx);
+								}
 							}
 							else
 							{
 								t.RemoveCellAtId(idx);
 								t.draft.Add(
-									new LevelDataCell{ 
-										Position = pos, 
-										Type=(CellType)t.drawingState, 
-										Data=0 
+									new LevelDataCell{
+										Position = pos,
+										Type=(CellType)t.drawingState,
+										Data=t.Data
 								});
 							}
 						} else {
 							t.draft.Add(
-								new LevelDataCell{ 
-									Position = pos, 
-									Type=(CellType)t.drawingState, 
-									Data=0 
+								new LevelDataCell{
+									Position = pos,
+									Type=(CellType)t.drawingState,
+									Data=t.Data
 							});
 						}
 
@@ -152,10 +167,8 @@ public class LevelEditorEditor : Editor {
 				{
 					if(cell.Position == pos)
 					{
-						Debug.Log("Start");
 						startPos = cell.Position;
 						startCell = cell;
-						Debug.Log(startCell.Type);
 						e.Use();
 						break;
 					}

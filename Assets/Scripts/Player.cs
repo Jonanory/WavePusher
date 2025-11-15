@@ -15,6 +15,7 @@ public class Player
 			{
 				GameManager.master.CurrentLevel.TimeStep();
 				Position = newPosition;
+				GameManager.master.CurrentLevel.CheckButtons();
 				GameManager.master.CurrentLevel.Refresh();
 			}
 			return;
@@ -23,6 +24,7 @@ public class Player
 		if (GameManager.master.Map.CoordIsBlocked(newPosition)) return;
 		GameManager.master.CurrentLevel.TimeStep();
 		Position = newPosition;
+		GameManager.master.CurrentLevel.CheckButtons();
 		GameManager.master.CurrentLevel.Refresh();
 	}
 }

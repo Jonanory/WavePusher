@@ -23,6 +23,8 @@ public class TileManager : MonoBehaviour
 	public HexagonalRuleTile  WallTile;
 	[SerializeField]
 	Tile HoleTile;
+	[SerializeField]
+	Tile ExitTile;
 
 	[Header("Activators")]
 	[SerializeField]
@@ -52,6 +54,8 @@ public class TileManager : MonoBehaviour
 		{
 			case CellType.PLAYER:
 				return master.PlayerTile;
+			case CellType.GHOST:
+				return master.GhostTile;
 
 			case CellType.HOLE:
 				return master.HoleTile;
@@ -59,6 +63,8 @@ public class TileManager : MonoBehaviour
 				return master.FloorTile;
 			case CellType.FLOOR_B:
 				return master.FloorTileB;
+			case CellType.EXIT:
+				return master.ExitTile;
 
 			case CellType.RECEIVER:
 				return master.ReceiverTile;
