@@ -27,10 +27,6 @@ public class Map : MonoBehaviour
 	public static float Scale = 0.5f;
 	public Tilemap AreaMap;
 	public Vector2Int Exit;
-	public Dictionary<Vector2Int, Emitter> Emitters = new Dictionary<Vector2Int, Emitter>();
-	public Dictionary<Vector2Int, Receiver> Receivers = new Dictionary<Vector2Int, Receiver>();
-	public Dictionary<Vector2Int, Button> Buttons = new Dictionary<Vector2Int, Button>();
-	public Dictionary<Vector2Int, IBlockable> Blockables = new Dictionary<Vector2Int, IBlockable>();
 
 	void Start()
 	{
@@ -40,46 +36,60 @@ public class Map : MonoBehaviour
 	public void ClearAll()
 	{
 		AreaMap.ClearAllTiles();
-		Emitters = new Dictionary<Vector2Int, Emitter>();
-		Receivers = new Dictionary<Vector2Int, Receiver>();
-		Buttons = new Dictionary<Vector2Int, Button>();
-		Blockables = new Dictionary<Vector2Int, IBlockable>();
 	}
 
 	public void Display()
 	{
-		foreach (Button button in Buttons.Values)
-		{
-			AreaMap.SetTile(
-				new Vector3Int(
-					button.Position.x,
-					button.Position.y,
-					(int)MapLayer.EXTRA),
-				TileManager.GetTile(CellType.BUTTON));
-		}
-
-		foreach (Emitter emitter in Emitters.Values)
-			AreaMap.SetTile(
-				new Vector3Int(
-					emitter.Position.x,
-					emitter.Position.y,
-					(int)MapLayer.EXTRA),
-				TileManager.GetTile(CellType.EMITTER));
-
-		foreach (Receiver receiver in Receivers.Values)
-			AreaMap.SetTile(
-				new Vector3Int(
-					receiver.Position.x,
-					receiver.Position.y,
-					(int)MapLayer.EXTRA),
-				TileManager.GetTile(CellType.RECEIVER));
-		
 		AreaMap.SetTile(
 			new Vector3Int(
 				Exit.x,
 				Exit.y,
 				(int)MapLayer.EXIT),
 			TileManager.GetTile(CellType.EXIT));
+	}
+
+	void DrawFloors(List<Vector2Int> _floorPositions)
+	{
+		foreach (Vector2Int floorPos in _floorPositions)
+		{
+			Tile tile;
+			if (Map.Mod(floorPos.x, 3) == Map.Mod(floorPos.y + Map.Mod(floorPos.y,6) / 2, 3) )
+			{
+				tile = TileManager.GetTile(CellType.FLOOR_B);
+			}
+			else
+			{
+				tile = TileManager.GetTile(CellType.FLOOR);
+			}
+			GameManager.master.Map.AreaMap.SetTile(
+				new Vector3Int(
+					floorPos.x,
+					floorPos.y,
+					(int)MapLayer.FLOOR),
+			tile);
+		}
+	}
+
+	void DrawWalls(List<Vector2Int> _wallPositions)
+	{
+		foreach(Vector2Int wallPos in _wallPositions)
+			GameManager.master.Map.AreaMap.SetTile(
+				new Vector3Int(
+					wallPos.x,
+					wallPos.y,
+					(int)MapLayer.WALL),
+			TileManager.master.WallTile);
+	}
+
+	void DrawHoles(List<Vector2Int> _holePositions)
+	{
+		foreach(Vector2Int holePos in _holePositions)
+			GameManager.master.Map.AreaMap.SetTile(
+				new Vector3Int(
+					holePos.x,
+					holePos.y,
+					(int)MapLayer.HOLE),
+			TileManager.GetTile(CellType.HOLE));
 	}
 
 	public static MapDirection RotateClockwise(MapDirection _direction, int _numberOfSteps = 1)
@@ -136,14 +146,13 @@ public class Map : MonoBehaviour
 				_coord.x,
 				_coord.y,
 				(int)MapLayer.HOLE))) return true;
-		foreach (Emitter emitter in Emitters.Values)
+		foreach (Emitter emitter in GameManager.master.CurrentLevel.Emitters.Values)
 			if (emitter.Position == _coord) return true;
-		foreach (Receiver receiver in Receivers.Values)
+		foreach (Receiver receiver in GameManager.master.CurrentLevel.Receivers.Values)
 			if (receiver.Position == _coord) return true;
 		if (GameManager.master.CurrentLevel.Boxes.ContainsKey(_coord)) return true;
 		foreach (Door door in GameManager.master.CurrentLevel.Doors.Values)
 			if (!door.Open && door.Position == _coord) return true;
-		if (Blockables.ContainsKey(_coord)) return Blockables[_coord].IsBlocking;
 		return false;
 	}
 

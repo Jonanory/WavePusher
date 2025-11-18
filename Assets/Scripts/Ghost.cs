@@ -3,12 +3,12 @@ using UnityEngine;
 public class Ghost
 {
 	const int STEPS_BETWEEN_WAVES = 7;
-	int currentSteps;
+	public int currentSteps;
 	public Vector2Int Position;
 
-	public Ghost(Vector2Int _position)
+	public Ghost(Vector2Int _position, int _currentSteps = STEPS_BETWEEN_WAVES)
 	{
-		currentSteps = STEPS_BETWEEN_WAVES;
+		currentSteps = _currentSteps;
 		Position = _position;
 	}
 

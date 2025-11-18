@@ -38,5 +38,14 @@ public class Controller : MonoBehaviour
 		{
 			GameManager.master.ShowLevelMenu();
 		}
+
+		if(Keyboard.current.zKey.wasPressedThisFrame)
+		{
+			if (!UndoManager.master.CanUndo)
+				return;
+
+			var prev = UndoManager.master.PopState();
+			HistoryManager.master.RestoreState(prev);
+		}
 	}
 }

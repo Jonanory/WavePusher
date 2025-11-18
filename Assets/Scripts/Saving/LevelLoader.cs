@@ -33,13 +33,13 @@ public class LevelLoader : MonoBehaviour
 				case CellType.RECEIVER:
 					Receiver newReceiver = new Receiver();
 					newReceiver.Position = cell.Position;
-					GameManager.master.Map.Receivers.Add(cell.Position, newReceiver);
+					GameManager.master.CurrentLevel.Receivers.Add(cell.Position, newReceiver);
 					break;
 
 				case CellType.BUTTON:
 					Button newButton = new Button();
 					newButton.Position = cell.Position;
-					GameManager.master.Map.Buttons.Add(cell.Position, newButton);
+					GameManager.master.CurrentLevel.Buttons.Add(cell.Position, newButton);
 					break;
 
 				case CellType.BOX:
@@ -52,7 +52,7 @@ public class LevelLoader : MonoBehaviour
 					Emitter newEmitter = new Emitter();
 					newEmitter.Position = cell.Position;
 					newEmitter.Strength = cell.Data;
-					GameManager.master.Map.Emitters.Add(cell.Position, newEmitter);
+					GameManager.master.CurrentLevel.Emitters.Add(cell.Position, newEmitter);
 					break;
 
 				case CellType.DOOR:
@@ -77,25 +77,25 @@ public class LevelLoader : MonoBehaviour
 					switch(link.input.Type)
 					{
 						case CellType.RECEIVER:
-							receiver = GameManager.master.Map.Receivers[link.input.Position];
+							receiver = GameManager.master.CurrentLevel.Receivers[link.input.Position];
 							receiver.Activatables.Add(door);
 							break;
 						case CellType.BUTTON:
-							button = GameManager.master.Map.Buttons[link.input.Position];
+							button = GameManager.master.CurrentLevel.Buttons[link.input.Position];
 							button.Activatables.Add(door);
 							break;
 					}
 					break;
 				case CellType.EMITTER:
-					emitter = GameManager.master.Map.Emitters[link.output.Position];
+					emitter = GameManager.master.CurrentLevel.Emitters[link.output.Position];
 					switch(link.input.Type)
 					{
 						case CellType.RECEIVER:
-							receiver = GameManager.master.Map.Receivers[link.input.Position];
+							receiver = GameManager.master.CurrentLevel.Receivers[link.input.Position];
 							receiver.Activatables.Add(emitter);
 							break;
 						case CellType.BUTTON:
-							button = GameManager.master.Map.Buttons[link.input.Position];
+							button = GameManager.master.CurrentLevel.Buttons[link.input.Position];
 							button.Activatables.Add(emitter);
 							break;
 					}

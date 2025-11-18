@@ -3,7 +3,7 @@ using UnityEngine;
 public class Emitter : IActivatable
 {
 	const int STEPS_BETWEEN_WAVES = 7;
-	int currentSteps;
+	public int currentSteps;
 	public bool HasEmittedThisTimestep = true;
 	public Vector2Int Position;
 	public int Strength;

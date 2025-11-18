@@ -7,12 +7,14 @@ public class Player
 
 	public void TryMove(MapDirection _direction)
 	{
+		GameState gameState = HistoryManager.master.CaptureState();
 		Vector2Int newPosition = Map.CoordAfterMovement(Position, _direction);
 
 		if (GameManager.master.CurrentLevel.GetBox(newPosition) != null)
 		{
 			if (GameManager.master.CurrentLevel.PushBox(newPosition, _direction))
 			{
+				UndoManager.master.PushState(gameState);
 				GameManager.master.CurrentLevel.TimeStep();
 				Position = newPosition;
 				GameManager.master.CurrentLevel.CheckButtons();
@@ -22,6 +24,7 @@ public class Player
 		}
 
 		if (GameManager.master.Map.CoordIsBlocked(newPosition)) return;
+		UndoManager.master.PushState(gameState);
 		GameManager.master.CurrentLevel.TimeStep();
 		Position = newPosition;
 		GameManager.master.CurrentLevel.CheckButtons();

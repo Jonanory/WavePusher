@@ -7,8 +7,9 @@ public enum ElementLayer
 {
 	WAVE = 0,
 	IMMOVABLE = 1,
-	MOVABLE = 2,
-	SCORE = 3
+	EXTRA = 2,
+	MOVABLE = 3,
+	SCORE = 4
 }
 
 public class Level : MonoBehaviour
@@ -18,9 +19,10 @@ public class Level : MonoBehaviour
 	public Dictionary<Vector2Int, Box> Boxes = new Dictionary<Vector2Int, Box>();
 	public Dictionary<Vector2Int, Door> Doors = new Dictionary<Vector2Int, Door>();
 	public Dictionary<Vector2Int, int> Scores = new Dictionary<Vector2Int, int>();
+	public Dictionary<Vector2Int, Emitter> Emitters = new Dictionary<Vector2Int, Emitter>();
+	public Dictionary<Vector2Int, Receiver> Receivers = new Dictionary<Vector2Int, Receiver>();
+	public Dictionary<Vector2Int, Button> Buttons = new Dictionary<Vector2Int, Button>();
 	public Tilemap ElementsMap;
-	public Dictionary<Vector2Int, IBlockable> Blockables =
-		new Dictionary<Vector2Int, IBlockable>();
 
 	public void ClearAll()
 	{
@@ -30,12 +32,14 @@ public class Level : MonoBehaviour
 		Boxes = new Dictionary<Vector2Int, Box>();
 		Doors = new Dictionary<Vector2Int, Door>();
 		Scores = new Dictionary<Vector2Int, int>();
-		Blockables = new Dictionary<Vector2Int, IBlockable>();
+		Emitters = new Dictionary<Vector2Int, Emitter>();
+		Receivers = new Dictionary<Vector2Int, Receiver>();
+		Buttons = new Dictionary<Vector2Int, Button>();
 	}
 
 	public void TimeStep()
 	{
-		foreach(Emitter emitter in GameManager.master.Map.Emitters.Values)
+		foreach(Emitter emitter in Emitters.Values)
 		{
 			emitter.InitiateTimestep();
 		}
@@ -61,7 +65,7 @@ public class Level : MonoBehaviour
 			ghost.TimeStep();
 		}
 
-		foreach (Button button in GameManager.master.Map.Buttons.Values)
+		foreach (Button button in Buttons.Values)
 		{
 			button.CheckCondition(true);
 		}
@@ -71,19 +75,19 @@ public class Level : MonoBehaviour
 
 	public void CheckButtons()
 	{
-		foreach (Button button in GameManager.master.Map.Buttons.Values)
+		foreach (Button button in Buttons.Values)
 		{
 			button.CheckCondition(false);
 		}
 
-		foreach(Emitter emitter in GameManager.master.Map.Emitters.Values)
+		foreach(Emitter emitter in Emitters.Values)
 		{
 			emitter.TryGenerate();
 		}
 
 		RecalculateScores();
 
-		foreach (Receiver reciever in GameManager.master.Map.Receivers.Values)
+		foreach (Receiver reciever in Receivers.Values)
 		{
 			reciever.TimeStep();
 		}
@@ -136,6 +140,32 @@ public class Level : MonoBehaviour
 	public void Refresh()
 	{
 		ElementsMap.ClearAllTiles();
+
+		foreach (Button button in Buttons.Values)
+		{
+			ElementsMap.SetTile(
+				new Vector3Int(
+					button.Position.x,
+					button.Position.y,
+					(int)ElementLayer.EXTRA),
+				TileManager.GetTile(CellType.BUTTON));
+		}
+
+		foreach (Emitter emitter in Emitters.Values)
+			ElementsMap.SetTile(
+				new Vector3Int(
+					emitter.Position.x,
+					emitter.Position.y,
+					(int)ElementLayer.EXTRA),
+				TileManager.GetTile(CellType.EMITTER));
+
+		foreach (Receiver receiver in Receivers.Values)
+			ElementsMap.SetTile(
+				new Vector3Int(
+					receiver.Position.x,
+					receiver.Position.y,
+					(int)ElementLayer.EXTRA),
+				TileManager.GetTile(CellType.RECEIVER));
 
 		ElementsMap.SetTile(
 			new Vector3Int(
