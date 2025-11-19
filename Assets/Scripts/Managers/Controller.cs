@@ -20,8 +20,12 @@ public class Controller : MonoBehaviour
 
 		if (Keyboard.current.spaceKey.wasPressedThisFrame)
 		{
+			GameState gameState = HistoryManager.master.CaptureState();
+			UndoManager.master.PushState(gameState);
 			GameManager.master.CurrentLevel.TimeStep();
 			GameManager.master.CurrentLevel.GenerateNewWave(GameManager.master.Player.Position);
+			GameManager.master.CurrentLevel.RecalculateScores();
+			GameManager.master.CurrentLevel.Refresh();
 		}
 
 		if (Keyboard.current.fKey.wasPressedThisFrame)

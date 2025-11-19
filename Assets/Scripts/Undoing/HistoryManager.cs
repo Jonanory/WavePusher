@@ -85,6 +85,8 @@ public class HistoryManager : MonoBehaviour
 				newElement.flowDirections = new List<MapDirection>();
 				foreach(MapDirection direction in elem.DirectionsToFlow)
 					newElement.flowDirections.Add(direction);
+			
+				waveState.elements.Add(newElement);
 			}
 
 			state.waves.Add(waveState);
@@ -168,7 +170,7 @@ public class HistoryManager : MonoBehaviour
 			}
 			GameManager.master.CurrentLevel.Waves.Add(newWave);
 		}
-
+		GameManager.master.CurrentLevel.RecalculateScores();
 		GameManager.master.Map.Display();
 		GameManager.master.CurrentLevel.Refresh();
 	}

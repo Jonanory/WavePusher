@@ -16,7 +16,7 @@ public class GameState
 	// Optional if you don't recompute:
 	public List<DoorState> doors;
 	public List<ReceiverState> receivers;
-	public List<ButtonState>buttons;
+	public List<ButtonState> buttons;
 
 	public List<WaveState> waves;
 	// etc...

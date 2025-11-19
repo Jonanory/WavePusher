@@ -5,12 +5,13 @@ using System.Collections.Generic;
 
 public enum ElementLayer
 {
-	WAVE = 0,
-	IMMOVABLE = 1,
-	EXTRA = 2,
-	MOVABLE = 3,
-	SCORE = 4
+	IMMOVABLE = -1,
+	EXTRA = -2,
+	MOVABLE = -3,
+	WAVE = -4,
+	SCORE = -5
 }
+
 
 public class Level : MonoBehaviour
 {
@@ -118,7 +119,7 @@ public class Level : MonoBehaviour
 		RecalculateScores();
 	}
 
-	void RecalculateScores()
+	public void RecalculateScores()
 	{
 		Scores = new Dictionary<Vector2Int, int>();
 		foreach (Wave wave in Waves)
@@ -147,7 +148,7 @@ public class Level : MonoBehaviour
 				new Vector3Int(
 					button.Position.x,
 					button.Position.y,
-					(int)ElementLayer.EXTRA),
+					(int)ElementLayer.IMMOVABLE),
 				TileManager.GetTile(CellType.BUTTON));
 		}
 
@@ -199,6 +200,24 @@ public class Level : MonoBehaviour
 				TileManager.GetTile(CellType.GHOST));
 		}
 
+		RedrawNumbers();
+
+		foreach(Door door in Doors.Values)
+		{
+			if(door.Open) continue;
+
+			ElementsMap.SetTile(
+				new Vector3Int(
+					door.Position.x,
+					door.Position.y,
+					(int)ElementLayer.IMMOVABLE), 
+				TileManager.GetTile(CellType.DOOR));
+		}
+		CheckWin();
+	}
+
+	public void RedrawNumbers()
+	{
 		foreach(KeyValuePair<Vector2Int,int> score in Scores)
 		{
 			int toScore = score.Value;
@@ -215,19 +234,6 @@ public class Level : MonoBehaviour
 				position,
 				new Color(0f, 0f, 0.6f));
 		}
-
-		foreach(Door door in Doors.Values)
-		{
-			if(door.Open) continue;
-
-			ElementsMap.SetTile(
-				new Vector3Int(
-					door.Position.x,
-					door.Position.y,
-					(int)ElementLayer.IMMOVABLE), 
-				TileManager.GetTile(CellType.DOOR));
-		}
-		CheckWin();
 	}
 
 	void CheckWin()

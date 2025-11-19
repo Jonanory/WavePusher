@@ -15,11 +15,11 @@ public enum MapDirection
 
 public enum MapLayer
 {
-	HOLE = -1,
-	FLOOR = 0,
-	EXTRA = 1,
-	WALL = 2,
-	EXIT = 3
+	HOLE = -5,
+	FLOOR = -4,
+	EXTRA = -5,
+	WALL = -2,
+	EXIT = -1
 }
 
 public class Map : MonoBehaviour
