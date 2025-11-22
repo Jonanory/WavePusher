@@ -114,40 +114,40 @@ public class LevelLoader : MonoBehaviour
 			Tile tile;
 			if (Map.Mod(floorPos.x, 3) == Map.Mod(floorPos.y + Map.Mod(floorPos.y,6) / 2, 3) )
 			{
-				tile = TileManager.GetTile(CellType.FLOOR_B);
+				tile = TileManager.GetTile(TileType.FLOOR_EXTRA);
 			}
 			else
 			{
-				tile = TileManager.GetTile(CellType.FLOOR);
+				tile = TileManager.GetTile(TileType.FLOOR_MAIN);
 			}
-			GameManager.master.Map.AreaMap.SetTile(
+			TileMapManager.SceneMap.SetTile(
 				new Vector3Int(
 					floorPos.x,
 					floorPos.y,
 					(int)MapLayer.FLOOR),
-			tile);
+				tile);
 		}
 	}
 
 	void DrawWalls(LevelData _levelData)
 	{
 		foreach(Vector2Int wallPos in _levelData.Walls)
-			GameManager.master.Map.AreaMap.SetTile(
+			TileMapManager.SceneMap.SetTile(
 				new Vector3Int(
 					wallPos.x,
 					wallPos.y,
 					(int)MapLayer.WALL),
-			TileManager.master.WallTile);
+				TileManager.master.WallTile);
 	}
 
 	void DrawHoles(LevelData _levelData)
 	{
 		foreach(Vector2Int holePos in _levelData.Holes)
-			GameManager.master.Map.AreaMap.SetTile(
+			TileMapManager.SceneMap.SetTile(
 				new Vector3Int(
 					holePos.x,
 					holePos.y,
 					(int)MapLayer.HOLE),
-			TileManager.GetTile(CellType.HOLE));
+				TileManager.master.HoleTile);
 	}
 }

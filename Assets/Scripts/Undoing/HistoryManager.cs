@@ -98,7 +98,7 @@ public class HistoryManager : MonoBehaviour
 	public void RestoreState(GameState state)
 	{
 		if (state == null) return;
-		GameManager.master.CurrentLevel.ClearAll();
+		GameManager.master.CurrentLevel.ClearMost();
 
 		GameManager.master.Player.Position = state.playerPos;
 
@@ -123,35 +123,27 @@ public class HistoryManager : MonoBehaviour
 
 		for (int i = 0; i < state.doors.Count; i++)
 		{
-			Door newDoor = new Door();
+			Door newDoor = GameManager.master.CurrentLevel.Doors[state.doors[i].position];
 			newDoor.Open = state.doors[i].isOpen;
-			newDoor.Position = state.doors[i].position;
-			GameManager.master.CurrentLevel.Doors.Add(state.doors[i].position, newDoor);
 		}
 
 		for (int i = 0; i < state.emitters.Count; i++)
 		{
-			Emitter newEmitter = new Emitter();
-			newEmitter.Position = state.emitters[i].position;
+			Emitter newEmitter = GameManager.master.CurrentLevel.Emitters[state.emitters[i].position];
 			newEmitter.IsActive = state.emitters[i].isActive;
 			newEmitter.currentSteps = state.emitters[i].ticksUntilNextWave;
-			GameManager.master.CurrentLevel.Emitters.Add(state.emitters[i].position, newEmitter);
 		}
 
 		for (int i = 0; i < state.receivers.Count; i++)
 		{
-			Receiver newReceiver = new Receiver();
-			newReceiver.Position = state.receivers[i].position;
+			Receiver newReceiver = GameManager.master.CurrentLevel.Receivers[state.receivers[i].position];
 			newReceiver.IsActivated = state.receivers[i].isActive;
-			GameManager.master.CurrentLevel.Receivers.Add(state.receivers[i].position, newReceiver);
 		}
 
 		for (int i = 0; i < state.buttons.Count; i++)
 		{
-			Button newButton = new Button();
-			newButton.Position = state.buttons[i].position;
+			Button newButton = GameManager.master.CurrentLevel.Buttons[state.buttons[i].position];
 			newButton.IsActivated = state.buttons[i].isActive;
-			GameManager.master.CurrentLevel.Buttons.Add(state.buttons[i].position, newButton);
 		}
 
 		/* Waves */

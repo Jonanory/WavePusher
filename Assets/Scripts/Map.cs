@@ -25,7 +25,6 @@ public enum MapLayer
 public class Map : MonoBehaviour
 {
 	public static float Scale = 0.5f;
-	public Tilemap AreaMap;
 	public Vector2Int Exit;
 
 	void Start()
@@ -35,17 +34,17 @@ public class Map : MonoBehaviour
 
 	public void ClearAll()
 	{
-		AreaMap.ClearAllTiles();
+		TileMapManager.SceneMap.ClearAllTiles();
 	}
 
 	public void Display()
 	{
-		AreaMap.SetTile(
+		TileMapManager.SceneMap.SetTile(
 			new Vector3Int(
 				Exit.x,
 				Exit.y,
 				(int)MapLayer.EXIT),
-			TileManager.GetTile(CellType.EXIT));
+			TileManager.GetTile(TileType.EXIT));
 	}
 
 	void DrawFloors(List<Vector2Int> _floorPositions)
@@ -55,13 +54,13 @@ public class Map : MonoBehaviour
 			Tile tile;
 			if (Map.Mod(floorPos.x, 3) == Map.Mod(floorPos.y + Map.Mod(floorPos.y,6) / 2, 3) )
 			{
-				tile = TileManager.GetTile(CellType.FLOOR_B);
+				tile = TileManager.GetTile(TileType.FLOOR_EXTRA);
 			}
 			else
 			{
-				tile = TileManager.GetTile(CellType.FLOOR);
+				tile = TileManager.GetTile(TileType.FLOOR_MAIN);
 			}
-			GameManager.master.Map.AreaMap.SetTile(
+			TileMapManager.SceneMap.SetTile(
 				new Vector3Int(
 					floorPos.x,
 					floorPos.y,
@@ -73,23 +72,23 @@ public class Map : MonoBehaviour
 	void DrawWalls(List<Vector2Int> _wallPositions)
 	{
 		foreach(Vector2Int wallPos in _wallPositions)
-			GameManager.master.Map.AreaMap.SetTile(
+			TileMapManager.SceneMap.SetTile(
 				new Vector3Int(
 					wallPos.x,
 					wallPos.y,
 					(int)MapLayer.WALL),
-			TileManager.master.WallTile);
+				TileManager.master.WallTile);
 	}
 
 	void DrawHoles(List<Vector2Int> _holePositions)
 	{
 		foreach(Vector2Int holePos in _holePositions)
-			GameManager.master.Map.AreaMap.SetTile(
+			TileMapManager.SceneMap.SetTile(
 				new Vector3Int(
 					holePos.x,
 					holePos.y,
 					(int)MapLayer.HOLE),
-			TileManager.GetTile(CellType.HOLE));
+				TileManager.master.HoleTile);
 	}
 
 	public static MapDirection RotateClockwise(MapDirection _direction, int _numberOfSteps = 1)
@@ -136,12 +135,12 @@ public class Map : MonoBehaviour
 
 	public bool CoordIsBlocked(Vector2Int _coord)
 	{
-		if (AreaMap.HasTile(
+		if (TileMapManager.SceneMap.HasTile(
 			new Vector3Int(
 				_coord.x,
 				_coord.y,
 				(int)MapLayer.WALL))) return true;
-		if (AreaMap.HasTile(
+		if (TileMapManager.SceneMap.HasTile(
 			new Vector3Int(
 				_coord.x,
 				_coord.y,
@@ -158,7 +157,7 @@ public class Map : MonoBehaviour
 
 	public bool CoordIsFlowable(Vector2Int _coord)
 	{
-		if (AreaMap.HasTile(
+		if (TileMapManager.SceneMap.HasTile(
 			new Vector3Int(
 				_coord.x,
 				_coord.y,

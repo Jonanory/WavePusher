@@ -3,16 +3,6 @@ using UnityEngine.Tilemaps;
 using System.Collections;
 using System.Collections.Generic;
 
-public enum ElementLayer
-{
-	IMMOVABLE = -1,
-	EXTRA = -2,
-	MOVABLE = -3,
-	WAVE = -4,
-	SCORE = -5
-}
-
-
 public class Level : MonoBehaviour
 {
 	public List<Wave> Waves = new List<Wave>();
@@ -23,11 +13,14 @@ public class Level : MonoBehaviour
 	public Dictionary<Vector2Int, Emitter> Emitters = new Dictionary<Vector2Int, Emitter>();
 	public Dictionary<Vector2Int, Receiver> Receivers = new Dictionary<Vector2Int, Receiver>();
 	public Dictionary<Vector2Int, Button> Buttons = new Dictionary<Vector2Int, Button>();
-	public Tilemap ElementsMap;
 
 	public void ClearAll()
 	{
-		ElementsMap.ClearAllTiles();
+		TileMapManager.WaveMap.ClearAllTiles();
+		TileMapManager.ScoreMap.ClearAllTiles();
+		TileMapManager.GhostMap.ClearAllTiles();
+		TileMapManager.OccupantMap.ClearAllTiles();
+		TileMapManager.InteractableMap.ClearAllTiles();
 		Waves = new List<Wave>();
 		Ghosts = new Dictionary<Vector2Int, Ghost>();
 		Boxes = new Dictionary<Vector2Int, Box>();
@@ -36,6 +29,20 @@ public class Level : MonoBehaviour
 		Emitters = new Dictionary<Vector2Int, Emitter>();
 		Receivers = new Dictionary<Vector2Int, Receiver>();
 		Buttons = new Dictionary<Vector2Int, Button>();
+	}
+
+	/* Keeps the buttons, receivers, doors and emitters intact (for undoing purposes) */
+	public void ClearMost()
+	{
+		TileMapManager.WaveMap.ClearAllTiles();
+		TileMapManager.ScoreMap.ClearAllTiles();
+		TileMapManager.GhostMap.ClearAllTiles();
+		TileMapManager.OccupantMap.ClearAllTiles();
+		TileMapManager.InteractableMap.ClearAllTiles();
+		Waves = new List<Wave>();
+		Ghosts = new Dictionary<Vector2Int, Ghost>();
+		Boxes = new Dictionary<Vector2Int, Box>();
+		Scores = new Dictionary<Vector2Int, int>();
 	}
 
 	public void TimeStep()
@@ -140,49 +147,70 @@ public class Level : MonoBehaviour
 
 	public void Refresh()
 	{
-		ElementsMap.ClearAllTiles();
+		TileMapManager.WaveMap.ClearAllTiles();
+		TileMapManager.ScoreMap.ClearAllTiles();
+		TileMapManager.GhostMap.ClearAllTiles();
+		TileMapManager.OccupantMap.ClearAllTiles();
+		TileMapManager.InteractableMap.ClearAllTiles();
 
+		Tile tileToUse;
 		foreach (Button button in Buttons.Values)
 		{
-			ElementsMap.SetTile(
+			if(button.IsActivated)
+				tileToUse = TileManager.GetTile(TileType.BUTTON_PRESSED);
+			else
+				tileToUse = TileManager.GetTile(TileType.BUTTON);
+			TileMapManager.InteractableMap.SetTile(
 				new Vector3Int(
 					button.Position.x,
 					button.Position.y,
-					(int)ElementLayer.IMMOVABLE),
-				TileManager.GetTile(CellType.BUTTON));
+					0),
+				tileToUse);
 		}
 
 		foreach (Emitter emitter in Emitters.Values)
-			ElementsMap.SetTile(
+		{
+			if(emitter.IsActive)
+				tileToUse = TileManager.GetActiveEmitterTile(emitter.currentSteps);
+			else
+				tileToUse = TileManager.GetTile(TileType.EMITTER);
+			TileMapManager.OccupantMap.SetTile(
 				new Vector3Int(
 					emitter.Position.x,
 					emitter.Position.y,
-					(int)ElementLayer.EXTRA),
-				TileManager.GetTile(CellType.EMITTER));
+					0),
+				tileToUse);
+		}
 
 		foreach (Receiver receiver in Receivers.Values)
-			ElementsMap.SetTile(
+		{
+			if(receiver.IsActivated)
+				tileToUse = TileManager.GetTile(TileType.RECEIVER_ACTIVATED);
+			else
+				tileToUse = TileManager.GetTile(TileType.RECEIVER);
+			TileMapManager.OccupantMap.SetTile(
 				new Vector3Int(
 					receiver.Position.x,
 					receiver.Position.y,
-					(int)ElementLayer.EXTRA),
-				TileManager.GetTile(CellType.RECEIVER));
+					0),
+				tileToUse);
+		}
 
-		ElementsMap.SetTile(
+		TileMapManager.OccupantMap.SetTile(
 			new Vector3Int(
 				GameManager.master.Player.Position.x,
 				GameManager.master.Player.Position.y,
-				(int)ElementLayer.MOVABLE),
-			TileManager.GetTile(CellType.PLAYER));
+				0),
+			TileManager.GetTile(TileType.PLAYER));
 
 		foreach(Vector2Int boxPos in Boxes.Keys)
 		{
-			ElementsMap.SetTile(
+			TileMapManager.OccupantMap.SetTile(
 				new Vector3Int(
 					boxPos.x,
 					boxPos.y,
-					(int)ElementLayer.MOVABLE),
-				TileManager.GetTile(CellType.BOX));
+					0),
+				TileManager.GetTile(TileType.BOX));
 		}
 
 		foreach (Wave wave in Waves)
@@ -190,28 +218,31 @@ public class Level : MonoBehaviour
 			DrawWave(wave);
 		}
 
-		foreach(Vector2Int ghostPos in Ghosts.Keys)
+		foreach(Ghost ghost in Ghosts.Values)
 		{
-			ElementsMap.SetTile(
+			TileMapManager.GhostMap.SetTile(
 				new Vector3Int(
-					ghostPos.x,
-					ghostPos.y,
-					(int)ElementLayer.IMMOVABLE),
-				TileManager.GetTile(CellType.GHOST));
+					ghost.Position.x,
+					ghost.Position.y,
+					0),
+				TileManager.GetGhostTile(ghost.currentSteps));
 		}
 
 		RedrawNumbers();
 
 		foreach(Door door in Doors.Values)
 		{
-			if(door.Open) continue;
+			if(door.Open)
+				tileToUse = TileManager.GetTile(TileType.DOOR_OPEN);
+			else
+				tileToUse = TileManager.GetTile(TileType.DOOR);
 
-			ElementsMap.SetTile(
+			TileMapManager.InteractableMap.SetTile(
 				new Vector3Int(
 					door.Position.x,
 					door.Position.y,
-					(int)ElementLayer.IMMOVABLE), 
-				TileManager.GetTile(CellType.DOOR));
+					0), 
+				tileToUse);
 		}
 		CheckWin();
 	}
@@ -226,11 +257,11 @@ public class Level : MonoBehaviour
 				new Vector3Int(
 					score.Key.x,
 					score.Key.y,
-					(int)ElementLayer.SCORE);
-			ElementsMap.SetTile(
+					0);
+			TileMapManager.ScoreMap.SetTile(
 				position, 
 				TileManager.GetNumberTile(toScore));
-			ElementsMap.SetColor(
+			TileMapManager.ScoreMap.SetColor(
 				position,
 				new Color(0f, 0f, 0.6f));
 		}
@@ -253,10 +284,10 @@ public class Level : MonoBehaviour
 			Vector3Int position = new Vector3Int(
 				waveElement.Key.x,
 				waveElement.Key.y,
-				(int)ElementLayer.WAVE
+				0
 			);
-			ElementsMap.SetTile(position, TileManager.GetTile(CellType.WAVE));
-			ElementsMap.SetColor(
+			TileMapManager.WaveMap.SetTile(position, TileManager.GetTile(TileType.WAVE));
+			TileMapManager.WaveMap.SetColor(
 				position,
 				new Color(1f, 1f, 1f, waveElement.Value.GetTransparency()));
 		}
