@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class GameState
 {
 	public Vector2Int playerPos;
+	public int playerRecharge;
 	public List<Vector2Int> boxPositions;
 	
 	public List<GhostState> ghosts;

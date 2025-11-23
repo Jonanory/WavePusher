@@ -12,7 +12,7 @@ public class Emitter : IActivatable
 	public void Activate()
 	{
 		IsActive = true;
-		currentSteps = 0;
+		currentSteps = STEPS_BETWEEN_WAVES;
 	}
 
 	public void Deactivate()

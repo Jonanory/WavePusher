@@ -27,6 +27,7 @@ public class LevelLoader : MonoBehaviour
 				case CellType.PLAYER:
 					Player newPlayer = new Player();
 					newPlayer.Position = cell.Position;
+					newPlayer.RechargeAmount = Player.RECHARGE_LENGTH;
 					GameManager.master.Player = newPlayer;
 					break;
 

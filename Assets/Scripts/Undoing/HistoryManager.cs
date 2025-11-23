@@ -16,6 +16,7 @@ public class HistoryManager : MonoBehaviour
 	{
 		var state = new GameState();
 		state.playerPos = GameManager.master.Player.Position;
+		state.playerRecharge = GameManager.master.Player.RechargeAmount;
 
 		state.boxPositions = new List<Vector2Int>();
 		foreach (Box box in GameManager.master.CurrentLevel.Boxes.Values)
@@ -101,6 +102,7 @@ public class HistoryManager : MonoBehaviour
 		GameManager.master.CurrentLevel.ClearMost();
 
 		GameManager.master.Player.Position = state.playerPos;
+		GameManager.master.Player.RechargeAmount = state.playerRecharge;
 
 		for (int i = 0; i < state.boxPositions.Count; i++)
 		{

@@ -186,6 +186,10 @@ MonoBehaviour:
     Position: {x: -2, y: -3}
     SecondaryPosition: {x: 0, y: 0}
     Data: 6
+  - Type: 5
+    Position: {x: 7, y: 0}
+    SecondaryPosition: {x: 0, y: 0}
+    Data: 6
   floors:
   - {x: -1, y: -2}
   - {x: 0, y: -2}
@@ -1472,7 +1476,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.084905684, g: 0.084905684, b: 0.084905684, a: 0}
+  m_BackGroundColor: {r: 0.13536845, g: 0.13835473, b: 0.16981131, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1981,7 +1985,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 482361508}
@@ -3029,8 +3033,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e8d357f7f23e9d48bd202be4a8a6b82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileManager
-  PlayerTile: {fileID: 11400000, guid: 9caf9188ef89df94fb28ec7bf2826334, type: 2}
-  WaveTile: {fileID: 11400000, guid: 862c53907f8fc7844a768f444975848a, type: 2}
+  PlayerTiles:
+  - {fileID: 11400000, guid: c1fb91cc2aa68d042ba402c064283ba2, type: 2}
+  - {fileID: 11400000, guid: ff49d01100544164ba7fdbc23b08344e, type: 2}
+  - {fileID: 11400000, guid: ca11e83197db2484c9de65b2137b1f7f, type: 2}
+  - {fileID: 11400000, guid: 88adf83783635114c8adc61497f8eeb7, type: 2}
+  - {fileID: 11400000, guid: 895b7020148d8d644b2c488515a71eed, type: 2}
+  - {fileID: 11400000, guid: 42533866d4d0c194d83b450a4a76e687, type: 2}
+  - {fileID: 11400000, guid: a9b3055a30dd68f46ab754d3a33d1766, type: 2}
+  WaveTiles:
+  - {fileID: 11400000, guid: ac93c6a1f3263714eba74b7105014023, type: 2}
+  - {fileID: 11400000, guid: 79c72a3ec61b59e4ca435ea914080b53, type: 2}
+  - {fileID: 11400000, guid: 2d03e1688eb5aa64792b3a9fcc4a99f9, type: 2}
+  - {fileID: 11400000, guid: 5736e5939ec44314dbe4d4486f2c38ec, type: 2}
+  - {fileID: 11400000, guid: 17226e4c6ca74c4408ae8f2dfa1efa59, type: 2}
+  - {fileID: 11400000, guid: 8661004f24ab56149b9b1bc4297c3f4c, type: 2}
   GhostTiles:
   - {fileID: 11400000, guid: c5818217213babb4a84a23a19e3eafeb, type: 2}
   - {fileID: 11400000, guid: 78f26548b3ed3fe4e849726d538c2e6a, type: 2}
@@ -3043,7 +3060,7 @@ MonoBehaviour:
   FloorTileB: {fileID: 11400000, guid: bb890627833ed564780519eb68459d75, type: 2}
   WallTile: {fileID: 11400000, guid: 642d557a2b702c84cb1d6ac162e80e36, type: 2}
   HoleTile: {fileID: 11400000, guid: 015ce2b495856f14abb9642ae125df36, type: 2}
-  ExitTile: {fileID: 11400000, guid: 301e6ecb1d471c1448cd6d21003e2aa2, type: 2}
+  ExitTile: {fileID: 11400000, guid: faa23fbad6e5b4b4b88d2eb03ca65a4a, type: 2}
   ButtonTile: {fileID: 11400000, guid: f758c127c93187445a61a1a12c9f3962, type: 2}
   ButtonTile_Pressed: {fileID: 11400000, guid: 376ea836b77f9f8409326357a03e6987, type: 2}
   ReceiverTile: {fileID: 11400000, guid: 1b87af70997da234bae94d8d6b2fde11, type: 2}

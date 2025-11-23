@@ -39,6 +39,7 @@ public class Map : MonoBehaviour
 
 	public void Display()
 	{
+		DrawSingleFloor(Exit);
 		TileMapManager.SceneMap.SetTile(
 			new Vector3Int(
 				Exit.x,
@@ -51,22 +52,27 @@ public class Map : MonoBehaviour
 	{
 		foreach (Vector2Int floorPos in _floorPositions)
 		{
-			Tile tile;
-			if (Map.Mod(floorPos.x, 3) == Map.Mod(floorPos.y + Map.Mod(floorPos.y,6) / 2, 3) )
-			{
-				tile = TileManager.GetTile(TileType.FLOOR_EXTRA);
-			}
-			else
-			{
-				tile = TileManager.GetTile(TileType.FLOOR_MAIN);
-			}
-			TileMapManager.SceneMap.SetTile(
-				new Vector3Int(
-					floorPos.x,
-					floorPos.y,
-					(int)MapLayer.FLOOR),
-			tile);
+			DrawSingleFloor(floorPos);
 		}
+	}
+
+	void DrawSingleFloor(Vector2Int _position)
+	{
+		Tile tile;
+		if (Map.Mod(_position.x, 3) == Map.Mod(_position.y + Map.Mod(_position.y,6) / 2, 3) )
+		{
+			tile = TileManager.GetTile(TileType.FLOOR_EXTRA);
+		}
+		else
+		{
+			tile = TileManager.GetTile(TileType.FLOOR_MAIN);
+		}
+		TileMapManager.SceneMap.SetTile(
+			new Vector3Int(
+				_position.x,
+				_position.y,
+				(int)MapLayer.FLOOR),
+			tile);
 	}
 
 	void DrawWalls(List<Vector2Int> _wallPositions)

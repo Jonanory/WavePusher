@@ -38,9 +38,9 @@ public class TileManager : MonoBehaviour
 {
 	public static TileManager master;
 	[SerializeField]
-	Tile PlayerTile;
+	List<Tile> PlayerTiles = new List<Tile>();
 	[SerializeField]
-	Tile WaveTile;
+	List<Tile> WaveTiles = new List<Tile>();
 
 	[SerializeField]
 	List<Tile> GhostTiles = new List<Tile>();
@@ -89,11 +89,6 @@ public class TileManager : MonoBehaviour
 	{
 		switch(_type)
 		{
-			case TileType.PLAYER:
-				return master.PlayerTile;
-			case TileType.GHOST_0:
-				return master.GhostTiles[0];
-
 			case TileType.FLOOR_MAIN:
 				return master.FloorTile;
 			case TileType.FLOOR_EXTRA:
@@ -115,28 +110,28 @@ public class TileManager : MonoBehaviour
 
 			case TileType.EMITTER:
 				return master.EmitterTiles[0];
-			case TileType.EMITTER_ACTIVE_0:
-				return master.EmitterTiles[1];
-			case TileType.EMITTER_ACTIVE_1:
-				return master.EmitterTiles[2];
-			case TileType.EMITTER_ACTIVE_2:
-				return master.EmitterTiles[3];
-			case TileType.EMITTER_ACTIVE_3:
-				return master.EmitterTiles[4];
-			case TileType.EMITTER_ACTIVE_4:
-				return master.EmitterTiles[5];
-			case TileType.EMITTER_ACTIVE_5:
-				return master.EmitterTiles[6];
-			case TileType.EMITTER_ACTIVE_6:
-				return master.EmitterTiles[7];
 			case TileType.DOOR:
 				return master.DoorTile;
 			case TileType.DOOR_OPEN:
 				return master.DoorTile_Open;
-			case TileType.WAVE:
-				return master.WaveTile;
 		}
 		return null;
+	}
+
+	public static Tile GetPlayerTile(int _number)
+	{
+		if(_number >=0 && _number < 7)
+			return master.PlayerTiles[_number];
+		else
+			return master.PlayerTiles[0];
+	}
+
+	public static Tile GetWaveTile(int _number)
+	{
+		if(_number >=0 && _number < 6)
+			return master.WaveTiles[_number];
+		else
+			return master.WaveTiles[0];
 	}
 
 	public static Tile GetGhostTile(int _number)

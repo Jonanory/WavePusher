@@ -47,6 +47,8 @@ public class Level : MonoBehaviour
 
 	public void TimeStep()
 	{
+		GameManager.master.Player.TimeStep();
+
 		foreach(Emitter emitter in Emitters.Values)
 		{
 			emitter.InitiateTimestep();
@@ -201,7 +203,7 @@ public class Level : MonoBehaviour
 				GameManager.master.Player.Position.x,
 				GameManager.master.Player.Position.y,
 				0),
-			TileManager.GetTile(TileType.PLAYER));
+			TileManager.GetPlayerTile(GameManager.master.Player.RechargeAmount));
 
 		foreach(Vector2Int boxPos in Boxes.Keys)
 		{
@@ -244,6 +246,9 @@ public class Level : MonoBehaviour
 					0), 
 				tileToUse);
 		}
+		// Vector3 cameraPosition = Map.CoordToWorldPoint(GameManager.master.Player.Position);
+		// cameraPosition.z = -10;
+		// Camera.main.transform.position = cameraPosition;
 		CheckWin();
 	}
 
@@ -286,10 +291,11 @@ public class Level : MonoBehaviour
 				waveElement.Key.y,
 				0
 			);
-			TileMapManager.WaveMap.SetTile(position, TileManager.GetTile(TileType.WAVE));
-			TileMapManager.WaveMap.SetColor(
-				position,
-				new Color(1f, 1f, 1f, waveElement.Value.GetTransparency()));
+			foreach(MapDirection direction in waveElement.Value.DirectionsToFlow)
+			{
+				position.z = (int)direction;
+				TileMapManager.WaveMap.SetTile(position, TileManager.GetWaveTile((int)direction));
+			}
 		}
 	}
 

@@ -2,8 +2,16 @@ using UnityEngine;
 
 public class Player
 {
+	public const int RECHARGE_LENGTH = 6;
+	public int RechargeAmount;
 	public Vector2Int Position;
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
+
+	public void TimeStep()
+	{
+		RechargeAmount++;
+		if(RechargeAmount > RECHARGE_LENGTH ) RechargeAmount = RECHARGE_LENGTH;
+	}
 
 	public void TryMove(MapDirection _direction)
 	{
@@ -29,5 +37,19 @@ public class Player
 		Position = newPosition;
 		GameManager.master.CurrentLevel.CheckButtons();
 		GameManager.master.CurrentLevel.Refresh();
+	}
+
+	public void TryGenerateWave()
+	{
+		if(RechargeAmount >= RECHARGE_LENGTH)
+		{
+			RechargeAmount = 0;
+			GameState gameState = HistoryManager.master.CaptureState();
+			UndoManager.master.PushState(gameState);
+			GameManager.master.CurrentLevel.TimeStep();
+			GameManager.master.CurrentLevel.GenerateNewWave(Position);
+			GameManager.master.CurrentLevel.RecalculateScores();
+			GameManager.master.CurrentLevel.Refresh();
+		}
 	}
 }
