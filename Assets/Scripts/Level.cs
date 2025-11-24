@@ -249,7 +249,10 @@ public class Level : MonoBehaviour
 		// Vector3 cameraPosition = Map.CoordToWorldPoint(GameManager.master.Player.Position);
 		// cameraPosition.z = -10;
 		// Camera.main.transform.position = cameraPosition;
-		CheckWin();
+		if(!CheckLose())
+		{
+			CheckWin();
+		}
 	}
 
 	public void RedrawNumbers()
@@ -272,11 +275,32 @@ public class Level : MonoBehaviour
 		}
 	}
 
+	bool CheckLose()
+	{
+		bool lost = false;
+		foreach( Door door in Doors.Values )
+		{
+			if( door.Open ) continue;
+			if( GameManager.master.Player.Position == door.Position ||
+					Boxes.ContainsKey(door.Position))
+			{
+				lost = true;
+				break;
+			}
+		}
+		if(lost)
+		{
+			GameManager.master.LoseLevel();
+		}
+		return lost;
+	}
+
 	void CheckWin()
 	{
 		if(GameManager.master.Player.Position == GameManager.master.Map.Exit)
 		{
-			GameManager.master.NextLevel();
+			Debug.Log("Win");
+			GameManager.master.WinLevel();
 		}
 	}
 

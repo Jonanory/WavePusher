@@ -11,6 +11,7 @@ public class LevelData : ScriptableObject
 	public List<Vector2Int> Floors;
 	public List<Vector2Int> Holes;
 	public List<Vector2Int> Walls;
+	public List<Vector2Int> OuterWalls;
 	public Vector2Int Exit;
 }
 

@@ -74,6 +74,7 @@ public class LevelEditorEditor : Editor {
 						{
 							if(t.walls.Contains(pos)) t.walls.Remove(pos);
 							if(t.holes.Contains(pos)) t.holes.Remove(pos);
+							if(t.outerWalls.Contains(pos)) t.outerWalls.Remove(pos);
 							t.floors.Add(pos);
 						}
 						break;
@@ -85,7 +86,20 @@ public class LevelEditorEditor : Editor {
 						{
 							if(t.floors.Contains(pos)) t.floors.Remove(pos);
 							if(t.holes.Contains(pos)) t.holes.Remove(pos);
+							if(t.outerWalls.Contains(pos)) t.outerWalls.Remove(pos);
 							t.walls.Add(pos);
+						}
+						break;
+					case DrawingState.OUTER_WALL:
+						if(t.outerWalls.Contains(pos)) {
+							t.outerWalls.Remove(pos);
+						}
+						else
+						{
+							if(t.floors.Contains(pos)) t.floors.Remove(pos);
+							if(t.holes.Contains(pos)) t.holes.Remove(pos);
+							if(t.walls.Contains(pos)) t.walls.Remove(pos);
+							t.outerWalls.Add(pos);
 						}
 						break;
 					case DrawingState.HOLE:
@@ -96,6 +110,7 @@ public class LevelEditorEditor : Editor {
 						{
 							if(t.floors.Contains(pos)) t.floors.Remove(pos);
 							if(t.walls.Contains(pos)) t.walls.Remove(pos);
+							if(t.outerWalls.Contains(pos)) t.outerWalls.Remove(pos);
 							t.holes.Add(pos);
 						}
 						break;

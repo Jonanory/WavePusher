@@ -27,6 +27,7 @@ public class Player
 				Position = newPosition;
 				GameManager.master.CurrentLevel.CheckButtons();
 				GameManager.master.CurrentLevel.Refresh();
+				GameManager.master.Camera.SetTarget(Map.CoordToWorldPoint(Position));
 			}
 			return;
 		}
@@ -37,6 +38,7 @@ public class Player
 		Position = newPosition;
 		GameManager.master.CurrentLevel.CheckButtons();
 		GameManager.master.CurrentLevel.Refresh();
+		GameManager.master.Camera.SetTarget(Map.CoordToWorldPoint(Position));
 	}
 
 	public void TryGenerateWave()

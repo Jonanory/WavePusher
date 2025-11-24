@@ -2,12 +2,13 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public enum GameMode{PLAYING, MENU}
+public enum GameMode{PLAYING, MENU, LOST, WIN}
 public class GameManager : MonoBehaviour
 {
 	public static GameManager master;
 	public Player Player;
 	public Level CurrentLevel;
+	public CameraMover Camera;
 
 	public List<LevelData> Levels = new List<LevelData>();
 	public int LevelIndex = 0;
@@ -34,11 +35,23 @@ public class GameManager : MonoBehaviour
 		Loader.LoadLevel(Levels[LevelIndex]);
 	}
 
-	public void NextLevel()
+	public void WinLevel()
 	{
+		Mode = GameMode.WIN;
+		StartCoroutine(AdvanceLevel());
+	}
+
+	IEnumerator AdvanceLevel()
+	{
+		yield return new WaitForSeconds(1);
 		LevelIndex++;
 		if(LevelIndex >= Levels.Count) LevelIndex = 0;
 		LoadLevel();
+	}
+
+	public void LoseLevel()
+	{
+		Mode = GameMode.LOST;
 	}
 
 	public void LoadLevelNumber(int _number)

@@ -148,482 +148,113 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e0cc5bc45c275041badc6fb0cd146ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelAuthoring
-  levelAsset: {fileID: 11400000, guid: 3dc3635cd44a9934e8e91e34b88f30a6, type: 2}
+  levelAsset: {fileID: 11400000, guid: d0fe1a9ee4c8d0449b9c7e01479ce5a7, type: 2}
   draft:
   - Type: 0
     Position: {x: -2, y: 0}
     SecondaryPosition: {x: 0, y: 0}
     Data: 6
-  - Type: 5
-    Position: {x: 1, y: 4}
-    SecondaryPosition: {x: 0, y: 0}
-    Data: 6
-  - Type: 7
-    Position: {x: 3, y: 0}
-    SecondaryPosition: {x: 0, y: 0}
-    Data: 6
-  - Type: 8
-    Position: {x: 3, y: 1}
-    SecondaryPosition: {x: 0, y: 0}
-    Data: 6
-  - Type: 8
-    Position: {x: 4, y: 0}
-    SecondaryPosition: {x: 0, y: 0}
-    Data: 6
-  - Type: 8
-    Position: {x: 3, y: -1}
-    SecondaryPosition: {x: 0, y: 0}
-    Data: 6
-  - Type: 8
-    Position: {x: 2, y: 0}
-    SecondaryPosition: {x: 0, y: 0}
-    Data: 6
-  - Type: 8
-    Position: {x: 2, y: -1}
-    SecondaryPosition: {x: 0, y: 0}
-    Data: 6
-  - Type: 6
-    Position: {x: -2, y: -3}
-    SecondaryPosition: {x: 0, y: 0}
-    Data: 6
-  - Type: 5
-    Position: {x: 7, y: 0}
-    SecondaryPosition: {x: 0, y: 0}
-    Data: 6
   floors:
+  - {x: -2, y: -1}
   - {x: -1, y: -2}
   - {x: 0, y: -2}
   - {x: 2, y: 0}
+  - {x: -1, y: 0}
   - {x: -2, y: 0}
   - {x: -2, y: 1}
-  - {x: -3, y: 3}
-  - {x: 1, y: 4}
-  - {x: 0, y: 4}
-  - {x: -1, y: 4}
-  - {x: -2, y: 4}
+  - {x: -1, y: 1}
   - {x: -2, y: -2}
-  - {x: -2, y: -3}
   - {x: 2, y: -1}
   - {x: 3, y: 0}
-  - {x: 2, y: 4}
-  - {x: 1, y: 5}
-  - {x: 0, y: 5}
-  - {x: -1, y: 5}
-  - {x: -2, y: 5}
-  - {x: -3, y: 5}
-  - {x: -3, y: 4}
-  - {x: -4, y: 3}
-  - {x: -5, y: 1}
-  - {x: -4, y: 2}
-  - {x: -4, y: 0}
   - {x: -3, y: -2}
-  - {x: -1, y: -4}
-  - {x: 0, y: -4}
   - {x: 1, y: 0}
   - {x: -1, y: -1}
-  - {x: 0, y: 0}
   - {x: 0, y: 1}
   - {x: 0, y: -1}
   - {x: 3, y: -1}
   - {x: 3, y: -2}
-  - {x: 1, y: -5}
-  - {x: -3, y: -5}
-  - {x: 0, y: -6}
-  - {x: -1, y: -6}
-  - {x: -2, y: -5}
-  - {x: -2, y: -6}
-  - {x: -4, y: -5}
-  - {x: -4, y: -4}
-  - {x: -4, y: -3}
-  - {x: -5, y: -3}
-  - {x: -5, y: -1}
-  - {x: -5, y: -2}
-  - {x: -4, y: -2}
-  - {x: 1, y: -7}
-  - {x: 0, y: -7}
-  - {x: -1, y: -7}
-  - {x: -2, y: -7}
-  - {x: 2, y: -6}
-  - {x: 3, y: -4}
-  - {x: 3, y: -3}
-  - {x: 2, y: -5}
+  - {x: -4, y: -1}
   - {x: 4, y: -2}
-  - {x: 4, y: -1}
   - {x: 3, y: 1}
   - {x: 4, y: 0}
-  - {x: 4, y: 2}
-  - {x: 3, y: 3}
-  - {x: 3, y: 4}
-  - {x: 2, y: 5}
-  - {x: 3, y: 5}
-  - {x: 4, y: 3}
   - {x: 4, y: 1}
-  - {x: 4, y: 4}
-  - {x: -3, y: -3}
-  - {x: -1, y: -5}
-  - {x: -1, y: -3}
-  - {x: -3, y: -4}
-  - {x: -4, y: 1}
-  - {x: -2, y: -4}
-  - {x: 1, y: -6}
-  - {x: 0, y: -5}
-  - {x: -3, y: 2}
-  - {x: -1, y: 1}
-  - {x: -1, y: 2}
-  - {x: -2, y: 2}
-  - {x: -3, y: 1}
-  - {x: -2, y: -1}
   - {x: -3, y: 0}
   - {x: -3, y: -1}
-  - {x: -4, y: -1}
-  - {x: -1, y: 0}
-  walls:
-  - {x: 2, y: 6}
-  - {x: 1, y: 6}
-  - {x: 0, y: 6}
-  - {x: -1, y: 6}
-  - {x: -2, y: 6}
-  - {x: -3, y: 6}
-  - {x: -4, y: 5}
-  - {x: -5, y: 3}
-  - {x: -4, y: 4}
-  - {x: -5, y: 2}
-  - {x: -6, y: 1}
-  - {x: -5, y: 0}
-  - {x: -5, y: -4}
-  - {x: -6, y: -3}
-  - {x: -6, y: -1}
-  - {x: -6, y: -2}
-  - {x: -6, y: 0}
-  - {x: -7, y: -1}
-  - {x: -7, y: 1}
-  - {x: -6, y: 2}
-  - {x: -5, y: 4}
-  - {x: -6, y: 3}
-  - {x: -5, y: 5}
-  - {x: -4, y: 6}
-  - {x: -4, y: 7}
-  - {x: -2, y: 7}
-  - {x: 0, y: 7}
-  - {x: -1, y: 7}
-  - {x: -3, y: 7}
-  - {x: 1, y: 7}
-  - {x: 2, y: 7}
-  - {x: 3, y: 6}
-  - {x: 6, y: 2}
-  - {x: 5, y: 1}
-  - {x: 5, y: 0}
-  - {x: 6, y: 0}
-  - {x: 5, y: -2}
-  - {x: 4, y: -3}
-  - {x: 5, y: -1}
-  - {x: 3, y: -5}
-  - {x: 3, y: -6}
-  - {x: 2, y: -7}
-  - {x: -3, y: -6}
-  - {x: -4, y: -6}
-  - {x: -3, y: -7}
-  - {x: -4, y: -7}
-  - {x: -5, y: -5}
-  - {x: 5, y: 3}
-  - {x: 5, y: 4}
-  - {x: 4, y: 5}
-  - {x: 4, y: 6}
-  - {x: 3, y: 7}
-  - {x: 2, y: -8}
-  - {x: 1, y: -8}
-  - {x: 0, y: -8}
-  - {x: -1, y: -8}
-  - {x: -3, y: -8}
-  - {x: -2, y: -8}
-  - {x: -6, y: -4}
-  - {x: -7, y: -3}
-  - {x: 6, y: 4}
-  - {x: 5, y: 5}
-  - {x: 5, y: 6}
-  - {x: 4, y: 7}
-  - {x: 6, y: 3}
-  - {x: 6, y: 1}
-  - {x: 6, y: -1}
-  - {x: 6, y: -2}
-  - {x: 3, y: -8}
-  - {x: 4, y: -5}
-  - {x: 5, y: -4}
-  - {x: 5, y: -3}
-  - {x: 5, y: 2}
-  - {x: 3, y: -7}
-  - {x: 4, y: -6}
-  - {x: -3, y: -9}
-  - {x: -2, y: -9}
-  - {x: 0, y: -9}
-  - {x: 2, y: -9}
-  - {x: 1, y: -9}
-  - {x: -1, y: -9}
-  - {x: -5, y: -7}
-  - {x: -5, y: -6}
-  - {x: -6, y: -5}
-  - {x: -7, y: -2}
-  - {x: 1, y: -1}
-  - {x: 1, y: -2}
+  - {x: -3, y: 1}
   - {x: 2, y: -2}
-  - {x: 1, y: -3}
-  - {x: 2, y: -4}
-  - {x: 2, y: -3}
-  - {x: 1, y: -4}
-  - {x: 0, y: -3}
-  - {x: 1, y: 8}
-  - {x: 2, y: 8}
-  - {x: 3, y: 8}
-  - {x: 4, y: 8}
-  - {x: 5, y: 8}
-  - {x: 5, y: 9}
-  - {x: 1, y: 9}
-  - {x: 0, y: 9}
-  - {x: 4, y: 9}
-  - {x: 3, y: 9}
-  - {x: 2, y: 9}
-  - {x: 0, y: 8}
-  - {x: -1, y: 8}
-  - {x: -2, y: 8}
-  - {x: -3, y: 8}
-  - {x: -4, y: 8}
-  - {x: -5, y: 7}
-  - {x: -6, y: 4}
-  - {x: -5, y: 6}
-  - {x: -6, y: 5}
-  - {x: -7, y: 5}
-  - {x: -6, y: 6}
-  - {x: -6, y: 7}
-  - {x: -5, y: 8}
-  - {x: -6, y: 8}
-  - {x: -7, y: 7}
-  - {x: -7, y: 9}
-  - {x: -4, y: 9}
-  - {x: -2, y: 9}
-  - {x: -1, y: 9}
-  - {x: -3, y: 9}
-  - {x: -6, y: 9}
-  - {x: -5, y: 9}
-  - {x: -7, y: 8}
-  - {x: -8, y: 5}
-  - {x: -7, y: 3}
-  - {x: -7, y: 4}
-  - {x: -8, y: 3}
-  - {x: -7, y: 2}
-  - {x: -8, y: 1}
-  - {x: -8, y: 0}
-  - {x: -8, y: -1}
-  - {x: -7, y: 0}
-  - {x: -7, y: -5}
-  - {x: -6, y: -6}
-  - {x: -6, y: -7}
-  - {x: -5, y: -8}
-  - {x: -4, y: -8}
-  - {x: -4, y: -9}
-  - {x: -5, y: -9}
-  - {x: -6, y: -8}
-  - {x: -6, y: -9}
-  - {x: -7, y: -9}
-  - {x: -9, y: -9}
-  - {x: -8, y: -9}
-  - {x: -8, y: -8}
-  - {x: -7, y: -8}
-  - {x: -8, y: -7}
-  - {x: -7, y: -7}
-  - {x: -8, y: -6}
-  - {x: -7, y: -6}
-  - {x: -9, y: -7}
-  - {x: -9, y: -5}
-  - {x: -8, y: -5}
-  - {x: -8, y: -4}
-  - {x: -7, y: -4}
-  - {x: -8, y: -3}
-  - {x: -9, y: -3}
-  - {x: -9, y: -1}
-  - {x: -8, y: -2}
-  - {x: -9, y: 1}
-  - {x: -8, y: 2}
-  - {x: -9, y: 3}
-  - {x: -8, y: 4}
-  - {x: -8, y: 6}
-  - {x: -7, y: 6}
-  - {x: -9, y: 6}
-  - {x: -9, y: 5}
-  - {x: -8, y: 7}
-  - {x: -9, y: 7}
-  - {x: -8, y: 8}
-  - {x: -9, y: 8}
-  - {x: -8, y: 9}
-  - {x: -9, y: 9}
-  - {x: 5, y: 7}
-  - {x: 6, y: 7}
-  - {x: 6, y: 6}
-  - {x: 7, y: 5}
-  - {x: 6, y: 5}
-  - {x: 7, y: 6}
-  - {x: 7, y: 4}
-  - {x: 8, y: 4}
-  - {x: 7, y: 2}
-  - {x: 7, y: 3}
-  - {x: 8, y: 2}
-  - {x: 7, y: 1}
-  - {x: 7, y: 0}
-  - {x: 8, y: 0}
-  - {x: 8, y: -2}
-  - {x: 7, y: -3}
-  - {x: 7, y: -4}
-  - {x: 6, y: -5}
-  - {x: 6, y: -6}
-  - {x: 5, y: -8}
-  - {x: 4, y: -8}
-  - {x: 5, y: -6}
-  - {x: 5, y: -5}
-  - {x: 6, y: -4}
-  - {x: 7, y: -2}
-  - {x: 7, y: -1}
-  - {x: 6, y: -3}
-  - {x: 3, y: -9}
-  - {x: 4, y: -9}
-  - {x: 5, y: -9}
-  - {x: 6, y: -9}
-  - {x: 7, y: -8}
-  - {x: 6, y: -8}
-  - {x: 6, y: -7}
-  - {x: 7, y: -6}
-  - {x: 7, y: -5}
-  - {x: 7, y: -7}
-  - {x: 7, y: -9}
-  - {x: 5, y: -7}
-  - {x: 4, y: -7}
-  - {x: 8, y: 6}
-  - {x: 7, y: 7}
-  - {x: 7, y: 8}
-  - {x: 6, y: 8}
-  - {x: 7, y: 9}
-  - {x: 6, y: 9}
-  - {x: 7, y: 10}
-  - {x: 6, y: 10}
-  - {x: 4, y: 10}
-  - {x: 3, y: 10}
-  - {x: 2, y: 10}
-  - {x: 1, y: 10}
-  - {x: 5, y: 10}
-  - {x: 0, y: 10}
-  - {x: -3, y: 10}
-  - {x: -4, y: 10}
-  - {x: -1, y: 10}
-  - {x: -2, y: 10}
-  - {x: -5, y: 10}
-  - {x: -6, y: 10}
-  - {x: -8, y: 10}
-  - {x: -7, y: 10}
-  - {x: 7, y: -10}
-  - {x: 6, y: -10}
-  - {x: 5, y: -10}
-  - {x: 2, y: -10}
-  - {x: 4, y: -10}
-  - {x: 3, y: -10}
-  - {x: 6, y: -11}
-  - {x: 5, y: -11}
-  - {x: 4, y: -11}
-  - {x: 3, y: -11}
-  - {x: 7, y: -11}
-  - {x: 2, y: -11}
-  - {x: 1, y: -11}
-  - {x: 1, y: -10}
-  - {x: 0, y: -11}
-  - {x: 0, y: -10}
-  - {x: -1, y: -11}
-  - {x: -2, y: -11}
-  - {x: -3, y: -11}
-  - {x: -4, y: -11}
-  - {x: -1, y: -10}
-  - {x: -2, y: -10}
-  - {x: -3, y: -10}
-  - {x: -4, y: -10}
-  - {x: -5, y: -11}
-  - {x: -6, y: -11}
-  - {x: -7, y: -11}
-  - {x: -8, y: -11}
-  - {x: -5, y: -10}
-  - {x: -6, y: -10}
-  - {x: -7, y: -10}
-  - {x: -8, y: -10}
-  - {x: -9, y: -11}
-  holes:
+  - {x: 1, y: -2}
+  - {x: 1, y: -1}
   - {x: 2, y: 1}
-  - {x: 3, y: 2}
-  - {x: 1, y: 2}
   - {x: 1, y: 1}
+  - {x: 5, y: 0}
+  - {x: 5, y: -2}
+  - {x: 5, y: -1}
+  walls:
+  - {x: 6, y: -2}
+  - {x: 1, y: -3}
+  - {x: 2, y: -3}
+  - {x: -3, y: -3}
+  - {x: -4, y: -3}
+  - {x: -1, y: -3}
+  - {x: 0, y: -3}
+  - {x: 3, y: -3}
+  - {x: 4, y: -3}
+  - {x: -4, y: -2}
+  - {x: -5, y: -1}
+  - {x: -4, y: 0}
+  - {x: -4, y: 1}
+  - {x: -3, y: 2}
+  - {x: -2, y: 2}
+  - {x: -1, y: 2}
+  - {x: 0, y: 2}
+  - {x: 1, y: 2}
+  - {x: -2, y: -3}
+  - {x: 2, y: 2}
+  - {x: 3, y: 2}
+  - {x: 5, y: -3}
+  - {x: 6, y: 0}
+  - {x: 6, y: -1}
+  - {x: 5, y: 1}
+  - {x: 5, y: 2}
+  - {x: 4, y: 2}
+  - {x: 0, y: 0}
+  outerWalls:
+  - {x: -6, y: -1}
+  - {x: -5, y: 0}
+  - {x: -5, y: 1}
+  - {x: -4, y: 2}
+  - {x: -4, y: 3}
+  - {x: -3, y: 3}
+  - {x: -2, y: 3}
+  - {x: -1, y: 3}
+  - {x: 0, y: 3}
   - {x: 1, y: 3}
   - {x: 2, y: 3}
-  - {x: 2, y: 2}
-  - {x: 0, y: 3}
-  - {x: 0, y: 2}
-  - {x: -1, y: 3}
-  - {x: -2, y: 3}
-  exit: {x: 4, y: -4}
-  links:
-  - input:
-      Type: 5
-      Position: {x: 1, y: 4}
-      SecondaryPosition: {x: 0, y: 0}
-      Data: 6
-    output:
-      Type: 8
-      Position: {x: 3, y: 1}
-      SecondaryPosition: {x: 0, y: 0}
-      Data: 6
-  - input:
-      Type: 5
-      Position: {x: 1, y: 4}
-      SecondaryPosition: {x: 0, y: 0}
-      Data: 6
-    output:
-      Type: 8
-      Position: {x: 4, y: 0}
-      SecondaryPosition: {x: 0, y: 0}
-      Data: 6
-  - input:
-      Type: 5
-      Position: {x: 1, y: 4}
-      SecondaryPosition: {x: 0, y: 0}
-      Data: 6
-    output:
-      Type: 8
-      Position: {x: 2, y: 0}
-      SecondaryPosition: {x: 0, y: 0}
-      Data: 6
-  - input:
-      Type: 5
-      Position: {x: 1, y: 4}
-      SecondaryPosition: {x: 0, y: 0}
-      Data: 6
-    output:
-      Type: 8
-      Position: {x: 2, y: -1}
-      SecondaryPosition: {x: 0, y: 0}
-      Data: 6
-  - input:
-      Type: 5
-      Position: {x: 1, y: 4}
-      SecondaryPosition: {x: 0, y: 0}
-      Data: 6
-    output:
-      Type: 8
-      Position: {x: 3, y: -1}
-      SecondaryPosition: {x: 0, y: 0}
-      Data: 6
-  - input:
-      Type: 5
-      Position: {x: 1, y: 4}
-      SecondaryPosition: {x: 0, y: 0}
-      Data: 6
-    output:
-      Type: 7
-      Position: {x: 3, y: 0}
-      SecondaryPosition: {x: 0, y: 0}
-      Data: 6
+  - {x: 3, y: 3}
+  - {x: 4, y: 3}
+  - {x: 5, y: 3}
+  - {x: 6, y: 2}
+  - {x: 6, y: 1}
+  - {x: 7, y: 0}
+  - {x: 7, y: -1}
+  - {x: 7, y: -2}
+  - {x: 6, y: -3}
+  - {x: 6, y: -4}
+  - {x: 5, y: -4}
+  - {x: 4, y: -4}
+  - {x: 3, y: -4}
+  - {x: 2, y: -4}
+  - {x: 0, y: -4}
+  - {x: 1, y: -4}
+  - {x: -1, y: -4}
+  - {x: -2, y: -4}
+  - {x: -3, y: -4}
+  - {x: -4, y: -4}
+  - {x: -5, y: -3}
+  - {x: -5, y: -2}
+  holes: []
+  exit: {x: 4, y: -1}
+  links: []
   colorOptions:
   - {r: 1, g: 0, b: 0, a: 0}
   - {r: 0, g: 0.84313726, b: 1, a: 0}
@@ -634,7 +265,7 @@ MonoBehaviour:
   - {r: 0.24528301, g: 0.24528301, b: 0.24528301, a: 0}
   hexSize: 0.5
   Data: 6
-  drawingState: 5
+  drawingState: 1
 --- !u!4 &27472662
 Transform:
   m_ObjectHideFlags: 0
@@ -1407,6 +1038,7 @@ GameObject:
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
   - component: {fileID: 519420030}
+  - component: {fileID: 519420033}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1526,12 +1158,35 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 11.05, y: 7.68, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &519420033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2f6e17f8d7c3f443bb9e6394bb1923d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraMover
+  orthoCam: {fileID: 0}
+  Type: 0
+  TargetLocation: {x: 0, y: 0, z: 0}
+  StartLocation: {x: 0, y: 0, z: 0}
+  IsTargeting: 0
+  LerpAmount: 0
+  Speed: 1
+  LeftOfLevel: 0
+  RightOfLevel: 0
+  TopOfLevel: 0
+  BottomOfLevel: 0
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -2891,6 +2546,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   CurrentLevel: {fileID: 1964689155}
+  Camera: {fileID: 519420033}
   Levels:
   - {fileID: 11400000, guid: 3dc3635cd44a9934e8e91e34b88f30a6, type: 2}
   - {fileID: 11400000, guid: d0fe1a9ee4c8d0449b9c7e01479ce5a7, type: 2}

@@ -139,6 +139,43 @@ public class LevelLoader : MonoBehaviour
 					wallPos.y,
 					(int)MapLayer.WALL),
 				TileManager.master.WallTile);
+
+		int[] extents = new int[]{
+			_levelData.OuterWalls[0].x,
+			_levelData.OuterWalls[0].y,
+			_levelData.OuterWalls[0].x,
+			_levelData.OuterWalls[0].y};
+
+		foreach(Vector2Int outerWallPos in _levelData.OuterWalls)
+		{
+			TileMapManager.SceneMap.SetTile(
+				new Vector3Int(
+					outerWallPos.x,
+					outerWallPos.y,
+					(int)MapLayer.WALL),
+				TileManager.master.WallTile);
+			TileMapManager.SceneMap.SetColor(
+				new Vector3Int(
+					outerWallPos.x,
+					outerWallPos.y,
+					(int)MapLayer.WALL),
+				new Color(1f, 1f, 1f,0.0f));
+
+			if(outerWallPos.x < extents[0]) extents[0] = outerWallPos.x;
+			if(outerWallPos.x > extents[2]) extents[2] = outerWallPos.x;
+			if(outerWallPos.y < extents[3]) extents[3] = outerWallPos.y;
+			if(outerWallPos.y > extents[1]) extents[1] = outerWallPos.y;
+		}
+
+		Vector2 bottomLeft = Map.CoordToWorldPoint(extents[0],extents[3]);
+		Vector2 topRight = Map.CoordToWorldPoint(extents[2],extents[1]);
+
+		GameManager.master.Camera.SetLevelRect(
+			bottomLeft.x,
+			topRight.y,
+			topRight.x,
+			bottomLeft.y
+		);
 	}
 
 	void DrawHoles(LevelData _levelData)

@@ -6,26 +6,34 @@ public class Controller : MonoBehaviour
 	void Update()
 	{
 		if (Keyboard.current.qKey.wasPressedThisFrame)
-			GameManager.master.Player.TryMove(MapDirection.UP_LEFT);
+			if(GameManager.master.Mode == GameMode.PLAYING)
+				GameManager.master.Player.TryMove(MapDirection.UP_LEFT);
 		if (Keyboard.current.wKey.wasPressedThisFrame)
-			GameManager.master.Player.TryMove(MapDirection.UP);
+			if(GameManager.master.Mode == GameMode.PLAYING)
+				GameManager.master.Player.TryMove(MapDirection.UP);
 		if (Keyboard.current.eKey.wasPressedThisFrame)
-			GameManager.master.Player.TryMove(MapDirection.UP_RIGHT);
+			if(GameManager.master.Mode == GameMode.PLAYING)
+				GameManager.master.Player.TryMove(MapDirection.UP_RIGHT);
 		if (Keyboard.current.aKey.wasPressedThisFrame)
-			GameManager.master.Player.TryMove(MapDirection.DOWN_LEFT);
+			if(GameManager.master.Mode == GameMode.PLAYING)
+				GameManager.master.Player.TryMove(MapDirection.DOWN_LEFT);
 		if (Keyboard.current.sKey.wasPressedThisFrame)
-			GameManager.master.Player.TryMove(MapDirection.DOWN);
+			if(GameManager.master.Mode == GameMode.PLAYING)
+				GameManager.master.Player.TryMove(MapDirection.DOWN);
 		if (Keyboard.current.dKey.wasPressedThisFrame)
-			GameManager.master.Player.TryMove(MapDirection.DOWN_RIGHT);
+			if(GameManager.master.Mode == GameMode.PLAYING)
+				GameManager.master.Player.TryMove(MapDirection.DOWN_RIGHT);
 
 		if (Keyboard.current.spaceKey.wasPressedThisFrame)
 		{
-			GameManager.master.Player.TryGenerateWave();
+			if(GameManager.master.Mode == GameMode.PLAYING)
+				GameManager.master.Player.TryGenerateWave();
 		}
 
 		if (Keyboard.current.fKey.wasPressedThisFrame)
 		{
-			GameManager.master.CurrentLevel.ToggleGhost(GameManager.master.Player.Position);
+			if(GameManager.master.Mode == GameMode.PLAYING)
+				GameManager.master.CurrentLevel.ToggleGhost(GameManager.master.Player.Position);
 		}
 
 		if (Keyboard.current.rKey.wasPressedThisFrame)
@@ -41,6 +49,11 @@ public class Controller : MonoBehaviour
 		if(Keyboard.current.zKey.wasPressedThisFrame)
 		{
 			if (!UndoManager.master.CanUndo)
+				return;
+
+
+			if(GameManager.master.Mode != GameMode.PLAYING &&
+					GameManager.master.Mode != GameMode.LOST)
 				return;
 
 			var prev = UndoManager.master.PopState();

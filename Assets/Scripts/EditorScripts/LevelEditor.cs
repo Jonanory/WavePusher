@@ -16,7 +16,8 @@ public enum DrawingState
 	EMITTER = 7,
 	DOOR = 8,
 	HOLE = 10,
-	EXIT = 12
+	EXIT = 12,
+	OUTER_WALL = 13,
 }
 [ExecuteInEditMode]
 public class LevelEditor : MonoBehaviour {
@@ -25,6 +26,7 @@ public class LevelEditor : MonoBehaviour {
 	[HideInInspector] public List<LevelDataCell> draft = new();
 	[HideInInspector] public List<Vector2Int> floors = new();
 	[HideInInspector] public List<Vector2Int> walls = new();
+	[HideInInspector] public List<Vector2Int> outerWalls = new();
 	[HideInInspector] public List<Vector2Int> holes = new();
 	[HideInInspector] public Vector2Int exit = new Vector2Int(0,0);
 	[HideInInspector] public List<LevelDataLink> links = new();
@@ -57,6 +59,7 @@ public class LevelEditor : MonoBehaviour {
 		draft = levelAsset ? new List<LevelDataCell>(levelAsset.Cells) : new List<LevelDataCell>();
 		floors = levelAsset ? new List<Vector2Int>(levelAsset.Floors) : new List<Vector2Int>();
 		walls = levelAsset ? new List<Vector2Int>(levelAsset.Walls) : new List<Vector2Int>();
+		outerWalls = levelAsset ? new List<Vector2Int>(levelAsset.OuterWalls) : new List<Vector2Int>();
 		holes = levelAsset ? new List<Vector2Int>(levelAsset.Holes) : new List<Vector2Int>();
 		links = levelAsset ? new List<LevelDataLink>(levelAsset.Links) : new List<LevelDataLink>();
 		exit = levelAsset ? levelAsset.Exit : new Vector2Int(0,0);
@@ -71,6 +74,8 @@ public class LevelEditor : MonoBehaviour {
 		if(levelAsset.Floors.Contains(exit)) levelAsset.Floors.Remove(exit);
 		levelAsset.Walls = new List<Vector2Int>(walls);
 		if(levelAsset.Walls.Contains(exit)) levelAsset.Walls.Remove(exit);
+		levelAsset.OuterWalls = new List<Vector2Int>(outerWalls);
+		if(levelAsset.OuterWalls.Contains(exit)) levelAsset.OuterWalls.Remove(exit);
 		levelAsset.Holes = new List<Vector2Int>(holes);
 		if(levelAsset.Holes.Contains(exit)) levelAsset.Holes.Remove(exit);
 		levelAsset.Links = new List<LevelDataLink>(links);
@@ -158,10 +163,15 @@ public class LevelEditor : MonoBehaviour {
 		}
 
 		foreach (var c in walls) {
-			// if(c.x == exit.x && c.y == exit.y) continue;
 			var pos = AxialToWorld(c.x, c.y);
 			pos.z = 2;
 			Gizmos.DrawIcon(pos, "Wall.tif");
+		}
+
+		foreach (var c in outerWalls) {
+			var pos = AxialToWorld(c.x, c.y);
+			pos.z = 2;
+			Gizmos.DrawIcon(pos, "OuterWall.tif");
 		}
 
 		foreach (var c in holes) {

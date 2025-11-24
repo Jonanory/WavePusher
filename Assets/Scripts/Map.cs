@@ -171,6 +171,11 @@ public class Map : MonoBehaviour
 		return true;
 	}
 
+	public static Vector2 CoordToWorldPoint(int _x, int _y)
+	{
+		return CoordToWorldPoint(new Vector2Int(_x,_y));
+	}
+
 	public static Vector2 CoordToWorldPoint(Vector2Int _coord)
 	{
 		return new Vector2(

@@ -14,7 +14,8 @@ public enum CellType
 	WAVE,
 	HOLE,
 	GHOST,
-	EXIT
+	EXIT,
+	OUTER_WALLs
 }
 [System.Serializable]
 public struct LevelDataCell
