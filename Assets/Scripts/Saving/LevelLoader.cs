@@ -18,7 +18,6 @@ public class LevelLoader : MonoBehaviour
 		}
 
 		DrawFloor(_levelData);
-		DrawWalls(_levelData);
 		DrawHoles(_levelData);
 		GameManager.master.Map.Exit = _levelData.Exit;
 
@@ -65,6 +64,7 @@ public class LevelLoader : MonoBehaviour
 					break;
 			}
 		}
+		DrawWalls(_levelData);
 
 		Door door;
 		Emitter emitter;

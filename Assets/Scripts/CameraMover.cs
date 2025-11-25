@@ -44,7 +44,8 @@ public class CameraMover :  MonoBehaviour
 		}
 		else
 			SetTarget(
-				Map.CoordToWorldPoint(GameManager.master.Player.Position));
+				Map.CoordToWorldPoint(
+					GameManager.master.Player.Position));
 	}
 
 	void RescaleCamera()
