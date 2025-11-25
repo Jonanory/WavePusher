@@ -52,7 +52,7 @@ public class HistoryManager : MonoBehaviour
 		}
 
 		state.buttons = new List<ButtonState>();
-		foreach (Button button in GameManager.master.CurrentLevel.Buttons.Values)
+		foreach (InGameButton button in GameManager.master.CurrentLevel.Buttons.Values)
 		{
 			state.buttons.Add(new ButtonState {
 				position = button.Position,
@@ -144,7 +144,7 @@ public class HistoryManager : MonoBehaviour
 
 		for (int i = 0; i < state.buttons.Count; i++)
 		{
-			Button newButton = GameManager.master.CurrentLevel.Buttons[state.buttons[i].position];
+			InGameButton newButton = GameManager.master.CurrentLevel.Buttons[state.buttons[i].position];
 			newButton.IsActivated = state.buttons[i].isActive;
 		}
 

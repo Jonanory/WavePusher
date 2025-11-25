@@ -1,13 +1,16 @@
 using UnityEngine;
 
-public class CameraMover :  MonoBehaviour
+public class CameraMover :  MonoBehaviour
 {
 	public Camera orthoCam;
 	public enum CameraType {STATIC, FLOAT}
-	public CameraType Type = CameraType.STATIC;
+	public CameraType HorizontalType = CameraType.STATIC;
+	public CameraType VerticalType = CameraType.STATIC;
 
 	public Vector3 TargetLocation;
 	public Vector3 StartLocation;
+	float ScreenWidth;
+	float ScreenHeight;
 
 	public bool IsTargeting = false;
 	public float LerpAmount;
@@ -18,24 +21,39 @@ public class CameraMover :  MonoBehaviour
 	public float TopOfLevel;
 	public float BottomOfLevel;
 
+	float LevelHeight {get{return TopOfLevel - BottomOfLevel;}}
+	float LevelWidth {get{return RightOfLevel - LeftOfLevel;}}
+
 	void RecalculateCameraType()
 	{
-		float screenAspect = (float) Screen.width / (float) Screen.height;
-		float camHalfHeight = orthoCam.orthographicSize;
-		float camHalfWidth = orthoCam.aspect * camHalfHeight;
+		HorizontalType = (RightOfLevel - LeftOfLevel > ScreenWidth) ? 
+			CameraType.FLOAT :
+			CameraType.STATIC;
 
-		if(RightOfLevel - LeftOfLevel > 2.0f * camHalfWidth || TopOfLevel - BottomOfLevel > 2.0f * camHalfHeight)
+		VerticalType = (TopOfLevel - BottomOfLevel > ScreenHeight) ? 
+			CameraType.FLOAT :
+			CameraType.STATIC;
+
+		if(HorizontalType == CameraType.STATIC && VerticalType == CameraType.STATIC)
 		{
-			Type = CameraType.FLOAT;
-		}
-		else
-		{
-			Type = CameraType.STATIC;
+			RescaleCamera();
 			transform.position = new Vector3(
-				RightOfLevel / 2 +   LeftOfLevel / 2,
-				  TopOfLevel / 2 + BottomOfLevel / 2,
+				RightOfLevel / 2 + LeftOfLevel / 2,
+				TopOfLevel / 2 + BottomOfLevel / 2,
 				transform.position.z);
 		}
+		else
+			SetTarget(
+				Map.CoordToWorldPoint(GameManager.master.Player.Position));
+	}
+
+	void RescaleCamera()
+	{
+		orthoCam.orthographicSize = 
+			Mathf.Max(
+				RightOfLevel-LeftOfLevel,
+				TopOfLevel-BottomOfLevel
+			)/2-0.5f;
 	}
 
 	public void SetLevelRect(float _left, float _top, float _right, float _bottom)
@@ -44,6 +62,10 @@ public class CameraMover :  MonoBehaviour
 		TopOfLevel = _top;
 		RightOfLevel = _right;
 		BottomOfLevel = _bottom;
+
+		orthoCam.orthographicSize = 6;
+		ScreenHeight = 2 * orthoCam.orthographicSize;
+		ScreenWidth = orthoCam.aspect * ScreenHeight;
 		RecalculateCameraType();
 	}
 
@@ -65,18 +87,42 @@ public class CameraMover :  MonoBehaviour
 			transform.position = Vector3.Lerp(
 				StartLocation,
 				TargetLocation,
-				1-(1-LerpAmount)*(1-LerpAmount));
+				LerpAmount*(2-LerpAmount));
 		}
 	}
 
 	public void SetTarget(Vector2 _targetLocation)
 	{
-		if(Type != CameraType.FLOAT) return;
+		if(HorizontalType == CameraType.STATIC &&
+			VerticalType == CameraType.STATIC) return;
+
+		float xTarget, yTarget;
+		if(HorizontalType == CameraType.STATIC)
+		{
+			xTarget = RightOfLevel / 2 + LeftOfLevel / 2;
+		}
+		else
+		{
+			xTarget = LeftOfLevel + ScreenWidth/2 +
+				(LevelWidth - ScreenWidth) * (_targetLocation.x - LeftOfLevel) / LevelWidth;
+		}
+
+		if(VerticalType == CameraType.STATIC)
+		{
+			yTarget = TopOfLevel / 2 + BottomOfLevel / 2;
+		}
+		else
+		{
+			yTarget = BottomOfLevel + ScreenHeight/2 +
+				(LevelHeight - ScreenHeight) * (_targetLocation.y - BottomOfLevel) / LevelHeight;
+		}
+
 		StartLocation = transform.position;
 		TargetLocation = new Vector3(
-			_targetLocation.x,
-			_targetLocation.y,
+			xTarget,
+			yTarget,
 			transform.position.z);
+
 		IsTargeting = true;
 		LerpAmount = 0f;
 	}

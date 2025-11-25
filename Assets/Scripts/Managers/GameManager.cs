@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 	public Player Player;
 	public Level CurrentLevel;
 	public CameraMover Camera;
+	public MenuManager menuManager;
 
 	public List<LevelData> Levels = new List<LevelData>();
 	public int LevelIndex = 0;
@@ -64,6 +65,6 @@ public class GameManager : MonoBehaviour
 	public void ShowLevelMenu()
 	{
 		Mode = GameMode.MENU;
-		LevelSelectMenu.SetActive(true);
+		menuManager.OpenLevelSelector();
 	}
 }

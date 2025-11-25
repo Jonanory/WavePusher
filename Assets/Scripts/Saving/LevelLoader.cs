@@ -4,16 +4,18 @@ using UnityEngine.Tilemaps;
 public class LevelLoader : MonoBehaviour
 {
 	public LevelData testData;
-
-	void Start()
-	{
-		LoadLevel(testData);
-	}
+	public Transform ImageHolder;
+	public float ImageZCoord = -3f;
 
 	public void LoadLevel(LevelData _levelData)
 	{
 		GameManager.master.Map.ClearAll();
 		GameManager.master.CurrentLevel.ClearAll();
+
+		foreach(Transform image in ImageHolder)
+		{
+			Destroy(image.gameObject);
+		}
 
 		DrawFloor(_levelData);
 		DrawWalls(_levelData);
@@ -38,7 +40,7 @@ public class LevelLoader : MonoBehaviour
 					break;
 
 				case CellType.BUTTON:
-					Button newButton = new Button();
+					InGameButton newButton = new InGameButton();
 					newButton.Position = cell.Position;
 					GameManager.master.CurrentLevel.Buttons.Add(cell.Position, newButton);
 					break;
@@ -67,7 +69,7 @@ public class LevelLoader : MonoBehaviour
 		Door door;
 		Emitter emitter;
 		Receiver receiver;
-		Button button;
+		InGameButton button;
 		/* Set the activatables of buttons and receivers */
 		foreach(LevelDataLink link in _levelData.Links)
 		{
@@ -187,5 +189,18 @@ public class LevelLoader : MonoBehaviour
 					holePos.y,
 					(int)MapLayer.HOLE),
 				TileManager.master.HoleTile);
+	}
+
+	public void CreateImageObject(LevelImage _image)
+	{
+		GameObject obj = new GameObject("SpriteObject");
+		obj.transform.SetParent(ImageHolder);
+		obj.transform.position = new Vector3(
+			_image.Position.x,
+			_image.Position.y,
+			ImageZCoord);
+
+		SpriteRenderer sr = obj.AddComponent<SpriteRenderer>();
+		sr.sprite = _image.Sprite;
 	}
 }

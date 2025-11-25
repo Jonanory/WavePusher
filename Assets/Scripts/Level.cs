@@ -12,7 +12,7 @@ public class Level : MonoBehaviour
 	public Dictionary<Vector2Int, int> Scores = new Dictionary<Vector2Int, int>();
 	public Dictionary<Vector2Int, Emitter> Emitters = new Dictionary<Vector2Int, Emitter>();
 	public Dictionary<Vector2Int, Receiver> Receivers = new Dictionary<Vector2Int, Receiver>();
-	public Dictionary<Vector2Int, Button> Buttons = new Dictionary<Vector2Int, Button>();
+	public Dictionary<Vector2Int, InGameButton> Buttons = new Dictionary<Vector2Int, InGameButton>();
 
 	public void ClearAll()
 	{
@@ -28,7 +28,7 @@ public class Level : MonoBehaviour
 		Scores = new Dictionary<Vector2Int, int>();
 		Emitters = new Dictionary<Vector2Int, Emitter>();
 		Receivers = new Dictionary<Vector2Int, Receiver>();
-		Buttons = new Dictionary<Vector2Int, Button>();
+		Buttons = new Dictionary<Vector2Int, InGameButton>();
 	}
 
 	/* Keeps the buttons, receivers, doors and emitters intact (for undoing purposes) */
@@ -75,7 +75,7 @@ public class Level : MonoBehaviour
 			ghost.TimeStep();
 		}
 
-		foreach (Button button in Buttons.Values)
+		foreach (InGameButton button in Buttons.Values)
 		{
 			button.CheckCondition(true);
 		}
@@ -85,7 +85,7 @@ public class Level : MonoBehaviour
 
 	public void CheckButtons()
 	{
-		foreach (Button button in Buttons.Values)
+		foreach (InGameButton button in Buttons.Values)
 		{
 			button.CheckCondition(false);
 		}
@@ -156,7 +156,7 @@ public class Level : MonoBehaviour
 		TileMapManager.InteractableMap.ClearAllTiles();
 
 		Tile tileToUse;
-		foreach (Button button in Buttons.Values)
+		foreach (InGameButton button in Buttons.Values)
 		{
 			if(button.IsActivated)
 				tileToUse = TileManager.GetTile(TileType.BUTTON_PRESSED);

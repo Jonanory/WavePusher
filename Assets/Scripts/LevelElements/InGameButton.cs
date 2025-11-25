@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class Button
+public class InGameButton
 {
 	public Vector2Int Position;
 	public bool IsActivated = false;
