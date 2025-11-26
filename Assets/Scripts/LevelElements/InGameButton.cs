@@ -14,6 +14,8 @@ public class InGameButton
 		{
 			if(GameManager.master.CurrentLevel.Boxes.ContainsKey(Position))
 				IsActivated = true;
+			else if(GameManager.master.CurrentLevel.Emitters.ContainsKey(Position))
+				IsActivated = true;
 			else if(!_ignorePlayer && GameManager.master.Player.Position == Position)
 				IsActivated = true;
 
@@ -25,9 +27,9 @@ public class InGameButton
 				}
 			}
 		}
-		else if (IsActivated && (GameManager.master.Player.Position != Position && !GameManager.master.CurrentLevel.Boxes.ContainsKey(Position)))
+		else if (IsActivated && (GameManager.master.Player.Position != Position && !GameManager.master.CurrentLevel.Boxes.ContainsKey(Position) && !GameManager.master.CurrentLevel.Emitters.ContainsKey(Position)))
 		{
-			if(!GameManager.master.CurrentLevel.Boxes.ContainsKey(Position) && (_ignorePlayer || GameManager.master.Player.Position != Position))
+			if(!GameManager.master.CurrentLevel.Boxes.ContainsKey(Position) && !GameManager.master.CurrentLevel.Emitters.ContainsKey(Position) && (_ignorePlayer || GameManager.master.Player.Position != Position))
 				IsActivated = false;
 
 			if(!IsActivated)

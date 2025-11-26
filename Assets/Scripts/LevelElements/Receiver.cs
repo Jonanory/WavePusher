@@ -11,7 +11,7 @@ public class Receiver
 
 	public void TimeStep()
 	{
-		if (!IsActivated && GameManager.master.CurrentLevel.ScoreAtCoord(Position) >= ScoreNeeded)
+		if (!IsActivated && GameManager.master.CurrentLevel.ScoreAtCoord(Position))
 		{
 			IsActivated = true;
 			foreach (IActivatable activatable in Activatables)
@@ -19,7 +19,7 @@ public class Receiver
 				activatable.Activate();
 			}
 		}
-		else if (IsActivated && GameManager.master.CurrentLevel.ScoreAtCoord(Position) < ScoreNeeded)
+		else if (IsActivated && !GameManager.master.CurrentLevel.ScoreAtCoord(Position))
 		{
 			IsActivated = false;
 			foreach (IActivatable activatable in Activatables)

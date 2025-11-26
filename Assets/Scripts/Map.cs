@@ -161,6 +161,23 @@ public class Map : MonoBehaviour
 		return false;
 	}
 
+	public bool CoordIsFullyBlocked(Vector2Int _coord)
+	{
+		if (TileMapManager.SceneMap.HasTile(
+			new Vector3Int(
+				_coord.x,
+				_coord.y,
+				(int)MapLayer.WALL))) return true;
+		if (TileMapManager.SceneMap.HasTile(
+			new Vector3Int(
+				_coord.x,
+				_coord.y,
+				(int)MapLayer.HOLE))) return true;
+		foreach (Receiver receiver in GameManager.master.CurrentLevel.Receivers.Values)
+			if (receiver.Position == _coord) return true;
+		return false;
+	}
+
 	public bool CoordIsFlowable(Vector2Int _coord)
 	{
 		if (TileMapManager.SceneMap.HasTile(

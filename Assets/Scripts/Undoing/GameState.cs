@@ -52,6 +52,7 @@ public struct EmitterState
 	public Vector2Int position;
 	public int ticksUntilNextWave;
 	public bool isActive;
+	public int strength;
 }
 
 

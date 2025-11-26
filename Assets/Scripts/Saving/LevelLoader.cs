@@ -54,6 +54,7 @@ public class LevelLoader : MonoBehaviour
 					Emitter newEmitter = new Emitter();
 					newEmitter.Position = cell.Position;
 					newEmitter.Strength = cell.Data;
+					newEmitter.IsActive = true;
 					GameManager.master.CurrentLevel.Emitters.Add(cell.Position, newEmitter);
 					break;
 
@@ -82,10 +83,12 @@ public class LevelLoader : MonoBehaviour
 						case CellType.RECEIVER:
 							receiver = GameManager.master.CurrentLevel.Receivers[link.input.Position];
 							receiver.Activatables.Add(door);
+							door.ReceiverActivator = receiver;
 							break;
 						case CellType.BUTTON:
 							button = GameManager.master.CurrentLevel.Buttons[link.input.Position];
 							button.Activatables.Add(door);
+							door.ButtonActivator = button;
 							break;
 					}
 					break;
@@ -96,10 +99,12 @@ public class LevelLoader : MonoBehaviour
 						case CellType.RECEIVER:
 							receiver = GameManager.master.CurrentLevel.Receivers[link.input.Position];
 							receiver.Activatables.Add(emitter);
+							emitter.ReceiverActivator = receiver;
 							break;
 						case CellType.BUTTON:
 							button = GameManager.master.CurrentLevel.Buttons[link.input.Position];
 							button.Activatables.Add(emitter);
+							emitter.ButtonActivator = button;
 							break;
 					}
 					break;
@@ -113,23 +118,7 @@ public class LevelLoader : MonoBehaviour
 	void DrawFloor(LevelData _levelData)
 	{
 		foreach (Vector2Int floorPos in _levelData.Floors)
-		{
-			Tile tile;
-			if (Map.Mod(floorPos.x, 3) == Map.Mod(floorPos.y + Map.Mod(floorPos.y,6) / 2, 3) )
-			{
-				tile = TileManager.GetTile(TileType.FLOOR_EXTRA);
-			}
-			else
-			{
-				tile = TileManager.GetTile(TileType.FLOOR_MAIN);
-			}
-			TileMapManager.SceneMap.SetTile(
-				new Vector3Int(
-					floorPos.x,
-					floorPos.y,
-					(int)MapLayer.FLOOR),
-				tile);
-		}
+			DrawSingleFloor(floorPos);
 	}
 
 	void DrawWalls(LevelData _levelData)
@@ -179,16 +168,37 @@ public class LevelLoader : MonoBehaviour
 			bottomLeft.y
 		);
 	}
+	void DrawSingleFloor(Vector2Int _position)
+	{
+		Tile tile;
+		if (Map.Mod(_position.x, 3) == Map.Mod(_position.y + Map.Mod(_position.y,6) / 2, 3) )
+		{
+			tile = TileManager.GetTile(TileType.FLOOR_EXTRA);
+		}
+		else
+		{
+			tile = TileManager.GetTile(TileType.FLOOR_MAIN);
+		}
+		TileMapManager.SceneMap.SetTile(
+			new Vector3Int(
+				_position.x,
+				_position.y,
+				(int)MapLayer.FLOOR),
+			tile);
+	}
 
 	void DrawHoles(LevelData _levelData)
 	{
 		foreach(Vector2Int holePos in _levelData.Holes)
+		{
+			DrawSingleFloor(holePos);
 			TileMapManager.SceneMap.SetTile(
 				new Vector3Int(
 					holePos.x,
 					holePos.y,
 					(int)MapLayer.HOLE),
 				TileManager.master.HoleTile);
+		}
 	}
 
 	public void CreateImageObject(LevelImage _image)

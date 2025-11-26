@@ -47,6 +47,7 @@ public class HistoryManager : MonoBehaviour
 			state.emitters.Add(new EmitterState {
 				position = emitter.Position,
 				ticksUntilNextWave = emitter.currentSteps,
+				strength = emitter.Strength,
 				isActive = emitter.IsActive
 			});
 		}
@@ -129,11 +130,19 @@ public class HistoryManager : MonoBehaviour
 			newDoor.Open = state.doors[i].isOpen;
 		}
 
+		GameManager.master.CurrentLevel.Emitters = new Dictionary<Vector2Int, Emitter>();
 		for (int i = 0; i < state.emitters.Count; i++)
 		{
-			Emitter newEmitter = GameManager.master.CurrentLevel.Emitters[state.emitters[i].position];
-			newEmitter.IsActive = state.emitters[i].isActive;
+			
+			Emitter newEmitter = new Emitter();
+			newEmitter.Position = state.emitters[i].position;
+			newEmitter.Strength = state.emitters[i].strength;
+			newEmitter.IsActive = true;
 			newEmitter.currentSteps = state.emitters[i].ticksUntilNextWave;
+			
+			GameManager.master.CurrentLevel.Emitters.Add(
+				state.emitters[i].position, 
+				newEmitter);
 		}
 
 		for (int i = 0; i < state.receivers.Count; i++)

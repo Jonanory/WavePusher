@@ -62,7 +62,7 @@ public class Level : MonoBehaviour
 
 		foreach (Wave wave in CurrentWaves)
 		{
-			if (wave.Radius > 10)
+			if (wave.Radius > 20)
 			{
 				Waves.Remove(wave);
 				continue;
@@ -257,6 +257,7 @@ public class Level : MonoBehaviour
 
 	public void RedrawNumbers()
 	{
+		return;
 		foreach(KeyValuePair<Vector2Int,int> score in Scores)
 		{
 			int toScore = score.Value;
@@ -323,16 +324,15 @@ public class Level : MonoBehaviour
 		}
 	}
 
-	public int ScoreAtCoord(Vector2Int _coord)
+	public bool ScoreAtCoord(Vector2Int _coord)
 	{
-		int score = 0;
 		WaveElement currentElement = null;
 		foreach(Wave wave in Waves)
 		{
 			currentElement = wave.ElementAtCoord(_coord);
-			if(currentElement != null) score += currentElement.Strength;
+			if(currentElement != null) return true;
 		}
-		return score;
+		return false;
 	}
 
 	public void GenerateNewWave(Vector2Int _origin, int? _strength = null)
@@ -369,6 +369,26 @@ public class Level : MonoBehaviour
 	public Box GetBox(Vector2Int _position)
 	{
 		if (Boxes.ContainsKey(_position)) return Boxes[_position];
+		return null;
+	}
+
+	public bool PushEmitter(Vector2Int _boxPosition, MapDirection _direction)
+	{
+		Emitter boxToPush = GetEmitter(_boxPosition);
+		if (boxToPush == null)
+		{
+			Debug.LogError("Tried to push emitter that doesn't exist");
+			return false;
+		}
+		if (!boxToPush.Push(_direction)) return false;
+		Emitters.Remove(_boxPosition);
+		Emitters.Add(boxToPush.Position, boxToPush);
+		return true;
+	}
+
+	public Emitter GetEmitter(Vector2Int _position)
+	{
+		if (Emitters.ContainsKey(_position)) return Emitters[_position];
 		return null;
 	}
 }

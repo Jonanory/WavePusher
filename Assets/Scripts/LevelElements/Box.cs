@@ -16,7 +16,7 @@ public class Box
 
 	public bool Push(MapDirection _direction)
 	{
-		if (!CanPush(_direction)) return false;
+		// if (!CanPush(_direction)) return false;
 		Position = Map.CoordAfterMovement(
 				Position,
 				_direction);

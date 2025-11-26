@@ -16,6 +16,22 @@ public class Wave
 		Radius = 1;
 	}
 
+	public Wave Duplicate()
+	{
+		Wave newWave = new Wave(Center);
+		newWave.Radius = Radius;
+		foreach(WaveElement element in Elements.Values)
+		{
+			WaveElement newElement = new WaveElement(element.Position, element.Strength);
+			foreach(MapDirection direction in element.DirectionsToFlow)
+			{
+				newElement.AddFlowDirection(direction);
+			}
+			newWave.Elements.Add(element.Position, newElement);
+		}
+		return newWave;
+	}
+
 	public void Init(int? _strength = null)
 	{
 		int strength = _strength.HasValue ? _strength.Value : BASE_WAVE_STRENGTH;

@@ -18,7 +18,7 @@ public class Ghost
 		if(currentSteps >= STEPS_BETWEEN_WAVES)
 		{
 			currentSteps = 0;
-			GameManager.master.CurrentLevel.GenerateNewWave(Position);
+			GameManager.master.CurrentLevel.GenerateNewWave(Position,6);
 		}
 	}
 }
