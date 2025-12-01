@@ -2,12 +2,16 @@ using UnityEngine;
 
 public enum Sfx
 {
-	BOX_MOVE
+	BOX_MOVE,
+	WIN,
+	LOSE
 }
 
 public class SfxManager : MonoBehaviour
 {
 	public AudioClip BoxMoveClip;
+	public AudioClip WinClip;
+	public AudioClip LoseClip;
 	private AudioSource SfxSource;
 
 	void Awake()
@@ -21,13 +25,17 @@ public class SfxManager : MonoBehaviour
 		switch(_sfx)
 		{
 			case Sfx.BOX_MOVE: return BoxMoveClip;
+			case Sfx.WIN: return WinClip;
+			case Sfx.LOSE: return LoseClip;
 			default: return null;
 		}
 	}
 
-	public void PlaySfx(Sfx _sfx)
+	public static void PlaySfx(Sfx _sfx, float volume = 1f)
 	{
-		SfxSource.PlayOneShot(GetClip(_sfx));
+		GameManager.master.sfxManager.SfxSource.PlayOneShot(
+			GameManager.master.sfxManager.GetClip(_sfx), 
+			volume);
 	}
 
 	public void PlayClip(AudioClip clip, float volume = 1f)

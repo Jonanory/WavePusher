@@ -26,110 +26,20 @@ public class Player
 
 		if (GameManager.master.CurrentLevel.Doors.ContainsKey(newPosition))
 		{
-			if(!DoorIsOpenAt(levelState, newPosition, _direction)) return;
-
-			if (GameManager.master.CurrentLevel.GetBox(newPosition) != null)
-			{
-				if(GameManager.master.Map.CoordIsFullyBlocked(newPushablePosition) ||
-						GameManager.master.CurrentLevel.Boxes.ContainsKey(newPushablePosition) ||
-						GameManager.master.CurrentLevel.Emitters.ContainsKey(newPushablePosition)) return;
-
-				if (GameManager.master.CurrentLevel.Doors.ContainsKey(newPushablePosition))
-				{
-					if(!DoorIsOpenAt(levelState, newPushablePosition, _direction, true, false)) return;
-					if (GameManager.master.CurrentLevel.PushBox(newPosition, _direction))
-					{
-						UndoManager.master.PushState(gameState);
-						GameManager.master.CurrentLevel.TimeStep();
-						Position = newPosition;
-						GameManager.master.CurrentLevel.CheckButtons();
-						GameManager.master.CurrentLevel.Refresh();
-						GameManager.master.Camera.SetTarget(Map.CoordToWorldPoint(Position));
-					}
-					return;
-				}
-				else
-				{
-					if (GameManager.master.CurrentLevel.PushBox(newPosition, _direction))
-					{
-						UndoManager.master.PushState(gameState);
-						GameManager.master.CurrentLevel.TimeStep();
-						Position = newPosition;
-						GameManager.master.CurrentLevel.CheckButtons();
-						GameManager.master.CurrentLevel.Refresh();
-						GameManager.master.Camera.SetTarget(Map.CoordToWorldPoint(Position));
-					}
-					return;
-				}
-			}
-			else if (GameManager.master.CurrentLevel.GetEmitter(newPosition) != null)
-			{
-				if(GameManager.master.Map.CoordIsFullyBlocked(newPushablePosition) ||
-						GameManager.master.CurrentLevel.Boxes.ContainsKey(newPushablePosition) ||
-						GameManager.master.CurrentLevel.Receivers.ContainsKey(newPushablePosition)) return;
-
-				if (GameManager.master.CurrentLevel.Doors.ContainsKey(newPushablePosition))
-				{
-					if(!DoorIsOpenAt(levelState, newPushablePosition, _direction, true, false)) return;
-					if (GameManager.master.CurrentLevel.PushEmitter(newPosition, _direction))
-					{
-						UndoManager.master.PushState(gameState);
-						GameManager.master.CurrentLevel.TimeStep();
-						Position = newPosition;
-						GameManager.master.CurrentLevel.CheckButtons();
-						GameManager.master.CurrentLevel.Refresh();
-						GameManager.master.Camera.SetTarget(Map.CoordToWorldPoint(Position));
-					}
-					return;
-				}
-				else
-				{
-					if (GameManager.master.CurrentLevel.PushEmitter(newPosition, _direction))
-					{
-						UndoManager.master.PushState(gameState);
-						GameManager.master.CurrentLevel.TimeStep();
-						Position = newPosition;
-						GameManager.master.CurrentLevel.CheckButtons();
-						GameManager.master.CurrentLevel.Refresh();
-						GameManager.master.Camera.SetTarget(Map.CoordToWorldPoint(Position));
-					}
-					return;
-				}
-			}
+			if(!GameManager.master.CurrentLevel.Doors[newPosition].Open && !DoorIsOpenAt(levelState, newPosition, _direction)) return;
 		}
-		else if (GameManager.master.CurrentLevel.GetBox(newPosition) != null)
+
+		if (GameManager.master.CurrentLevel.GetBox(newPosition) != null)
 		{
 			if(GameManager.master.Map.CoordIsFullyBlocked(newPushablePosition) ||
 					GameManager.master.CurrentLevel.Boxes.ContainsKey(newPushablePosition) ||
 					GameManager.master.CurrentLevel.Emitters.ContainsKey(newPushablePosition)) return;
 
 			if (GameManager.master.CurrentLevel.Doors.ContainsKey(newPushablePosition))
-			{
 				if(!DoorIsOpenAt(levelState, newPushablePosition, _direction, true, false)) return;
-				if (GameManager.master.CurrentLevel.PushBox(newPosition, _direction))
-				{
-					UndoManager.master.PushState(gameState);
-					GameManager.master.CurrentLevel.TimeStep();
-					Position = newPosition;
-					GameManager.master.CurrentLevel.CheckButtons();
-					GameManager.master.CurrentLevel.Refresh();
-					GameManager.master.Camera.SetTarget(Map.CoordToWorldPoint(Position));
-				}
+
+			if (!GameManager.master.CurrentLevel.PushBox(newPosition, _direction))
 				return;
-			}
-			else
-			{
-				if (GameManager.master.CurrentLevel.PushBox(newPosition, _direction))
-				{
-					UndoManager.master.PushState(gameState);
-					GameManager.master.CurrentLevel.TimeStep();
-					Position = newPosition;
-					GameManager.master.CurrentLevel.CheckButtons();
-					GameManager.master.CurrentLevel.Refresh();
-					GameManager.master.Camera.SetTarget(Map.CoordToWorldPoint(Position));
-				}
-				return;
-			}
 		}
 		else if (GameManager.master.CurrentLevel.GetEmitter(newPosition) != null)
 		{
@@ -138,32 +48,9 @@ public class Player
 					GameManager.master.CurrentLevel.Emitters.ContainsKey(newPushablePosition)) return;
 
 			if (GameManager.master.CurrentLevel.Doors.ContainsKey(newPushablePosition))
-			{
-				if(!DoorIsOpenAt(levelState, newPushablePosition, _direction, true, false)) return;
-				if (GameManager.master.CurrentLevel.PushEmitter(newPosition, _direction))
-				{
-					UndoManager.master.PushState(gameState);
-					GameManager.master.CurrentLevel.TimeStep();
-					Position = newPosition;
-					GameManager.master.CurrentLevel.CheckButtons();
-					GameManager.master.CurrentLevel.Refresh();
-					GameManager.master.Camera.SetTarget(Map.CoordToWorldPoint(Position));
-				}
+				if(!DoorIsOpenAt(levelState, newPushablePosition, _direction, false, true)) return;
+			if (!GameManager.master.CurrentLevel.PushEmitter(newPosition, _direction))
 				return;
-			}
-			else
-			{
-				if (GameManager.master.CurrentLevel.PushEmitter(newPosition, _direction))
-				{
-					UndoManager.master.PushState(gameState);
-					GameManager.master.CurrentLevel.TimeStep();
-					Position = newPosition;
-					GameManager.master.CurrentLevel.CheckButtons();
-					GameManager.master.CurrentLevel.Refresh();
-					GameManager.master.Camera.SetTarget(Map.CoordToWorldPoint(Position));
-				}
-				return;
-			}
 		}
 
 		UndoManager.master.PushState(gameState);
@@ -172,6 +59,7 @@ public class Player
 		GameManager.master.CurrentLevel.CheckButtons();
 		GameManager.master.CurrentLevel.Refresh();
 		GameManager.master.Camera.SetTarget(Map.CoordToWorldPoint(Position));
+		GameManager.master.CurrentLevel.CheckWin();
 	}
 
 	public void TryGenerateWave()

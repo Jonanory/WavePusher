@@ -51,10 +51,6 @@ MonoBehaviour:
     SecondaryPosition: {x: 0, y: 0}
     Data: 6
   - Type: 6
-    Position: {x: -6, y: -8}
-    SecondaryPosition: {x: 0, y: 0}
-    Data: 6
-  - Type: 6
     Position: {x: -4, y: -11}
     SecondaryPosition: {x: 0, y: 0}
     Data: 6
@@ -67,17 +63,9 @@ MonoBehaviour:
     SecondaryPosition: {x: 0, y: 0}
     Data: 6
   - Type: 7
-    Position: {x: 1, y: 0}
-    SecondaryPosition: {x: 0, y: 0}
-    Data: 6
-  - Type: 7
     Position: {x: -1, y: -3}
     SecondaryPosition: {x: 0, y: 0}
-    Data: 6
-  - Type: 7
-    Position: {x: -2, y: 4}
-    SecondaryPosition: {x: 0, y: 0}
-    Data: 6
+    Data: 4
   - Type: 4
     Position: {x: -1, y: -6}
     SecondaryPosition: {x: 0, y: 0}
@@ -86,6 +74,30 @@ MonoBehaviour:
     Position: {x: 2, y: -6}
     SecondaryPosition: {x: 0, y: 0}
     Data: 6
+  - Type: 7
+    Position: {x: -8, y: 7}
+    SecondaryPosition: {x: 0, y: 0}
+    Data: 5
+  - Type: 7
+    Position: {x: -8, y: 3}
+    SecondaryPosition: {x: 0, y: 0}
+    Data: 4
+  - Type: 7
+    Position: {x: -8, y: -1}
+    SecondaryPosition: {x: 0, y: 0}
+    Data: 3
+  - Type: 7
+    Position: {x: -8, y: -5}
+    SecondaryPosition: {x: 0, y: 0}
+    Data: 2
+  - Type: 7
+    Position: {x: -8, y: -9}
+    SecondaryPosition: {x: 0, y: 0}
+    Data: 1
+  - Type: 7
+    Position: {x: -7, y: -13}
+    SecondaryPosition: {x: 0, y: 0}
+    Data: 0
   Links:
   - input:
       Type: 4
@@ -234,23 +246,13 @@ MonoBehaviour:
   - {x: -4, y: 4}
   - {x: -5, y: 4}
   - {x: -5, y: 3}
-  - {x: -6, y: 3}
   - {x: -5, y: 2}
   - {x: -6, y: 1}
-  - {x: -7, y: 1}
-  - {x: -6, y: 2}
-  - {x: -6, y: -1}
   - {x: -5, y: 0}
-  - {x: -6, y: 0}
-  - {x: -6, y: -2}
-  - {x: -7, y: -2}
   - {x: -7, y: -1}
   - {x: -6, y: -3}
-  - {x: -7, y: -3}
   - {x: -5, y: -4}
   - {x: -4, y: -4}
-  - {x: -6, y: -4}
-  - {x: -6, y: -5}
   - {x: -5, y: -5}
   - {x: -4, y: -6}
   - {x: -3, y: -6}
@@ -286,48 +288,32 @@ MonoBehaviour:
   - {x: -4, y: -9}
   - {x: -5, y: -8}
   - {x: -5, y: -11}
-  - {x: -6, y: -9}
   - {x: -4, y: -10}
   - {x: -5, y: -10}
   - {x: -5, y: -9}
   - {x: -4, y: -8}
-  - {x: -6, y: -8}
-  - {x: -7, y: -7}
-  - {x: -6, y: -6}
   - {x: -6, y: -7}
   - {x: -5, y: -6}
   - {x: -7, y: -6}
   - {x: -7, y: -5}
   - {x: -8, y: -5}
   - {x: -7, y: -4}
-  - {x: -8, y: -3}
   - {x: -8, y: -1}
   - {x: -7, y: 0}
-  - {x: -8, y: 1}
   - {x: -7, y: 2}
   - {x: -7, y: 3}
   - {x: -7, y: 4}
   - {x: -6, y: 5}
   - {x: -5, y: 6}
-  - {x: -6, y: 4}
-  - {x: -7, y: 5}
   - {x: -8, y: 3}
   - {x: -7, y: 6}
-  - {x: -8, y: 5}
   - {x: -8, y: 7}
   - {x: -7, y: 7}
-  - {x: -6, y: 7}
   - {x: -5, y: 7}
-  - {x: -6, y: 6}
-  - {x: -8, y: -7}
   - {x: -7, y: -8}
   - {x: -7, y: -9}
   - {x: -8, y: -9}
-  - {x: -6, y: -10}
   - {x: -7, y: -10}
-  - {x: -6, y: -11}
-  - {x: -7, y: -11}
-  - {x: -8, y: -11}
   - {x: -4, y: -11}
   - {x: -3, y: -11}
   - {x: -2, y: -11}
@@ -374,7 +360,6 @@ MonoBehaviour:
   - {x: 5, y: 7}
   - {x: -7, y: -12}
   - {x: -6, y: -12}
-  - {x: -5, y: -12}
   - {x: -4, y: -12}
   - {x: -3, y: -12}
   - {x: -2, y: -12}
@@ -394,12 +379,9 @@ MonoBehaviour:
   - {x: -3, y: -13}
   - {x: -1, y: -13}
   - {x: -4, y: -13}
-  - {x: -5, y: -13}
   - {x: -6, y: -13}
   - {x: -7, y: -13}
-  - {x: -5, y: -14}
   - {x: -4, y: -14}
-  - {x: -6, y: -15}
   - {x: -6, y: -14}
   - {x: -5, y: -15}
   - {x: -3, y: -15}
@@ -466,6 +448,7 @@ MonoBehaviour:
   - {x: 7, y: -7}
   - {x: 4, y: -4}
   - {x: 4, y: -3}
+  - {x: -7, y: -2}
   Holes:
   - {x: 5, y: -8}
   - {x: 5, y: -7}
@@ -573,6 +556,35 @@ MonoBehaviour:
   - {x: 10, y: -3}
   - {x: -8, y: -13}
   - {x: 3, y: -18}
+  - {x: -8, y: 5}
+  - {x: -7, y: 5}
+  - {x: -6, y: 6}
+  - {x: -6, y: 7}
+  - {x: -6, y: 4}
+  - {x: -6, y: 3}
+  - {x: -6, y: 2}
+  - {x: -7, y: 1}
+  - {x: -8, y: 1}
+  - {x: -6, y: 0}
+  - {x: -6, y: -1}
+  - {x: -6, y: -2}
+  - {x: -8, y: -3}
+  - {x: -7, y: -3}
+  - {x: -6, y: -4}
+  - {x: -6, y: -5}
+  - {x: -6, y: -6}
+  - {x: -7, y: -7}
+  - {x: -8, y: -7}
+  - {x: -6, y: -9}
+  - {x: -6, y: -10}
+  - {x: -7, y: -11}
+  - {x: -8, y: -11}
+  - {x: -6, y: -8}
+  - {x: -6, y: -11}
+  - {x: -5, y: -12}
+  - {x: -5, y: -13}
+  - {x: -5, y: -14}
+  - {x: -6, y: -15}
   OuterWalls:
   - {x: 1, y: -24}
   - {x: 0, y: -25}

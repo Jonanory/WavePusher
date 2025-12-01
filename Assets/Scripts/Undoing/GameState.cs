@@ -5,6 +5,7 @@ using System.Collections.Generic;
 [System.Serializable]
 public class GameState
 {
+	public int Time;
 	public Vector2Int playerPos;
 	public int playerRecharge;
 	public List<Vector2Int> boxPositions;
@@ -50,9 +51,7 @@ public struct ReceiverState
 public struct EmitterState
 {
 	public Vector2Int position;
-	public int ticksUntilNextWave;
-	public bool isActive;
-	public int strength;
+	public int offset;
 }
 
 

@@ -59,12 +59,12 @@ public class CameraMover :  MonoBehaviour
 
 	public void SetLevelRect(float _left, float _top, float _right, float _bottom)
 	{
-		LeftOfLevel = _left;
-		TopOfLevel = _top;
-		RightOfLevel = _right;
-		BottomOfLevel = _bottom;
+		LeftOfLevel = _left-1;
+		TopOfLevel = _top + 1;
+		RightOfLevel = _right+1;
+		BottomOfLevel = _bottom-1;
 
-		orthoCam.orthographicSize = 6;
+		orthoCam.orthographicSize = 5;
 		ScreenHeight = 2 * orthoCam.orthographicSize;
 		ScreenWidth = orthoCam.aspect * ScreenHeight;
 		RecalculateCameraType();

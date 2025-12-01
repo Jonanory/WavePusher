@@ -6,6 +6,8 @@ using System.Collections.Generic;
 [CreateAssetMenu(menuName = "Levels/LevelData")]
 public class LevelData : ScriptableObject
 {
+	public string Name;
+	public int Number;
 	public List<LevelImage> Images;
 	public List<LevelDataCell> Cells;
 	public List<LevelDataLink> Links;
@@ -21,4 +23,5 @@ public struct LevelImage
 {
 	public Vector2 Position;
 	public Sprite Sprite;
+	public float Scale;
 }

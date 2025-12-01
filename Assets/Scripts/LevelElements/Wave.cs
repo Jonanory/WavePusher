@@ -97,8 +97,7 @@ public class Wave
 			if (!NewElementLocations.Contains(_newPosition))
 			{
 				if (!GameManager.master.Map.CoordIsFlowable(_newPosition) ||
-							GameManager.master.CurrentLevel.Boxes.ContainsKey(_newPosition) ||
-							(GameManager.master.CurrentLevel.Doors.ContainsKey(_newPosition) && !GameManager.master.CurrentLevel.Doors[_newPosition].Open))
+							GameManager.master.CurrentLevel.Boxes.ContainsKey(_newPosition))
 				{
 					BlockedElementLocations.Add(_newPosition);
 					return;

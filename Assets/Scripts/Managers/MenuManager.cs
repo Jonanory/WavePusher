@@ -6,6 +6,8 @@ public class MenuManager : MonoBehaviour
 {
 	public GameObject LevelSelectMenu;
 	public GameObject MainMenu;
+	public GameObject EndMenu;
+	public GameObject LevelNamePanel;
 
 	public List<HexMenuButton> LevelButtons;
 	public HexMenuButton CurrentLevelButton;
@@ -31,6 +33,7 @@ public class MenuManager : MonoBehaviour
 
 	public void OpenLevelSelector()
 	{
+		LevelNamePanel.SetActive(false);
 		GameManager.master.Mode = GameMode.MENU;
 		SetUnlockedLevels();
 		LevelSelectMenu.SetActive(true);
@@ -56,4 +59,32 @@ public class MenuManager : MonoBehaviour
 		LevelSelectMenu.SetActive(false);
 	}
 
+	public void OpenMainMenu()
+	{
+		GameManager.master.Mode = GameMode.MENU;
+		LevelNamePanel.SetActive(false);
+		MainMenu.SetActive(true);
+	}
+
+	public void CloseMainMenu()
+	{
+		MainMenu.SetActive(false);
+	}
+
+	public void OpenEndMenu()
+	{
+		GameManager.master.Mode = GameMode.MENU;
+		LevelNamePanel.SetActive(false);
+		EndMenu.SetActive(true);
+	}
+
+	public void CloseEndMenu()
+	{
+		EndMenu.SetActive(false);
+	}
+
+	public void OpenLevelName()
+	{
+		LevelNamePanel.SetActive(true);
+	}
 }

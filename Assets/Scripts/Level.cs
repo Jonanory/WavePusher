@@ -14,8 +14,11 @@ public class Level : MonoBehaviour
 	public Dictionary<Vector2Int, Receiver> Receivers = new Dictionary<Vector2Int, Receiver>();
 	public Dictionary<Vector2Int, InGameButton> Buttons = new Dictionary<Vector2Int, InGameButton>();
 
+	public int Time;
+
 	public void ClearAll()
 	{
+		Time = 0;
 		TileMapManager.WaveMap.ClearAllTiles();
 		TileMapManager.ScoreMap.ClearAllTiles();
 		TileMapManager.GhostMap.ClearAllTiles();
@@ -47,6 +50,7 @@ public class Level : MonoBehaviour
 
 	public void TimeStep()
 	{
+		Time++;
 		GameManager.master.Player.TimeStep();
 
 		foreach(Emitter emitter in Emitters.Values)
@@ -172,10 +176,7 @@ public class Level : MonoBehaviour
 
 		foreach (Emitter emitter in Emitters.Values)
 		{
-			if(emitter.IsActive)
-				tileToUse = TileManager.GetActiveEmitterTile(emitter.currentSteps);
-			else
-				tileToUse = TileManager.GetTile(TileType.EMITTER);
+			tileToUse = TileManager.GetActiveEmitterTile(emitter.StepsTilEmit());
 			TileMapManager.OccupantMap.SetTile(
 				new Vector3Int(
 					emitter.Position.x,
@@ -203,7 +204,7 @@ public class Level : MonoBehaviour
 				GameManager.master.Player.Position.x,
 				GameManager.master.Player.Position.y,
 				0),
-			TileManager.GetPlayerTile(GameManager.master.Player.RechargeAmount));
+			TileManager.GetTile(TileType.PLAYER));
 
 		foreach(Vector2Int boxPos in Boxes.Keys)
 		{
@@ -249,10 +250,6 @@ public class Level : MonoBehaviour
 		// Vector3 cameraPosition = Map.CoordToWorldPoint(GameManager.master.Player.Position);
 		// cameraPosition.z = -10;
 		// Camera.main.transform.position = cameraPosition;
-		if(!CheckLose())
-		{
-			CheckWin();
-		}
 	}
 
 	public void RedrawNumbers()
@@ -282,8 +279,7 @@ public class Level : MonoBehaviour
 		foreach( Door door in Doors.Values )
 		{
 			if( door.Open ) continue;
-			if( GameManager.master.Player.Position == door.Position ||
-					Boxes.ContainsKey(door.Position))
+			if( GameManager.master.Player.Position == door.Position)
 			{
 				lost = true;
 				break;
@@ -296,8 +292,13 @@ public class Level : MonoBehaviour
 		return lost;
 	}
 
-	void CheckWin()
+	public void CheckWin()
 	{
+		if(CheckLose())
+		{
+			return;
+		}
+
 		if(GameManager.master.Player.Position == GameManager.master.Map.Exit)
 		{
 			Debug.Log("Win");
@@ -314,25 +315,31 @@ public class Level : MonoBehaviour
 			Vector3Int position = new Vector3Int(
 				waveElement.Key.x,
 				waveElement.Key.y,
-				0
+				7
 			);
+			
+			TileMapManager.WaveMap.SetTile(position, TileManager.GetTile(TileType.HOLE));
+			TileMapManager.WaveMap.SetColor(position, new Color(0.34f,0.72f,1f,0.3f));
+
 			foreach(MapDirection direction in waveElement.Value.DirectionsToFlow)
 			{
 				position.z = (int)direction;
 				TileMapManager.WaveMap.SetTile(position, TileManager.GetWaveTile((int)direction));
+				TileMapManager.WaveMap.SetColor(position, new Color(1f,1f,1f,0.7f * waveElement.Value.Strength / Emitter.START_STRENGTH + 0.3f));
 			}
 		}
 	}
 
-	public bool ScoreAtCoord(Vector2Int _coord)
+	public int ScoreAtCoord(Vector2Int _coord)
 	{
+		int score = 0;
 		WaveElement currentElement = null;
 		foreach(Wave wave in Waves)
 		{
 			currentElement = wave.ElementAtCoord(_coord);
-			if(currentElement != null) return true;
+			if(currentElement != null) score++;
 		}
-		return false;
+		return score;
 	}
 
 	public void GenerateNewWave(Vector2Int _origin, int? _strength = null)

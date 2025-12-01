@@ -89,12 +89,20 @@ public class Map : MonoBehaviour
 	void DrawHoles(List<Vector2Int> _holePositions)
 	{
 		foreach(Vector2Int holePos in _holePositions)
+		{
 			TileMapManager.SceneMap.SetTile(
 				new Vector3Int(
 					holePos.x,
 					holePos.y,
 					(int)MapLayer.HOLE),
-				TileManager.master.HoleTile);
+				TileManager.GetTile(TileType.HOLE));
+			TileMapManager.SceneMap.SetColor(
+				new Vector3Int(
+					holePos.x,
+					holePos.y,
+					(int)MapLayer.HOLE),
+				new Color(0f,0f,0f));
+		}
 	}
 
 	public static MapDirection RotateClockwise(MapDirection _direction, int _numberOfSteps = 1)

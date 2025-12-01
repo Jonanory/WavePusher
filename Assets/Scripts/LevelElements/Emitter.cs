@@ -3,6 +3,8 @@ using UnityEngine;
 public class Emitter : IActivatable
 {
 	public const int STEPS_BETWEEN_WAVES = 6;
+	public const int START_STRENGTH = 12;
+	public int Offset = 0;
 	public int currentSteps;
 	public bool HasEmittedThisTimestep = true;
 	public Vector2Int Position;
@@ -37,14 +39,12 @@ public class Emitter : IActivatable
 	{
 		if(IsActive && !HasEmittedThisTimestep)
 		{
-			currentSteps++;
-			if(currentSteps>=STEPS_BETWEEN_WAVES)
+			if(GameManager.master.CurrentLevel.Time % STEPS_BETWEEN_WAVES == Offset)
 			{
-				currentSteps = 0;
 				HasEmittedThisTimestep = true;
 				GameManager.master.CurrentLevel.GenerateNewWave(
 					Position, 
-					Strength);
+					START_STRENGTH);
 			}
 			return true;
 		}
@@ -64,6 +64,11 @@ public class Emitter : IActivatable
 		return !GameManager.master.Map.CoordIsBlocked(
 			positionAfterPush
 		);
+	}
+
+	public int StepsTilEmit()
+	{
+		return (GameManager.master.CurrentLevel.Time + STEPS_BETWEEN_WAVES - Offset) % STEPS_BETWEEN_WAVES;
 	}
 
 	public bool Push(MapDirection _direction)

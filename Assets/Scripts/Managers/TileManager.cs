@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public enum TileType
 {
 	PLAYER,
+	PLAYER_LOSE,
 	WAVE,
 	GHOST_0,
 	GHOST_1,
@@ -31,14 +32,17 @@ public enum TileType
 	EMITTER_ACTIVE_5,
 	EMITTER_ACTIVE_6,
 	DOOR,
-	DOOR_OPEN
+	DOOR_OPEN,
+	HOLE
 }
 
 public class TileManager : MonoBehaviour
 {
 	public static TileManager master;
 	[SerializeField]
-	List<Tile> PlayerTiles = new List<Tile>();
+	Tile PlayerTile;
+	[SerializeField]
+	Tile PlayerTile_Lose;
 	[SerializeField]
 	List<Tile> WaveTiles = new List<Tile>();
 
@@ -53,7 +57,7 @@ public class TileManager : MonoBehaviour
 	[SerializeField]
 	public HexagonalRuleTile  WallTile;
 	[SerializeField]
-	public HexagonalRuleTile  HoleTile;
+	Tile HoleTile;
 	[SerializeField]
 	Tile ExitTile;
 
@@ -96,6 +100,11 @@ public class TileManager : MonoBehaviour
 			case TileType.EXIT:
 				return master.ExitTile;
 
+			case TileType.PLAYER:
+				return master.PlayerTile;
+			case TileType.PLAYER_LOSE:
+				return master.PlayerTile_Lose;
+
 			case TileType.RECEIVER:
 				return master.ReceiverTile;
 			case TileType.RECEIVER_ACTIVATED:
@@ -108,6 +117,9 @@ public class TileManager : MonoBehaviour
 			case TileType.BOX:
 				return master.BoxTile;
 
+			case TileType.HOLE:
+				return master.HoleTile;
+
 			case TileType.EMITTER:
 				return master.EmitterTiles[0];
 			case TileType.DOOR:
@@ -116,14 +128,6 @@ public class TileManager : MonoBehaviour
 				return master.DoorTile_Open;
 		}
 		return null;
-	}
-
-	public static Tile GetPlayerTile(int _number)
-	{
-		if(_number >=0 && _number < 7)
-			return master.PlayerTiles[_number];
-		else
-			return master.PlayerTiles[0];
 	}
 
 	public static Tile GetWaveTile(int _number)

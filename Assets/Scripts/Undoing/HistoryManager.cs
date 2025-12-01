@@ -15,6 +15,7 @@ public class HistoryManager : MonoBehaviour
 	public GameState CaptureState()
 	{
 		var state = new GameState();
+		state.Time = GameManager.master.CurrentLevel.Time;
 		state.playerPos = GameManager.master.Player.Position;
 		state.playerRecharge = GameManager.master.Player.RechargeAmount;
 
@@ -46,9 +47,7 @@ public class HistoryManager : MonoBehaviour
 		{
 			state.emitters.Add(new EmitterState {
 				position = emitter.Position,
-				ticksUntilNextWave = emitter.currentSteps,
-				strength = emitter.Strength,
-				isActive = emitter.IsActive
+				offset = emitter.Offset
 			});
 		}
 
@@ -102,6 +101,7 @@ public class HistoryManager : MonoBehaviour
 		if (state == null) return;
 		GameManager.master.CurrentLevel.ClearMost();
 
+		GameManager.master.CurrentLevel.Time = state.Time;
 		GameManager.master.Player.Position = state.playerPos;
 		GameManager.master.Player.RechargeAmount = state.playerRecharge;
 
@@ -136,9 +136,8 @@ public class HistoryManager : MonoBehaviour
 			
 			Emitter newEmitter = new Emitter();
 			newEmitter.Position = state.emitters[i].position;
-			newEmitter.Strength = state.emitters[i].strength;
+			newEmitter.Offset = state.emitters[i].offset;
 			newEmitter.IsActive = true;
-			newEmitter.currentSteps = state.emitters[i].ticksUntilNextWave;
 			
 			GameManager.master.CurrentLevel.Emitters.Add(
 				state.emitters[i].position, 
@@ -165,7 +164,7 @@ public class HistoryManager : MonoBehaviour
 			newWave.Elements = new Dictionary<Vector2Int,WaveElement>();
 			foreach (WaveElementState elemState in waveState.elements)
 			{
-				WaveElement newElement = new WaveElement(elemState.position,  elemState.strength);
+				WaveElement newElement = new WaveElement(elemState.position,  elemState.strength);
 				newElement.DirectionsToFlow = new HashSet<MapDirection>();
 				foreach(MapDirection direction in elemState.flowDirections)
 					newElement.DirectionsToFlow.Add(direction);

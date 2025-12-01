@@ -1,24 +1,42 @@
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 using UnityEngine.Tilemaps;
 
 public class LevelLoader : MonoBehaviour
 {
 	public LevelData testData;
+	public GameObject LevelNamePanel;
+	public TMP_Text LevelNumberText;
+	public TMP_Text LevelNameText;
 	public Transform ImageHolder;
-	public float ImageZCoord = -3f;
+	public float ImageZCoord = -1.6f;
 
 	public void LoadLevel(LevelData _levelData)
 	{
+		UndoManager.master.ClearHistory();
 		GameManager.master.Map.ClearAll();
 		GameManager.master.CurrentLevel.ClearAll();
+		GameManager.master.CurrentLevel.Time = 0;
+
+		GameManager.master.menuManager.OpenLevelName();
+		LevelNumberText.text = "LEVEL " + _levelData.Number;
+		LevelNameText.text = _levelData.Name;
+		LevelNamePanel.SetActive(true);
 
 		foreach(Transform image in ImageHolder)
 		{
 			Destroy(image.gameObject);
 		}
 
+		foreach(LevelImage image in _levelData.Images)
+		{
+			CreateImageObject(image);
+		}
+
 		DrawFloor(_levelData);
 		DrawHoles(_levelData);
+		DrawSingleFloor(_levelData.Exit);
 		GameManager.master.Map.Exit = _levelData.Exit;
 
 		foreach (LevelDataCell cell in _levelData.Cells)
@@ -53,7 +71,7 @@ public class LevelLoader : MonoBehaviour
 				case CellType.EMITTER:
 					Emitter newEmitter = new Emitter();
 					newEmitter.Position = cell.Position;
-					newEmitter.Strength = cell.Data;
+					newEmitter.Offset = cell.Data;
 					newEmitter.IsActive = true;
 					GameManager.master.CurrentLevel.Emitters.Add(cell.Position, newEmitter);
 					break;
@@ -170,34 +188,46 @@ public class LevelLoader : MonoBehaviour
 	}
 	void DrawSingleFloor(Vector2Int _position)
 	{
+		Color floorColor;
 		Tile tile;
 		if (Map.Mod(_position.x, 3) == Map.Mod(_position.y + Map.Mod(_position.y,6) / 2, 3) )
 		{
-			tile = TileManager.GetTile(TileType.FLOOR_EXTRA);
+			floorColor = new Color(0.75f,0.75f,0.75f,1f);
 		}
 		else
 		{
-			tile = TileManager.GetTile(TileType.FLOOR_MAIN);
+			floorColor = new Color(.84f,0.84f,0.84f,1f);
 		}
 		TileMapManager.SceneMap.SetTile(
 			new Vector3Int(
 				_position.x,
 				_position.y,
 				(int)MapLayer.FLOOR),
-			tile);
+			TileManager.GetTile(TileType.FLOOR_MAIN));
+		TileMapManager.SceneMap.SetColor(
+			new Vector3Int(
+				_position.x,
+				_position.y,
+				(int)MapLayer.FLOOR),
+			floorColor);
 	}
 
 	void DrawHoles(LevelData _levelData)
 	{
 		foreach(Vector2Int holePos in _levelData.Holes)
 		{
-			DrawSingleFloor(holePos);
 			TileMapManager.SceneMap.SetTile(
 				new Vector3Int(
 					holePos.x,
 					holePos.y,
 					(int)MapLayer.HOLE),
-				TileManager.master.HoleTile);
+				TileManager.GetTile(TileType.HOLE));
+			TileMapManager.SceneMap.SetColor(
+				new Vector3Int(
+					holePos.x,
+					holePos.y,
+					(int)MapLayer.HOLE),
+				new Color(0f,0f,0f));
 		}
 	}
 
@@ -209,6 +239,11 @@ public class LevelLoader : MonoBehaviour
 			_image.Position.x,
 			_image.Position.y,
 			ImageZCoord);
+		obj.transform.localScale = new Vector3(
+			_image.Scale,
+			_image.Scale,
+			_image.Scale
+		);
 
 		SpriteRenderer sr = obj.AddComponent<SpriteRenderer>();
 		sr.sprite = _image.Sprite;

@@ -48,20 +48,6 @@ public class Controller : MonoBehaviour
 				GameManager.master.menuManager.MoveDirection(MapDirection.DOWN_RIGHT);
 		}
 
-		if (Keyboard.current.spaceKey.wasPressedThisFrame)
-		{
-			if(GameManager.master.Mode == GameMode.PLAYING)
-				GameManager.master.Player.TryGenerateWave();
-			if(GameManager.master.Mode == GameMode.MENU)
-				GameManager.master.menuManager.SelectButton();
-		}
-
-		if (Keyboard.current.fKey.wasPressedThisFrame)
-		{
-			if(GameManager.master.Mode == GameMode.PLAYING)
-				GameManager.master.CurrentLevel.ToggleGhost(GameManager.master.Player.Position);
-		}
-
 		if (Keyboard.current.rKey.wasPressedThisFrame)
 		{
 			GameManager.master.LoadLevel();
@@ -81,7 +67,7 @@ public class Controller : MonoBehaviour
 			if(GameManager.master.Mode != GameMode.PLAYING &&
 					GameManager.master.Mode != GameMode.LOST)
 				return;
-
+			GameManager.master.Mode = GameMode.PLAYING;
 			var prev = UndoManager.master.PopState();
 			HistoryManager.master.RestoreState(prev);
 		}
