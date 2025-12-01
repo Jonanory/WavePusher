@@ -215,183 +215,286 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e0cc5bc45c275041badc6fb0cd146ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelAuthoring
-  levelAsset: {fileID: 11400000, guid: 59ab294f5e70de74aa8a5e0625dc3bfb, type: 2}
+  levelAsset: {fileID: 11400000, guid: 6fade2006e45a6946b5e7282c4660ca4, type: 2}
   draft:
-  - Type: 6
+  - Type: 0
     Position: {x: 0, y: 0}
     SecondaryPosition: {x: 0, y: 0}
-    Data: 4
+    Data: 0
   - Type: 6
     Position: {x: -1, y: -2}
     SecondaryPosition: {x: 0, y: 0}
-    Data: 4
+    Data: 0
   - Type: 6
+    Position: {x: -2, y: -2}
+    SecondaryPosition: {x: 0, y: 0}
+    Data: 0
+  - Type: 5
+    Position: {x: 0, y: -2}
+    SecondaryPosition: {x: 0, y: 0}
+    Data: 0
+  - Type: 5
+    Position: {x: -2, y: -3}
+    SecondaryPosition: {x: 0, y: 0}
+    Data: 0
+  - Type: 6
+    Position: {x: -1, y: -1}
+    SecondaryPosition: {x: 0, y: 0}
+    Data: 0
+  - Type: 8
+    Position: {x: 0, y: -5}
+    SecondaryPosition: {x: 0, y: 0}
+    Data: 0
+  - Type: 8
+    Position: {x: 0, y: -4}
+    SecondaryPosition: {x: 0, y: 0}
+    Data: 0
+  - Type: 8
+    Position: {x: -2, y: -1}
+    SecondaryPosition: {x: 0, y: 0}
+    Data: 0
+  - Type: 5
+    Position: {x: -3, y: 2}
+    SecondaryPosition: {x: 0, y: 0}
+    Data: 0
+  - Type: 5
+    Position: {x: -1, y: 2}
+    SecondaryPosition: {x: 0, y: 0}
+    Data: 0
+  - Type: 5
     Position: {x: 1, y: 2}
     SecondaryPosition: {x: 0, y: 0}
-    Data: 4
+    Data: 0
   - Type: 8
-    Position: {x: 3, y: 2}
+    Position: {x: -3, y: 5}
     SecondaryPosition: {x: 0, y: 0}
-    Data: 4
-  - Type: 4
-    Position: {x: 5, y: -4}
+    Data: 0
+  - Type: 8
+    Position: {x: -4, y: 7}
     SecondaryPosition: {x: 0, y: 0}
-    Data: 4
-  - Type: 0
-    Position: {x: 1, y: -1}
+    Data: 0
+  - Type: 8
+    Position: {x: -1, y: 6}
     SecondaryPosition: {x: 0, y: 0}
-    Data: 4
+    Data: 0
   - Type: 7
-    Position: {x: 2, y: -1}
-    SecondaryPosition: {x: 0, y: 0}
-    Data: 0
-  - Type: 8
-    Position: {x: 4, y: 1}
+    Position: {x: -4, y: 4}
     SecondaryPosition: {x: 0, y: 0}
     Data: 0
   - Type: 4
-    Position: {x: 5, y: -3}
+    Position: {x: 1, y: 5}
     SecondaryPosition: {x: 0, y: 0}
     Data: 0
   floors:
   - {x: 0, y: 0}
-  - {x: 1, y: 0}
   - {x: 0, y: -1}
   - {x: -1, y: -1}
-  - {x: 0, y: 1}
-  - {x: -1, y: -2}
-  - {x: 0, y: -2}
-  - {x: -1, y: -3}
-  - {x: -2, y: -3}
-  - {x: -2, y: -2}
-  - {x: 0, y: -3}
-  - {x: 1, y: -2}
   - {x: 1, y: -1}
+  - {x: 1, y: -2}
+  - {x: 0, y: -2}
+  - {x: -1, y: -2}
+  - {x: -2, y: -2}
   - {x: -2, y: -1}
-  - {x: -1, y: 0}
-  - {x: 0, y: 2}
-  - {x: 1, y: 2}
-  - {x: -1, y: 1}
-  - {x: 2, y: 0}
-  - {x: 2, y: 1}
-  - {x: 2, y: 2}
-  - {x: 1, y: 3}
-  - {x: 0, y: 3}
-  - {x: -1, y: 3}
-  - {x: -2, y: 1}
-  - {x: -1, y: 2}
-  - {x: -2, y: 0}
-  - {x: -3, y: -1}
-  - {x: 3, y: 2}
-  - {x: 4, y: 2}
-  - {x: 5, y: -3}
-  - {x: 5, y: -4}
-  - {x: 1, y: 1}
-  - {x: 5, y: 0}
-  - {x: 4, y: 1}
-  - {x: 2, y: -1}
-  walls:
-  - {x: 4, y: -4}
-  - {x: 3, y: -4}
-  - {x: 2, y: -4}
-  - {x: 1, y: -4}
-  - {x: 0, y: -4}
+  - {x: -2, y: -3}
+  - {x: -1, y: -3}
+  - {x: 0, y: -3}
   - {x: -1, y: -4}
   - {x: -2, y: -4}
   - {x: -3, y: -3}
   - {x: -3, y: -2}
   - {x: -4, y: -1}
   - {x: -3, y: 0}
+  - {x: -4, y: 0}
+  - {x: -4, y: 1}
+  - {x: -4, y: 2}
+  - {x: -3, y: 2}
   - {x: -3, y: 1}
   - {x: -2, y: 2}
-  - {x: -2, y: 3}
-  - {x: -1, y: 4}
+  - {x: -1, y: 2}
+  - {x: 0, y: 2}
+  - {x: 1, y: 2}
+  - {x: 1, y: 0}
+  - {x: 0, y: 1}
+  - {x: -1, y: 1}
+  - {x: -2, y: 1}
+  - {x: 1, y: 1}
+  - {x: 0, y: -4}
+  - {x: 0, y: -5}
+  - {x: -4, y: 4}
+  - {x: -3, y: 4}
+  - {x: -3, y: 5}
+  - {x: -3, y: 6}
+  - {x: -4, y: 7}
+  - {x: -3, y: 8}
+  - {x: -2, y: 8}
+  - {x: -2, y: 7}
+  - {x: -1, y: 6}
+  - {x: -1, y: 5}
   - {x: 0, y: 4}
   - {x: 1, y: 4}
-  - {x: 2, y: 3}
-  - {x: 2, y: 4}
-  - {x: 3, y: 3}
-  - {x: 4, y: 3}
-  - {x: 3, y: 1}
-  - {x: 4, y: 0}
-  - {x: 5, y: 1}
-  - {x: 5, y: 2}
-  - {x: 4, y: -1}
-  - {x: 5, y: -2}
-  - {x: 4, y: -5}
-  - {x: 5, y: -5}
-  - {x: 6, y: -4}
-  - {x: 6, y: -2}
-  - {x: 6, y: -3}
-  - {x: 6, y: 0}
-  - {x: 6, y: -1}
-  outerWalls:
-  - {x: 3, y: -5}
-  - {x: 4, y: -6}
-  - {x: 5, y: -6}
-  - {x: 6, y: -6}
-  - {x: 6, y: -5}
-  - {x: 7, y: -4}
-  - {x: 7, y: -3}
-  - {x: 7, y: -2}
-  - {x: 6, y: 1}
-  - {x: 6, y: 2}
-  - {x: 5, y: 3}
-  - {x: 5, y: 4}
-  - {x: 4, y: 4}
-  - {x: 3, y: 4}
-  - {x: 2, y: 5}
   - {x: 1, y: 5}
-  - {x: 0, y: 5}
-  - {x: 2, y: -5}
+  walls:
+  - {x: -1, y: 0}
+  - {x: -2, y: 0}
+  - {x: -3, y: -1}
+  - {x: 2, y: 0}
+  - {x: 2, y: -1}
+  - {x: 2, y: 1}
+  - {x: 2, y: -2}
+  - {x: 1, y: -3}
+  - {x: 1, y: -4}
   - {x: 1, y: -5}
+  - {x: 2, y: -6}
+  - {x: 1, y: -7}
+  - {x: 0, y: -7}
+  - {x: 0, y: -6}
   - {x: -1, y: -5}
-  - {x: 0, y: -5}
   - {x: -2, y: -5}
-  - {x: -3, y: -4}
   - {x: -3, y: -5}
+  - {x: -3, y: -4}
   - {x: -4, y: -3}
   - {x: -4, y: -2}
   - {x: -5, y: -1}
-  - {x: -4, y: 0}
-  - {x: -4, y: 1}
-  - {x: -3, y: 2}
+  - {x: -5, y: 0}
+  - {x: -5, y: 1}
+  - {x: -5, y: 2}
+  - {x: -5, y: 3}
+  - {x: -4, y: 3}
   - {x: -3, y: 3}
+  - {x: -2, y: 3}
+  - {x: -1, y: 3}
+  - {x: 0, y: 3}
+  - {x: 1, y: 3}
+  - {x: 2, y: 2}
+  - {x: 2, y: 4}
+  - {x: 2, y: 5}
+  - {x: 2, y: 6}
+  - {x: 1, y: 6}
+  - {x: 0, y: 5}
+  - {x: 0, y: 6}
+  - {x: -1, y: 7}
+  - {x: -1, y: 8}
+  - {x: -1, y: 4}
   - {x: -2, y: 4}
   - {x: -2, y: 5}
-  - {x: -1, y: 5}
-  - {x: 7, y: -1}
-  - {x: 7, y: 0}
-  holes:
-  - {x: 1, y: -3}
-  - {x: 2, y: -2}
+  - {x: -2, y: 6}
+  - {x: -5, y: 4}
+  - {x: -5, y: 5}
+  - {x: -4, y: 5}
+  - {x: -4, y: 6}
+  - {x: -5, y: 7}
+  - {x: -4, y: 8}
+  - {x: -4, y: 9}
+  - {x: -3, y: 9}
+  - {x: -2, y: 9}
+  - {x: -3, y: 7}
+  outerWalls:
+  - {x: 2, y: -7}
+  - {x: 2, y: -8}
+  - {x: 1, y: -8}
+  - {x: 0, y: -8}
+  - {x: -1, y: -7}
+  - {x: -1, y: -6}
+  - {x: -2, y: -6}
+  - {x: -3, y: -6}
+  - {x: -4, y: -4}
+  - {x: -5, y: -3}
+  - {x: -4, y: -5}
+  - {x: -6, y: -1}
+  - {x: -5, y: -2}
+  - {x: -6, y: 1}
+  - {x: -6, y: 0}
+  - {x: -6, y: 2}
+  - {x: -6, y: 3}
+  - {x: -6, y: 4}
+  - {x: -6, y: 5}
+  - {x: -5, y: 6}
+  - {x: -6, y: 7}
+  - {x: -5, y: 8}
+  - {x: -5, y: 9}
+  - {x: -4, y: 10}
+  - {x: -3, y: 10}
+  - {x: -2, y: 10}
+  - {x: -1, y: 10}
+  - {x: -1, y: 9}
+  - {x: 0, y: 8}
+  - {x: 0, y: 7}
+  - {x: 1, y: 7}
+  - {x: 2, y: 7}
+  - {x: 3, y: 6}
+  - {x: 3, y: 4}
+  - {x: 3, y: 5}
+  - {x: 2, y: 3}
+  - {x: 3, y: 2}
+  - {x: 3, y: 1}
   - {x: 3, y: 0}
-  - {x: 3, y: -1}
-  - {x: 4, y: -2}
-  - {x: 3, y: -3}
-  - {x: 2, y: -3}
-  - {x: 4, y: -3}
+  - {x: 2, y: -4}
   - {x: 3, y: -2}
-  exit: {x: 5, y: -1}
+  - {x: 2, y: -3}
+  - {x: 3, y: -1}
+  - {x: 2, y: -5}
+  - {x: 3, y: -6}
+  holes: []
+  exit: {x: 1, y: -6}
   links:
   - input:
       Type: 4
-      Position: {x: 5, y: -4}
+      Position: {x: 1, y: 5}
       SecondaryPosition: {x: 0, y: 0}
-      Data: 4
+      Data: 0
     output:
       Type: 8
-      Position: {x: 3, y: 2}
+      Position: {x: -2, y: -1}
       SecondaryPosition: {x: 0, y: 0}
-      Data: 4
+      Data: 0
   - input:
-      Type: 4
-      Position: {x: 5, y: -3}
+      Type: 5
+      Position: {x: 1, y: 2}
       SecondaryPosition: {x: 0, y: 0}
-      Data: 4
+      Data: 0
     output:
       Type: 8
-      Position: {x: 4, y: 1}
+      Position: {x: -1, y: 6}
+      SecondaryPosition: {x: 0, y: 0}
+      Data: 0
+  - input:
+      Type: 5
+      Position: {x: -3, y: 2}
+      SecondaryPosition: {x: 0, y: 0}
+      Data: 0
+    output:
+      Type: 8
+      Position: {x: -4, y: 7}
+      SecondaryPosition: {x: 0, y: 0}
+      Data: 0
+  - input:
+      Type: 5
+      Position: {x: -1, y: 2}
+      SecondaryPosition: {x: 0, y: 0}
+      Data: 0
+    output:
+      Type: 8
+      Position: {x: -3, y: 5}
+      SecondaryPosition: {x: 0, y: 0}
+      Data: 0
+  - input:
+      Type: 5
+      Position: {x: 0, y: -2}
+      SecondaryPosition: {x: 0, y: 0}
+      Data: 0
+    output:
+      Type: 8
+      Position: {x: 0, y: -4}
+      SecondaryPosition: {x: 0, y: 0}
+      Data: 0
+  - input:
+      Type: 5
+      Position: {x: -2, y: -3}
+      SecondaryPosition: {x: 0, y: 0}
+      Data: 0
+    output:
+      Type: 8
+      Position: {x: 0, y: -5}
       SecondaryPosition: {x: 0, y: 0}
       Data: 0
   colorOptions:

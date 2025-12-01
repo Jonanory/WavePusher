@@ -52,8 +52,8 @@ public class CameraMover :  MonoBehaviour
 	{
 		orthoCam.orthographicSize = 
 			Mathf.Max(
-				RightOfLevel-LeftOfLevel,
-				TopOfLevel-BottomOfLevel
+				RightOfLevel-LeftOfLevel-2,
+				TopOfLevel-BottomOfLevel-2
 			)/2-0.5f;
 	}
 
