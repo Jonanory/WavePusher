@@ -17,22 +17,11 @@ public class HistoryManager : MonoBehaviour
 		var state = new GameState();
 		state.Time = GameManager.master.CurrentLevel.Time;
 		state.playerPos = GameManager.master.Player.Position;
-		state.playerRecharge = GameManager.master.Player.RechargeAmount;
 
 		state.boxPositions = new List<Vector2Int>();
 		foreach (Box box in GameManager.master.CurrentLevel.Boxes.Values)
 			state.boxPositions.Add(box.Position);
-
-		state.ghosts = new List<GhostState>();
-		foreach (Ghost ghost in GameManager.master.CurrentLevel.Ghosts.Values)
-		{
-			state.ghosts.Add(new GhostState {
-				position = ghost.Position,
-				ticksUntilNextWave = ghost.currentSteps
-			});
-		}
 		
-
 		state.doors = new List<DoorState>();
 		foreach (Door door in GameManager.master.CurrentLevel.Doors.Values)
 		{
@@ -103,7 +92,6 @@ public class HistoryManager : MonoBehaviour
 
 		GameManager.master.CurrentLevel.Time = state.Time;
 		GameManager.master.Player.Position = state.playerPos;
-		GameManager.master.Player.RechargeAmount = state.playerRecharge;
 
 		for (int i = 0; i < state.boxPositions.Count; i++)
 		{
@@ -112,16 +100,6 @@ public class HistoryManager : MonoBehaviour
 			GameManager.master.CurrentLevel.Boxes.Add(
 				state.boxPositions[i], 
 				newBox);
-		}
-
-		for (int i = 0; i < state.ghosts.Count; i++)
-		{
-			Ghost newGhost = new Ghost(
-				state.ghosts[i].position, 
-				state.ghosts[i].ticksUntilNextWave);
-			GameManager.master.CurrentLevel.Ghosts.Add(
-				state.ghosts[i].position,
-				newGhost);
 		}
 
 		for (int i = 0; i < state.doors.Count; i++)
@@ -175,5 +153,6 @@ public class HistoryManager : MonoBehaviour
 		GameManager.master.CurrentLevel.RecalculateScores();
 		GameManager.master.Map.Display();
 		GameManager.master.CurrentLevel.Refresh();
+		GameManager.master.Camera.SetTarget(Map.CoordToWorldPoint(GameManager.master.Player.Position));
 	}
 }

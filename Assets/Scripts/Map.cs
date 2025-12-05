@@ -48,13 +48,6 @@ public class Map : MonoBehaviour
 			TileManager.GetTile(TileType.EXIT));
 	}
 
-	void DrawFloors(List<Vector2Int> _floorPositions)
-	{
-		foreach (Vector2Int floorPos in _floorPositions)
-		{
-			DrawSingleFloor(floorPos);
-		}
-	}
 
 	void DrawSingleFloor(Vector2Int _position)
 	{
@@ -73,36 +66,6 @@ public class Map : MonoBehaviour
 				_position.y,
 				(int)MapLayer.FLOOR),
 			tile);
-	}
-
-	void DrawWalls(List<Vector2Int> _wallPositions)
-	{
-		foreach(Vector2Int wallPos in _wallPositions)
-			TileMapManager.SceneMap.SetTile(
-				new Vector3Int(
-					wallPos.x,
-					wallPos.y,
-					(int)MapLayer.WALL),
-				TileManager.master.WallTile);
-	}
-
-	void DrawHoles(List<Vector2Int> _holePositions)
-	{
-		foreach(Vector2Int holePos in _holePositions)
-		{
-			TileMapManager.SceneMap.SetTile(
-				new Vector3Int(
-					holePos.x,
-					holePos.y,
-					(int)MapLayer.HOLE),
-				TileManager.GetTile(TileType.HOLE));
-			TileMapManager.SceneMap.SetColor(
-				new Vector3Int(
-					holePos.x,
-					holePos.y,
-					(int)MapLayer.HOLE),
-				new Color(0f,0f,0f));
-		}
 	}
 
 	public static MapDirection RotateClockwise(MapDirection _direction, int _numberOfSteps = 1)
@@ -145,6 +108,49 @@ public class Map : MonoBehaviour
 		int valueHold = _value;
 		while (valueHold < 0) valueHold += _base;
 		return valueHold;
+	}
+
+	public static MapDirection? CoordsAreAdjacent(Vector2Int _coordA, Vector2Int _coordB)
+	{
+		for(int i=0; i<6; i++)
+		{
+			if(CoordAfterMovement(_coordA, (MapDirection)i) == _coordB)
+				return (MapDirection)i;
+		}
+		return null;
+	}
+
+	public static MapDirection? Vector2ToDirection(Vector2 _vector)
+	{
+		if(_vector.magnitude <= Scale) return null;
+		if(_vector.y > 0)
+		{
+			if(_vector.x > 0)
+			{
+				if(_vector.x * Mathf.Sqrt(3)/2f > _vector.y)
+					return MapDirection.UP_RIGHT;
+			}
+			else
+			{
+				if(-_vector.x * Mathf.Sqrt(3)/2f > _vector.y)
+					return MapDirection.UP_LEFT;
+			}
+			return MapDirection.UP;
+		}
+		else
+		{
+			if(_vector.x > 0)
+			{
+				if(_vector.x * Mathf.Sqrt(3)/2f > -_vector.y)
+					return MapDirection.DOWN_RIGHT;
+			}
+			else
+			{
+				if(-_vector.x * Mathf.Sqrt(3)/2f > -_vector.y)
+					return MapDirection.DOWN_LEFT;
+			}
+			return MapDirection.DOWN;
+		}
 	}
 
 	public bool CoordIsBlocked(Vector2Int _coord)
@@ -209,11 +215,71 @@ public class Map : MonoBehaviour
 		);
 	}
 
+	/* Determine the nearest point by checking the surrounding coords and
+	 * returning the closest point */
 	public static Vector2Int WorldPointToCoord(Vector2 worldPoint)
 	{
-		int y = Mathf.RoundToInt(worldPoint.x / 1.5f);
-		float rowParity = Mod(y, 2) / 2f;
-		int x = Mathf.RoundToInt(worldPoint.y / Mathf.Sqrt(3f) - rowParity);
-		return new Vector2Int(x, y);
+
+		float columnWidth = 3f * Scale;
+		Vector2 modifiedHorizontalNormal = new Vector2(
+			1 / columnWidth, 0
+		);
+
+		int column = Mathf.RoundToInt(
+			Vector2.Dot(
+				worldPoint,
+				modifiedHorizontalNormal));
+		int maxColumn, minColumn;
+		if(column < worldPoint.x/columnWidth)
+		{
+			maxColumn = 2*column + 2;
+			minColumn = 2*column;
+		} else {
+			maxColumn = 2*column;
+			minColumn = 2*column - 2;
+		}
+
+		float rowHeight = Mathf.Sqrt(3) * Scale;
+		Vector2 modifiedVerticalNormal = new Vector2(
+			0, 1 / rowHeight
+		);
+
+		int row = Mathf.RoundToInt(
+			Vector2.Dot(
+				worldPoint,
+				modifiedVerticalNormal));
+
+		int maxRow, minRow;
+		if(row < worldPoint.y/rowHeight)
+		{
+			maxRow = row + 1;
+			minRow = row;
+		} else {
+			maxRow = row;
+			minRow = row - 1;
+		}
+
+		float minDistance = 100f;
+		Vector2Int minCoord = new Vector2Int(1000,1000);
+
+		Vector2Int[] possibleCoords = new Vector2Int[]
+		{
+			new Vector2Int(minRow, minColumn),
+			new Vector2Int(minRow, maxColumn),
+			new Vector2Int(maxRow, minColumn),
+			new Vector2Int(maxRow, maxColumn),
+			new Vector2Int(minRow, minColumn+1),
+		};
+
+		foreach(Vector2Int posCoord in possibleCoords)
+		{
+			if(Vector2.Distance(CoordToWorldPoint(posCoord), worldPoint) < minDistance)
+			{
+				minCoord = posCoord;
+				minDistance = Vector2.Distance(CoordToWorldPoint(posCoord), worldPoint);
+			}
+		}
+
+		return minCoord;
 	}
 }

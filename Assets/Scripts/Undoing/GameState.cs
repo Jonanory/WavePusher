@@ -7,28 +7,12 @@ public class GameState
 {
 	public int Time;
 	public Vector2Int playerPos;
-	public int playerRecharge;
 	public List<Vector2Int> boxPositions;
-	
-	public List<GhostState> ghosts;
 	public List<EmitterState> emitters;
-	
-	public int timeStep;
-	
-	// Optional if you don't recompute:
 	public List<DoorState> doors;
 	public List<ReceiverState> receivers;
 	public List<ButtonState> buttons;
-
 	public List<WaveState> waves;
-	// etc...
-}
-
-[System.Serializable]
-public struct GhostState
-{
-	public Vector2Int position;
-	public int ticksUntilNextWave;
 }
 
 [System.Serializable]
