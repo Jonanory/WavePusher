@@ -19,6 +19,11 @@ public class GameManager : MonoBehaviour
 	public GameObject LevelSelectMenu;
 	public GameMode Mode = GameMode.MENU;
 
+	public bool ShowGuide
+	{
+		get {return LevelIndex <= 2;}
+	}
+
 	public void Awake()
 	{
 		if(master == null) master = this;

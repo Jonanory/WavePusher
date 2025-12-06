@@ -231,7 +231,8 @@ public class Level : MonoBehaviour
 				TileManager.GetGhostTile(ghost.currentSteps));
 		}
 
-		RedrawNumbers();
+		if(GameManager.master.ShowGuide)
+			RedrawKeys();
 
 		foreach(Door door in Doors.Values)
 		{
@@ -247,29 +248,25 @@ public class Level : MonoBehaviour
 					0), 
 				tileToUse);
 		}
-		// Vector3 cameraPosition = Map.CoordToWorldPoint(GameManager.master.Player.Position);
-		// cameraPosition.z = -10;
-		// Camera.main.transform.position = cameraPosition;
 	}
 
-	public void RedrawNumbers()
+	public void RedrawKeys()
 	{
-		return;
-		foreach(KeyValuePair<Vector2Int,int> score in Scores)
+		for(int i=0; i<6; i++)
 		{
-			int toScore = score.Value;
-			if (toScore > 9) toScore = 9;
-			Vector3Int position = 
-				new Vector3Int(
-					score.Key.x,
-					score.Key.y,
-					0);
+			Vector2Int coord = Map.CoordAfterMovement(GameManager.master.Player.Position, (MapDirection)i);
+			if(GameManager.master.Map.CoordIsFullyBlocked(coord)) continue;
+			Vector3Int position = new Vector3Int(
+				coord.x,
+				coord.y,
+				0
+			);
 			TileMapManager.ScoreMap.SetTile(
 				position, 
-				TileManager.GetNumberTile(toScore));
+				TileManager.GetKeyTile((MapDirection)i));
 			TileMapManager.ScoreMap.SetColor(
 				position,
-				new Color(0f, 0f, 0.6f));
+				new Color(1f, 1f, 1f, 0.4f));
 		}
 	}
 

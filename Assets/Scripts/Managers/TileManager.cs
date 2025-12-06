@@ -80,6 +80,20 @@ public class TileManager : MonoBehaviour
 	Tile DoorTile;
 	[SerializeField]
 	Tile DoorTile_Open;
+
+	[Header("Overlay")]
+	[SerializeField]
+	Tile QTile;
+	[SerializeField]
+	Tile WTile;
+	[SerializeField]
+	Tile ETile;
+	[SerializeField]
+	Tile ATile;
+	[SerializeField]
+	Tile STile;
+	[SerializeField]
+	Tile DTile;
 	[SerializeField]
 	List<Tile> NumberTiles = new List<Tile>();
 
@@ -159,5 +173,26 @@ public class TileManager : MonoBehaviour
 		int number = _number;
 		if(number > 9) number = 9;
 		return master.NumberTiles[number];
+	}
+
+	public static Tile GetKeyTile(MapDirection _direction)
+	{
+		switch(_direction)
+		{
+			case MapDirection.UP_LEFT:
+				return master.QTile;
+			case MapDirection.UP:
+				return master.WTile;
+			case MapDirection.UP_RIGHT:
+				return master.ETile;
+			case MapDirection.DOWN_LEFT:
+				return master.ATile;
+			case MapDirection.DOWN:
+				return master.STile;
+			case MapDirection.DOWN_RIGHT:
+				return master.DTile;
+			default:
+				return null;
+		}
 	}
 }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58ba11051fd64294d83b0ec06869abf7, type: 3}
   m_Name: 4 - Triagulate
   m_EditorClassIdentifier: Assembly-CSharp::LevelData
-  Name: Trangulation
+  Name: Triangulation
   Number: 4
   Images: []
   Cells:

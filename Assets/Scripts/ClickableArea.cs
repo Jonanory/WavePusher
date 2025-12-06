@@ -11,7 +11,6 @@ public class ClickableArea: MonoBehaviour, IBeginDragHandler, IEndDragHandler, I
 
 	public void OnBeginDrag(PointerEventData eventData)
 	{
-		Debug.Log("pionter begn");
 		CountdownUntilDragMovement = 0;
 		IsDragging = true;
 	}

@@ -39,7 +39,7 @@ public class CameraMover :  MonoBehaviour
 			RescaleCamera();
 			transform.position = new Vector3(
 				RightOfLevel / 2 + LeftOfLevel / 2,
-				TopOfLevel / 2 + BottomOfLevel / 2,
+				TopOfLevel / 2 + BottomOfLevel / 2 + 0.5f,
 				transform.position.z);
 		}
 		else
@@ -51,9 +51,9 @@ public class CameraMover :  MonoBehaviour
 	void RescaleCamera()
 	{
 		orthoCam.orthographicSize = 
-			Mathf.Max(
-				RightOfLevel-LeftOfLevel-2,
-				TopOfLevel-BottomOfLevel-2
+			Mathf.Min(
+				RightOfLevel-LeftOfLevel,
+				TopOfLevel-BottomOfLevel
 			)/2-0.5f;
 	}
 
