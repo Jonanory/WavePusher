@@ -6,7 +6,6 @@ using System.Collections.Generic;
 public class Level : MonoBehaviour
 {
 	public List<Wave> Waves = new List<Wave>();
-	public Dictionary<Vector2Int, Ghost> Ghosts = new Dictionary<Vector2Int, Ghost>();
 	public Dictionary<Vector2Int, Box> Boxes = new Dictionary<Vector2Int, Box>();
 	public Dictionary<Vector2Int, Door> Doors = new Dictionary<Vector2Int, Door>();
 	public Dictionary<Vector2Int, int> Scores = new Dictionary<Vector2Int, int>();
@@ -21,11 +20,9 @@ public class Level : MonoBehaviour
 		Time = 0;
 		TileMapManager.WaveMap.ClearAllTiles();
 		TileMapManager.ScoreMap.ClearAllTiles();
-		TileMapManager.GhostMap.ClearAllTiles();
 		TileMapManager.OccupantMap.ClearAllTiles();
 		TileMapManager.InteractableMap.ClearAllTiles();
 		Waves = new List<Wave>();
-		Ghosts = new Dictionary<Vector2Int, Ghost>();
 		Boxes = new Dictionary<Vector2Int, Box>();
 		Doors = new Dictionary<Vector2Int, Door>();
 		Scores = new Dictionary<Vector2Int, int>();
@@ -39,11 +36,9 @@ public class Level : MonoBehaviour
 	{
 		TileMapManager.WaveMap.ClearAllTiles();
 		TileMapManager.ScoreMap.ClearAllTiles();
-		TileMapManager.GhostMap.ClearAllTiles();
 		TileMapManager.OccupantMap.ClearAllTiles();
 		TileMapManager.InteractableMap.ClearAllTiles();
 		Waves = new List<Wave>();
-		Ghosts = new Dictionary<Vector2Int, Ghost>();
 		Boxes = new Dictionary<Vector2Int, Box>();
 		Scores = new Dictionary<Vector2Int, int>();
 	}
@@ -72,11 +67,6 @@ public class Level : MonoBehaviour
 				continue;
 			}
 			wave.Flow();
-		}
-
-		foreach (Ghost ghost in Ghosts.Values)
-		{
-			ghost.TimeStep();
 		}
 
 		foreach (InGameButton button in Buttons.Values)
@@ -155,7 +145,6 @@ public class Level : MonoBehaviour
 	{
 		TileMapManager.WaveMap.ClearAllTiles();
 		TileMapManager.ScoreMap.ClearAllTiles();
-		TileMapManager.GhostMap.ClearAllTiles();
 		TileMapManager.OccupantMap.ClearAllTiles();
 		TileMapManager.InteractableMap.ClearAllTiles();
 
@@ -219,16 +208,6 @@ public class Level : MonoBehaviour
 		foreach (Wave wave in Waves)
 		{
 			DrawWave(wave);
-		}
-
-		foreach(Ghost ghost in Ghosts.Values)
-		{
-			TileMapManager.GhostMap.SetTile(
-				new Vector3Int(
-					ghost.Position.x,
-					ghost.Position.y,
-					0),
-				TileManager.GetGhostTile(ghost.currentSteps));
 		}
 
 		if(GameManager.master.ShowGuide)
@@ -344,15 +323,6 @@ public class Level : MonoBehaviour
 		Wave newWave = new Wave(_origin);
 		newWave.Init(_strength);
 		Waves.Add(newWave);
-		Refresh();
-	}
-
-	public void ToggleGhost(Vector2Int _position)
-	{
-		if (Ghosts.ContainsKey(_position))
-			Ghosts.Remove(_position);
-		else
-			Ghosts.Add(_position, new Ghost(_position));
 		Refresh();
 	}
 

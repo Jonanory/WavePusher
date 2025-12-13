@@ -23,6 +23,7 @@ public class ClickableArea: MonoBehaviour, IBeginDragHandler, IEndDragHandler, I
 
 	void FixedUpdate()
 	{
+		if(GameManager.master.Mode != GameMode.PLAYING) return;
 		if(!IsDragging) return;
 		CountdownUntilDragMovement -= Time.fixedDeltaTime;
 		if(CountdownUntilDragMovement > 0)
@@ -44,6 +45,7 @@ public class ClickableArea: MonoBehaviour, IBeginDragHandler, IEndDragHandler, I
 
 	public void OnPointerDown(PointerEventData eventData)
 	{
+		if(GameManager.master.Mode != GameMode.PLAYING) return;
 		IsDragging = true;
 		MousePosition = Camera.main.ScreenToWorldPoint(eventData.position);
 		Vector2Int clickedCoord = Map.WorldPointToCoord(MousePosition);

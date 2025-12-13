@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
 	public CameraMover Camera;
 	public MenuManager menuManager;
 	public SfxManager sfxManager;
+	public Controller controller;
 
 	public List<LevelData> Levels = new List<LevelData>();
 	public int LevelIndex = 0;
@@ -19,9 +20,10 @@ public class GameManager : MonoBehaviour
 	public GameObject LevelSelectMenu;
 	public GameMode Mode = GameMode.MENU;
 
+	public bool AlwaysShowGuide = false;
 	public bool ShowGuide
 	{
-		get {return LevelIndex <= 2;}
+		get {return LevelIndex == 0 || AlwaysShowGuide;}
 	}
 
 	public void Awake()
@@ -43,6 +45,7 @@ public class GameManager : MonoBehaviour
 		menuManager.CloseEndMenu();
 		menuManager.CloseLevelSelector();
 		Mode = GameMode.PLAYING;
+		controller.SetControllerMap("Playing");
 		Loader.LoadLevel(Levels[LevelIndex]);
 	}
 
@@ -50,6 +53,7 @@ public class GameManager : MonoBehaviour
 	{
 		Mode = GameMode.WIN;
 		SfxManager.PlaySfx(Sfx.WIN);
+		controller.ResetMovement();
 		StartCoroutine(AdvanceLevel());
 	}
 
@@ -78,6 +82,7 @@ public class GameManager : MonoBehaviour
 				Player.Position.y,
 				0),
 			TileManager.GetTile(TileType.PLAYER_LOSE));
+		controller.ResetMovement();
 		Mode = GameMode.LOST;
 	}
 
@@ -91,6 +96,13 @@ public class GameManager : MonoBehaviour
 	public void ShowLevelMenu()
 	{
 		Mode = GameMode.MENU;
+		controller.SetControllerMap("Menu");
 		menuManager.OpenLevelSelector();
+	}
+
+	public void ToggleGuide()
+	{
+		AlwaysShowGuide = !AlwaysShowGuide;
+		CurrentLevel.Refresh();
 	}
 }

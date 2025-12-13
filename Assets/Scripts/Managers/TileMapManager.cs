@@ -27,10 +27,6 @@ public class TileMapManager : MonoBehaviour
 	Tilemap _scoreMap;
 	public static Tilemap ScoreMap { get{ return master._scoreMap; }}
 
-	[SerializeField]
-	Tilemap _ghostMap;
-	public static Tilemap GhostMap { get{ return master._ghostMap; }}
-
 	void Awake()
 	{
 		if(master == null) master = this;
