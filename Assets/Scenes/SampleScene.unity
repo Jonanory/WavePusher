@@ -180,6 +180,7 @@ RectTransform:
   m_Children:
   - {fileID: 1925622713}
   - {fileID: 1710519292}
+  - {fileID: 691486078}
   m_Father: {fileID: 1547608266}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2993,6 +2994,138 @@ MonoBehaviour:
     Button: {fileID: 1367360679}
   - Direction: 3
     Button: {fileID: 1335189020}
+--- !u!1 &691486077
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 691486078}
+  - component: {fileID: 691486081}
+  - component: {fileID: 691486080}
+  - component: {fileID: 691486079}
+  m_Layer: 5
+  m_Name: SoundButton
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &691486078
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 691486077}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 25540136}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -11, y: -76.900024}
+  m_SizeDelta: {x: 70.33002, y: 64.16}
+  m_Pivot: {x: 1, y: 1}
+--- !u!114 &691486079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 691486077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 691486080}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1597554688}
+        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
+        m_MethodName: ToggleVolume
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &691486080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 691486077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 91efb4fa449cf634abbc369fb4db46c9, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &691486081
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 691486077}
+  m_CullTransparentMesh: 1
 --- !u!1 &732682352
 GameObject:
   m_ObjectHideFlags: 0
@@ -4355,6 +4488,7 @@ MonoBehaviour:
   BoxMoveClip: {fileID: 8300000, guid: a3ef08d2ac5feb74b9f1f48294165f5e, type: 3}
   WinClip: {fileID: 8300000, guid: 5c3667598dcaf4541aede6ecf1236dc9, type: 3}
   LoseClip: {fileID: 8300000, guid: ced749857ec51c249aba34e7e2bddf58, type: 3}
+  IsMuted: 0
 --- !u!4 &1241075567
 Transform:
   m_ObjectHideFlags: 0
@@ -5738,6 +5872,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1597554687}
   - component: {fileID: 1597554686}
+  - component: {fileID: 1597554688}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -5762,6 +5897,7 @@ MonoBehaviour:
   menuManager: {fileID: 1017787442}
   sfxManager: {fileID: 1241075566}
   controller: {fileID: 1638919300}
+  settings: {fileID: 1597554688}
   Levels:
   - {fileID: 11400000, guid: 8222d705c201f8e47b1759d2c8d2a026, type: 2}
   - {fileID: 11400000, guid: 102c216d6928f254a99c1d624c5bd0ef, type: 2}
@@ -5794,6 +5930,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1597554688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1597554685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe8b040857ac31d45bdfb27c7d148931, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Settings
+  KeyHelpRenderer: {fileID: 1710519294}
+  NoHelpSprite: {fileID: 21300000, guid: c210e1eac0792b94f95c2ca92db27534, type: 3}
+  HelpSprite: {fileID: 21300000, guid: d43111612dc987e4d90e3045c3a5fe41, type: 3}
+  VolumeRenderer: {fileID: 691486080}
+  NoVolumeSprite: {fileID: 21300000, guid: 8bc7b5347e236794c8b76a7a99a29778, type: 3}
+  VolumeSprite: {fileID: 21300000, guid: 91efb4fa449cf634abbc369fb4db46c9, type: 3}
 --- !u!1 &1610311414
 GameObject:
   m_ObjectHideFlags: 0
@@ -6303,7 +6457,7 @@ GameObject:
   - component: {fileID: 1710519294}
   - component: {fileID: 1710519293}
   m_Layer: 5
-  m_Name: Button
+  m_Name: ControlsButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6372,8 +6526,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1597554686}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+      - m_Target: {fileID: 1597554688}
+        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: ToggleGuide
         m_Mode: 1
         m_Arguments:
@@ -6404,8 +6558,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: d43111612dc987e4d90e3045c3a5fe41, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -8099,8 +8253,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1597554686}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: LoadLevel
-        m_Mode: 1
+        m_MethodName: LoadLevelNumber
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

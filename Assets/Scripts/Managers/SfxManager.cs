@@ -13,6 +13,7 @@ public class SfxManager : MonoBehaviour
 	public AudioClip WinClip;
 	public AudioClip LoseClip;
 	private AudioSource SfxSource;
+	public bool IsMuted = false;
 
 	void Awake()
 	{
@@ -33,6 +34,7 @@ public class SfxManager : MonoBehaviour
 
 	public static void PlaySfx(Sfx _sfx, float volume = 1f)
 	{
+		if(GameManager.master.sfxManager.IsMuted) return;
 		GameManager.master.sfxManager.SfxSource.PlayOneShot(
 			GameManager.master.sfxManager.GetClip(_sfx), 
 			volume);
@@ -40,6 +42,7 @@ public class SfxManager : MonoBehaviour
 
 	public void PlayClip(AudioClip clip, float volume = 1f)
 	{
+		if(IsMuted) return;
 		SfxSource.PlayOneShot(clip, volume);
 	}
 }

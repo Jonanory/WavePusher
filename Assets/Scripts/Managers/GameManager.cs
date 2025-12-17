@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
 	public MenuManager menuManager;
 	public SfxManager sfxManager;
 	public Controller controller;
+	public Settings settings;
 
 	public List<LevelData> Levels = new List<LevelData>();
 	public int LevelIndex = 0;
@@ -23,7 +24,7 @@ public class GameManager : MonoBehaviour
 	public bool AlwaysShowGuide = false;
 	public bool ShowGuide
 	{
-		get {return LevelIndex == 0 || AlwaysShowGuide;}
+		get {return AlwaysShowGuide;}
 	}
 
 	public void Awake()
@@ -98,11 +99,5 @@ public class GameManager : MonoBehaviour
 		Mode = GameMode.MENU;
 		controller.SetControllerMap("Menu");
 		menuManager.OpenLevelSelector();
-	}
-
-	public void ToggleGuide()
-	{
-		AlwaysShowGuide = !AlwaysShowGuide;
-		CurrentLevel.Refresh();
 	}
 }

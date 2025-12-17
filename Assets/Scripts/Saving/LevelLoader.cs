@@ -134,6 +134,7 @@ public class LevelLoader : MonoBehaviour
 
 		GameManager.master.CurrentLevel.Refresh();
 		GameManager.master.Map.Display();
+		GameManager.master.settings.RefreshDisplay();
 	}
 	
 	void DrawFloor(LevelData _levelData)
