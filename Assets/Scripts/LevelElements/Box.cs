@@ -9,9 +9,8 @@ public class Box
 		Vector2Int positionAfterPush = Map.CoordAfterMovement(
 				Position,
 				_direction);
-		return !GameManager.master.Map.CoordIsBlocked(
-			positionAfterPush
-		);
+		return !GameManager.master.Map.CoordIsBlocked(positionAfterPush) && 
+				GameManager.master.Map.PathClear(Position,_direction);
 	}
 
 	public bool Push(MapDirection _direction)

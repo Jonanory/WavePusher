@@ -14,6 +14,7 @@ public class LevelData : ScriptableObject
 	public List<Vector2Int> Floors;
 	public List<Vector2Int> Holes;
 	public List<Vector2Int> Walls;
+	public List<BlockedPath> ThinWalls;
 	public List<Vector2Int> OuterWalls;
 	public Vector2Int Exit;
 }
@@ -24,4 +25,11 @@ public struct LevelImage
 	public Vector2 Position;
 	public Sprite Sprite;
 	public float Scale;
+}
+
+[System.Serializable]
+public struct BlockedPath
+{
+	public Vector2Int Position;
+	public List<MapDirection> Directions;
 }

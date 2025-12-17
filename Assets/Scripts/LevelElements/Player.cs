@@ -23,6 +23,7 @@ public class Player
 		Vector2Int newPushablePosition = Map.CoordAfterMovement(newPosition, _direction);
 		
 		if(GameManager.master.Map.CoordIsFullyBlocked(newPosition)) return;
+		if(!GameManager.master.Map.PathClear(Position,_direction)) return;
 
 		if (GameManager.master.CurrentLevel.Doors.ContainsKey(newPosition))
 		{
@@ -32,6 +33,7 @@ public class Player
 		if (GameManager.master.CurrentLevel.GetBox(newPosition) != null)
 		{
 			if(GameManager.master.Map.CoordIsFullyBlocked(newPushablePosition) ||
+					!GameManager.master.Map.PathClear(newPosition,_direction) ||
 					GameManager.master.CurrentLevel.Boxes.ContainsKey(newPushablePosition) ||
 					GameManager.master.CurrentLevel.Emitters.ContainsKey(newPushablePosition)) return;
 
@@ -44,6 +46,7 @@ public class Player
 		else if (GameManager.master.CurrentLevel.GetEmitter(newPosition) != null)
 		{
 			if(GameManager.master.Map.CoordIsFullyBlocked(newPushablePosition) ||
+					!GameManager.master.Map.PathClear(newPosition,_direction) ||
 					GameManager.master.CurrentLevel.Boxes.ContainsKey(newPushablePosition) ||
 					GameManager.master.CurrentLevel.Emitters.ContainsKey(newPushablePosition)) return;
 

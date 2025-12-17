@@ -12,6 +12,10 @@ public class TileMapManager : MonoBehaviour
 	public static Tilemap SceneMap { get{ return master._sceneMap; }}
 
 	[SerializeField]
+	Tilemap _thinWallMap;
+	public static Tilemap ThinWallMap { get{ return master._thinWallMap; }}
+
+	[SerializeField]
 	Tilemap _occupantMap;
 	public static Tilemap OccupantMap { get{ return master._occupantMap; }}
 

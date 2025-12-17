@@ -17,7 +17,7 @@ public class LevelEditorEditor : Editor {
 			GUI.enabled = true;
 		}
 
-		currentMode = GUILayout.Toolbar(currentMode, new string[] {"Drawing", "Linking"});
+		currentMode = GUILayout.Toolbar(currentMode, new string[] {"Drawing", "Thin Walls", "Linking"});
 	}
 	
 	public static Vector2Int WorldPointToCoord(Vector2 worldPoint, float _scale)
@@ -44,6 +44,10 @@ public class LevelEditorEditor : Editor {
 		if(currentMode == 0)
 		{
 			DrawingMode(t);
+		}
+		else if(currentMode == 1)
+		{
+			ThinWallMode(t);
 		}
 		else
 		{
@@ -167,6 +171,45 @@ public class LevelEditorEditor : Editor {
 	Vector2Int startPos;
 	LevelDataCell startCell;
 
+	void ThinWallMode(LevelEditor t)
+	{
+		var e = Event.current;
+
+		// Start link
+		if (e.type == EventType.MouseDown && e.button == 0 && !e.alt)
+		{
+			Debug.Log("Click found");
+			startPos = WorldPointToCoord( (Vector2)MouseWorldPoint(t) , t.hexSize);
+			e.Use();
+		}
+
+		// Finish link
+		if (startPos.x != 1000 & startPos.y != 1000 &&
+			e.type == EventType.MouseUp &&
+			e.button == 0)
+		{
+			Vector2Int endPos = WorldPointToCoord( (Vector2)MouseWorldPoint(t) , t.hexSize);
+			MapDirection? Movement = Map.CoordsAreAdjacent(startPos,endPos);
+			if (Movement != null)
+			{
+				Undo.RecordObject(t, "Add Thin Wall");
+				t.AddThinWall(startPos, endPos, Movement.Value);
+				EditorUtility.SetDirty(t);
+			}
+
+			startPos = new Vector2Int(1000,1000);
+			e.Use();
+			SceneView.RepaintAll();
+		}
+
+		// Cancel
+		if (e.type == EventType.KeyDown && e.keyCode == KeyCode.Escape)
+		{
+			startPos = new Vector2Int(1000,1000);
+			e.Use();
+		}
+	}
+
 	void LinkingMode(LevelEditor t)
 	{
 		var e = Event.current;
@@ -211,7 +254,7 @@ public class LevelEditorEditor : Editor {
 						break;
 					}
 				}
-				if (IsValidEdge(startCell, endCell))
+				if (IsValidLink(startCell, endCell))
 				{
 					Undo.RecordObject(t, "Add Link");
 					t.AddLink(new LevelDataLink
@@ -261,6 +304,6 @@ public class LevelEditorEditor : Editor {
 
 	bool IsSource(LevelDataCell n) => n.Type == CellType.BUTTON || n.Type == CellType.RECEIVER;
 	bool IsTarget(LevelDataCell n) => n.Type == CellType.DOOR || n.Type == CellType.EMITTER;
-	bool IsValidEdge(LevelDataCell from, LevelDataCell to) => IsSource(from) && IsTarget(to) && from.Position != to.Position;
+	bool IsValidLink(LevelDataCell from, LevelDataCell to) => IsSource(from) && IsTarget(to) && from.Position != to.Position;
 }
 #endif

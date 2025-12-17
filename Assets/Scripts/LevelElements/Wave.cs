@@ -71,6 +71,7 @@ public class Wave
 		{
 			foreach(MapDirection direction in WaveElement.Value.DirectionsToFlow)
 			{
+				if(!GameManager.master.Map.PathClear(WaveElement.Key, direction)) continue;
 				TryCreateWaveElement(
 					WaveElement.Value.Strength - 1, 
 					Map.CoordAfterMovement(

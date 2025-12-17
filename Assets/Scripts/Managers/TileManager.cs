@@ -57,6 +57,8 @@ public class TileManager : MonoBehaviour
 	[SerializeField]
 	public HexagonalRuleTile  WallTile;
 	[SerializeField]
+	List<Tile> ThinWallTiles = new List<Tile>();
+	[SerializeField]
 	Tile HoleTile;
 	[SerializeField]
 	Tile ExitTile;
@@ -191,6 +193,27 @@ public class TileManager : MonoBehaviour
 				return master.STile;
 			case MapDirection.DOWN_RIGHT:
 				return master.DTile;
+			default:
+				return null;
+		}
+	}
+
+	public static Tile GetThinWall(MapDirection _direction)
+	{
+		switch(_direction)
+		{
+			case MapDirection.UP:
+				return master.ThinWallTiles[0];
+			case MapDirection.UP_RIGHT:
+				return master.ThinWallTiles[1];
+			case MapDirection.DOWN_RIGHT:
+				return master.ThinWallTiles[2];
+			case MapDirection.DOWN:
+				return master.ThinWallTiles[3];
+			case MapDirection.DOWN_LEFT:
+				return master.ThinWallTiles[4];
+			case MapDirection.UP_LEFT:
+				return master.ThinWallTiles[5];
 			default:
 				return null;
 		}

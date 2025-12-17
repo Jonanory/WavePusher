@@ -25,6 +25,7 @@ public enum MapLayer
 public class Map : MonoBehaviour
 {
 	public static float Scale = 0.5f;
+	public Dictionary<Vector2Int, HashSet<MapDirection>> BlockedPaths = new Dictionary<Vector2Int, HashSet<MapDirection>>();
 	public Vector2Int Exit;
 
 	void Start()
@@ -66,6 +67,11 @@ public class Map : MonoBehaviour
 				_position.y,
 				(int)MapLayer.FLOOR),
 			tile);
+	}
+
+	public static MapDirection Reverse(MapDirection _direction)
+	{
+		return  RotateClockwise(_direction,3);
 	}
 
 	public static MapDirection RotateClockwise(MapDirection _direction, int _numberOfSteps = 1)
@@ -200,6 +206,12 @@ public class Map : MonoBehaviour
 				_coord.y,
 				(int)MapLayer.WALL))) return false;
 		return true;
+	}
+
+	public bool PathClear(Vector2Int _position, MapDirection _direction)
+	{
+		if(!BlockedPaths.ContainsKey(_position)) return true;
+		return !BlockedPaths[_position].Contains(_direction);
 	}
 
 	public static Vector2 CoordToWorldPoint(int _x, int _y)

@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Tilemaps;
+using System.Collections;
+using System.Collections.Generic;
 
 public class LevelLoader : MonoBehaviour
 {
@@ -84,6 +86,7 @@ public class LevelLoader : MonoBehaviour
 			}
 		}
 		DrawWalls(_levelData);
+		DrawThinWalls(_levelData);
 
 		Door door;
 		Emitter emitter;
@@ -186,6 +189,28 @@ public class LevelLoader : MonoBehaviour
 			bottomLeft.y
 		);
 	}
+
+	void DrawThinWalls(LevelData _levelData)
+	{
+		foreach(BlockedPath element in _levelData.ThinWalls)
+		{
+			if(!GameManager.master.Map.BlockedPaths.ContainsKey(element.Position))
+			{
+				GameManager.master.Map.BlockedPaths.Add(element.Position, new HashSet<MapDirection>());
+			}
+			foreach(MapDirection direction in element.Directions)
+			{
+				GameManager.master.Map.BlockedPaths[element.Position].Add(direction);
+				TileMapManager.ThinWallMap.SetTile(
+					new Vector3Int(
+						element.Position.x,
+						element.Position.y,
+						(int)direction),
+					TileManager.GetThinWall(direction));
+			}
+		}
+	}
+
 	void DrawSingleFloor(Vector2Int _position)
 	{
 		Color floorColor;

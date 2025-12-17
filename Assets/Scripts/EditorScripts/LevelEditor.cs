@@ -26,6 +26,7 @@ public class LevelEditor : MonoBehaviour {
 	[HideInInspector] public List<LevelDataCell> draft = new();
 	[HideInInspector] public List<Vector2Int> floors = new();
 	[HideInInspector] public List<Vector2Int> walls = new();
+	[HideInInspector] public List<BlockedPath> thinWalls = new();
 	[HideInInspector] public List<Vector2Int> outerWalls = new();
 	[HideInInspector] public List<Vector2Int> holes = new();
 	[HideInInspector] public Vector2Int exit = new Vector2Int(0,0);
@@ -58,6 +59,7 @@ public class LevelEditor : MonoBehaviour {
 	public void LoadFromAsset() {
 		draft = levelAsset ? new List<LevelDataCell>(levelAsset.Cells) : new List<LevelDataCell>();
 		floors = levelAsset ? new List<Vector2Int>(levelAsset.Floors) : new List<Vector2Int>();
+		thinWalls = levelAsset ? new List<BlockedPath>(levelAsset.ThinWalls) : new List<BlockedPath>();
 		walls = levelAsset ? new List<Vector2Int>(levelAsset.Walls) : new List<Vector2Int>();
 		outerWalls = levelAsset ? new List<Vector2Int>(levelAsset.OuterWalls) : new List<Vector2Int>();
 		holes = levelAsset ? new List<Vector2Int>(levelAsset.Holes) : new List<Vector2Int>();
@@ -74,6 +76,7 @@ public class LevelEditor : MonoBehaviour {
 		if(levelAsset.Floors.Contains(exit)) levelAsset.Floors.Remove(exit);
 		levelAsset.Walls = new List<Vector2Int>(walls);
 		if(levelAsset.Walls.Contains(exit)) levelAsset.Walls.Remove(exit);
+		levelAsset.ThinWalls = new List<BlockedPath>(thinWalls);
 		levelAsset.OuterWalls = new List<Vector2Int>(outerWalls);
 		if(levelAsset.OuterWalls.Contains(exit)) levelAsset.OuterWalls.Remove(exit);
 		levelAsset.Holes = new List<Vector2Int>(holes);
@@ -103,6 +106,55 @@ public class LevelEditor : MonoBehaviour {
 		}
 		links = newLinks;
 		draft.RemoveAt(idx);
+	}
+
+	public void AddThinWall(Vector2Int _startCell, Vector2Int _endCell, MapDirection _direction)
+	{
+		List<BlockedPath> newThinWalls = new List<BlockedPath>();
+		bool foundFrom = false;
+		bool foundTo = false;
+		BlockedPath currentPath;
+		MapDirection oppositeDirection = Map.Reverse(_direction);
+		for(int i=0; i<thinWalls.Count; i++)
+		{
+			currentPath = thinWalls[i];
+			if(currentPath.Position == _startCell)
+			{
+				foundTo = true;
+				if(currentPath.Directions.Contains(_direction))
+					currentPath.Directions.Remove(_direction);
+				else currentPath.Directions.Add(_direction);
+			}
+			else if(currentPath.Position == _endCell)
+			{
+				foundFrom = true;
+				if(currentPath.Directions.Contains(oppositeDirection))
+					currentPath.Directions.Remove(oppositeDirection);
+				else currentPath.Directions.Add(oppositeDirection);
+			}
+			if(currentPath.Directions.Count != 0)
+				newThinWalls.Add(currentPath);
+		}
+
+		if(!foundTo)
+		{
+			newThinWalls.Add(new BlockedPath
+			{
+				Position = _startCell,
+				Directions = new List<MapDirection>(){_direction}
+			});
+		}
+
+		if(!foundFrom)
+		{
+			newThinWalls.Add(new BlockedPath
+			{
+				Position = _endCell,
+				Directions = new List<MapDirection>(){oppositeDirection}
+			});
+		}
+
+		thinWalls = newThinWalls;
 	}
 
 	public void AddLink(LevelDataLink _newLink)
@@ -166,6 +218,35 @@ public class LevelEditor : MonoBehaviour {
 			var pos = AxialToWorld(c.x, c.y);
 			pos.z = 2;
 			Gizmos.DrawIcon(pos, "Wall.tif");
+		}
+
+		foreach (var c in thinWalls) {
+			var pos = AxialToWorld(c.Position.x, c.Position.y);
+			pos.z = 1;
+			foreach(var d in c.Directions)
+			{
+				switch(d)
+				{
+					case MapDirection.UP:
+						Gizmos.DrawIcon(pos, "Thin1.tif");
+						break;
+					case MapDirection.UP_RIGHT:
+						Gizmos.DrawIcon(pos, "Thin2.tif");
+						break;
+					case MapDirection.DOWN_RIGHT:
+						Gizmos.DrawIcon(pos, "Thin3.tif");
+						break;
+					case MapDirection.DOWN:
+						Gizmos.DrawIcon(pos, "Thin4.tif");
+						break;
+					case MapDirection.DOWN_LEFT:
+						Gizmos.DrawIcon(pos, "Thin5.tif");
+						break;
+					case MapDirection.UP_LEFT:
+						Gizmos.DrawIcon(pos, "Thin6.tif");
+						break;
+				}
+			}
 		}
 
 		foreach (var c in outerWalls) {

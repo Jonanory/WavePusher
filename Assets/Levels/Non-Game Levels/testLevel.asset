@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58ba11051fd64294d83b0ec06869abf7, type: 3}
   m_Name: testLevel
   m_EditorClassIdentifier: Assembly-CSharp::LevelData
+  Name: 
+  Number: 0
   Images: []
   Cells:
   - Type: 0
@@ -585,6 +587,23 @@ MonoBehaviour:
   - {x: -5, y: -13}
   - {x: -5, y: -14}
   - {x: -6, y: -15}
+  ThinWalls:
+  - Position: {x: 3, y: -2}
+    Directions: 02000000
+  - Position: {x: 2, y: -1}
+    Directions: 050000000000000001000000
+  - Position: {x: 3, y: -1}
+    Directions: 03000000
+  - Position: {x: 3, y: 0}
+    Directions: 04000000
+  - Position: {x: 3, y: 1}
+    Directions: 030000000200000001000000
+  - Position: {x: 2, y: 1}
+    Directions: 00000000
+  - Position: {x: 3, y: 2}
+    Directions: 05000000
+  - Position: {x: 4, y: 2}
+    Directions: 04000000
   OuterWalls:
   - {x: 1, y: -24}
   - {x: 0, y: -25}
